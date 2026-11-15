@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
-import BloomLoader from "@/components/ui/BloomLoader";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/home/HeroSection";
@@ -20,7 +19,11 @@ import InstagramJournal from "@/components/home/InstagramJournal";
 import ContactSection from "@/components/home/ContactSection";
 import Footer from "@/components/layout/Footer";
 
-// Dynamic imports with ssr: false for WebGL/Canvas and mouse cursor to prevent any hydration mismatch
+// Dynamic imports with ssr: false for client-only animations, WebGL canvas, and cursor to prevent extension attribute mismatches
+const BloomLoader = dynamic(() => import("@/components/ui/BloomLoader"), {
+  ssr: false,
+});
+
 const FloralCanvas = dynamic(() => import("@/components/canvas/FloralCanvas"), {
   ssr: false,
 });

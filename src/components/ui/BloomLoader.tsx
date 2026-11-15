@@ -60,6 +60,7 @@ export default function BloomLoader({ onComplete }: BloomLoaderProps) {
       {isVisible && (
         <motion.div
           key="bloom-loader"
+          suppressHydrationWarning
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,

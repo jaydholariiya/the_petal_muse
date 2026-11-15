@@ -100,6 +100,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${cormorant.variable} ${manrope.variable} ${italiana.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
       <head>
         <script
@@ -107,7 +108,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased bg-butter-cream text-ink-aubergine min-h-screen relative">
+      <body
+        className="font-sans antialiased bg-butter-cream text-ink-aubergine min-h-screen relative"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
