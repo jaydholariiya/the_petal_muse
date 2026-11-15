@@ -114,24 +114,45 @@ export default function BrandLogo({
       : "#4A1F3D";
 
   const sizeMap = {
-    sm: { img: "h-6 w-auto", icon: "w-5 h-5", title: "text-xs tracking-[0.22em]", sub: "text-[7.5px] tracking-[0.25em]" },
-    md: { img: "h-8 w-auto", icon: "w-6 h-6", title: "text-sm sm:text-base tracking-[0.26em]", sub: "text-[8px] sm:text-[9px] tracking-[0.3em]" },
-    lg: { img: "h-11 w-auto", icon: "w-8 h-8", title: "text-lg sm:text-xl tracking-[0.28em]", sub: "text-[9px] sm:text-[10px] tracking-[0.34em]" },
-    xl: { img: "h-16 w-auto", icon: "w-11 h-11", title: "text-xl sm:text-2xl tracking-[0.3em]", sub: "text-xs tracking-[0.36em]" },
+    sm: {
+      img: "w-6 h-6 rounded-full overflow-hidden shadow-2xs border border-ink-aubergine/10",
+      icon: "w-5 h-5",
+      title: "text-xs tracking-[0.22em]",
+      sub: "text-[7.5px] tracking-[0.25em]",
+    },
+    md: {
+      img: "w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden shadow-2xs border border-ink-aubergine/15",
+      icon: "w-6 h-6",
+      title: "text-sm sm:text-base tracking-[0.26em]",
+      sub: "text-[8px] sm:text-[9px] tracking-[0.3em]",
+    },
+    lg: {
+      img: "w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden shadow-sm border border-ink-aubergine/15",
+      icon: "w-8 h-8",
+      title: "text-lg sm:text-xl tracking-[0.28em]",
+      sub: "text-[9px] sm:text-[10px] tracking-[0.34em]",
+    },
+    xl: {
+      img: "w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden shadow-md border border-ink-aubergine/20",
+      icon: "w-11 h-11",
+      title: "text-xl sm:text-2xl tracking-[0.3em]",
+      sub: "text-xs tracking-[0.36em]",
+    },
   };
 
   const logoContent = (
     <div className={`inline-flex items-center gap-2.5 sm:gap-3 group transition-transform duration-300 shrink-0 ${className}`}>
       {/* If logoPath is provided and hasn't failed, show the owner's real logo image */}
       {SITE_CONTENT.brand.logoPath && !logoImageFailed ? (
-        <div className="relative flex items-center justify-center shrink-0">
+        <div className={`relative flex items-center justify-center shrink-0 ${sizeMap[size].img}`}>
           <Image
             src={SITE_CONTENT.brand.logoPath}
             alt={SITE_CONTENT.brand.name}
-            width={120}
-            height={48}
+            width={80}
+            height={80}
+            priority
             unoptimized
-            className={`${sizeMap[size].img} object-contain transition-opacity duration-300`}
+            className="w-full h-full object-cover transition-opacity duration-300"
             onError={() => setLogoImageFailed(true)}
           />
         </div>
@@ -155,7 +176,7 @@ export default function BrandLogo({
           <span
             className={`font-sans uppercase font-medium mt-1 whitespace-nowrap transition-colors duration-300 ${subColor} ${sizeMap[size].sub}`}
           >
-            CREATIVE FLORAL ATELIER
+            BESPOKE GIFTS &amp; FLORAL ATELIER
           </span>
         </div>
       )}

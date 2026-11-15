@@ -5,18 +5,17 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
   const [isPointer, setIsPointer] = useState(false);
-  const [cursorText, setCursorText] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
   // Smooth springs for fluid, organic petal trailing
-  const springConfig = { damping: 28, stiffness: 350 };
+  const springConfig = { damping: 30, stiffness: 400 };
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
-  const trailSpringConfig = { damping: 20, stiffness: 180 };
+  const trailSpringConfig = { damping: 24, stiffness: 220 };
   const trailX = useSpring(mouseX, trailSpringConfig);
   const trailY = useSpring(mouseY, trailSpringConfig);
 
@@ -38,16 +37,8 @@ export default function CustomCursor() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      const interactive = target.closest("a, button, [role='button'], input, textarea, select");
+      const interactive = target.closest("a, button, [role='button'], input, textarea, select, [data-cursor]");
       setIsPointer(Boolean(interactive));
-
-      // Check for custom cursor text (e.g. data-cursor="VIEW")
-      const cursorTarget = target.closest("[data-cursor]") as HTMLElement | null;
-      if (cursorTarget && cursorTarget.dataset.cursor) {
-        setCursorText(cursorTarget.dataset.cursor);
-      } else {
-        setCursorText("");
-      }
     };
 
     const handleMouseLeave = () => setIsVisible(false);
@@ -68,9 +59,9 @@ export default function CustomCursor() {
 
   return (
     <div className="hidden lg:block pointer-events-none fixed inset-0 z-[999] overflow-hidden select-none">
-      {/* 1. Trailing organic petal ring */}
+      {/* Trailing organic petal ring */}
       <motion.div
-        className="absolute top-0 left-0 flex items-center justify-center -translate-x-1/2 -translate-y-1/2"
+        className="absolute top-0 left-0 flex items-center justify-center -translate-x-1/2 -translate-y-1/2 pointer-events-none"
         style={{
           x: trailX,
           y: trailY,
@@ -78,34 +69,24 @@ export default function CustomCursor() {
       >
         <motion.div
           animate={{
-            scale: cursorText ? 1.2 : isPointer ? 1.3 : 1,
-            rotate: isPointer ? 45 : 0,
-            opacity: cursorText ? 0.95 : isPointer ? 0.8 : 0.45,
+            scale: isPointer ? 1.4 : 1,
+            opacity: isPointer ? 0.75 : 0.35,
           }}
           transition={{ duration: 0.2 }}
-          className={`rounded-full flex items-center justify-center transition-colors duration-300 ${
-            cursorText
-              ? "w-12 h-12 bg-marigold-glow text-ink-aubergine shadow-md"
-              : isPointer
-              ? "w-8 h-8 border border-marigold-glow/70 bg-marigold-glow/10"
-              : "w-7 h-7 border border-dusty-orchid/40"
+          className={`rounded-full transition-all duration-300 ${
+            isPointer
+              ? "w-8 h-8 border border-marigold-glow bg-marigold-glow/10 shadow-[0_0_12px_rgba(232,169,59,0.3)]"
+              : "w-6 h-6 border border-ink-aubergine/30"
           }`}
-        >
-          {cursorText && (
-            <span className="font-sans text-[9px] font-semibold tracking-widest uppercase">
-              {cursorText}
-            </span>
-          )}
-        </motion.div>
+        />
       </motion.div>
 
-      {/* 2. Leading core golden dot */}
+      {/* Leading core golden dot */}
       <motion.div
-        className="absolute top-0 left-0 w-2 h-2 rounded-full bg-marigold-glow -translate-x-1/2 -translate-y-1/2 shadow-[0_0_8px_#E8A93B]"
+        className="absolute top-0 left-0 w-2 h-2 rounded-full bg-marigold-glow -translate-x-1/2 -translate-y-1/2 shadow-[0_0_6px_#E8A93B] pointer-events-none"
         style={{
           x: cursorX,
           y: cursorY,
-          opacity: cursorText ? 0 : 1,
         }}
         animate={{
           scale: isPointer ? 0.6 : 1,

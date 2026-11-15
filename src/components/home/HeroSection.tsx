@@ -12,8 +12,22 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-[90vh] sm:min-h-screen flex flex-col justify-between pt-20 sm:pt-28 pb-8 sm:pb-12 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
-      {/* Top ambient editorial badge */}
-      <div className="flex items-center justify-between border-b border-ink-aubergine/10 pb-3 sm:pb-4">
+      {/* Top ambient editorial badge — Responsive Mobile & Desktop Layout */}
+      {/* Mobile Screen: Clean single-line layout without text collision */}
+      <div className="flex sm:hidden items-center justify-between gap-2 border-b border-ink-aubergine/10 pb-2.5 w-full">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse shrink-0" />
+          <span className="text-[10px] font-sans tracking-[0.14em] uppercase text-ink-aubergine/80 font-medium truncate">
+            Bespoke Floral Atelier
+          </span>
+        </div>
+        <span className="text-[9.5px] font-sans tracking-[0.12em] uppercase text-muted-jade font-semibold shrink-0">
+          Est. 2024 • Gujarat
+        </span>
+      </div>
+
+      {/* Desktop Screen: Full wide tracking badge */}
+      <div className="hidden sm:flex items-center justify-between border-b border-ink-aubergine/10 pb-3 sm:pb-4 w-full">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -21,7 +35,7 @@ export default function HeroSection() {
           className="flex items-center gap-2"
         >
           <span className="w-2 h-2 rounded-full bg-marigold-glow animate-pulse" />
-          <span className="text-[9.5px] sm:text-xs font-sans tracking-[0.22em] sm:tracking-[0.3em] uppercase text-ink-aubergine/70">
+          <span className="text-xs font-sans tracking-[0.3em] uppercase text-ink-aubergine/70">
             {hero.eyebrow}
           </span>
         </motion.div>
@@ -30,7 +44,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-[9.5px] sm:text-xs font-sans tracking-[0.18em] sm:tracking-[0.25em] uppercase text-muted-jade"
+          className="text-xs font-sans tracking-[0.25em] uppercase text-muted-jade"
         >
           {hero.badgeText}
         </motion.span>
@@ -45,7 +59,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="font-serif text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[7.2rem] font-light leading-[0.98] sm:leading-[0.94] text-ink-aubergine tracking-tight">
+            <h1 className="font-serif text-[2.2rem] sm:text-6xl md:text-7xl lg:text-[7.2rem] font-light leading-[1.04] sm:leading-[0.94] text-ink-aubergine tracking-tight">
               <span className="block italic">{hero.headlineLine1}</span>
               <span className="block font-normal text-mulberry-wine font-serif">
                 {hero.headlineLine2}
@@ -69,14 +83,14 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-6 sm:mt-8 md:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 w-full sm:w-auto"
           >
-            <a href="#creations" className="w-full sm:w-auto">
+            <a href="#collections" className="w-full sm:w-auto">
               <MagneticButton variant="primary" className="w-full sm:w-auto py-3.5">
                 <span>{hero.ctaPrimary}</span>
               </MagneticButton>
             </a>
 
-            {/* Desktop link to interactive mood workshop */}
-            <a href="#workshop" className="hidden sm:inline-block w-auto">
+            {/* Desktop link to contact/bespoke enquiry */}
+            <a href="#contact" className="hidden sm:inline-block w-auto">
               <MagneticButton variant="outline" className="w-auto py-3.5">
                 <Sparkles className="w-3.5 h-3.5 text-marigold-glow" />
                 <span>{hero.ctaSecondary}</span>
@@ -87,7 +101,7 @@ export default function HeroSection() {
             <a href="#contact" className="sm:hidden w-full">
               <MagneticButton variant="outline" className="w-full py-3.5">
                 <Sparkles className="w-3.5 h-3.5 text-marigold-glow" />
-                <span>CONTACT ATELIER</span>
+                <span>CONTACT CONCIERGE</span>
               </MagneticButton>
             </a>
           </motion.div>
@@ -137,14 +151,14 @@ export default function HeroSection() {
               <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-butter-cream z-10 flex items-end justify-between">
                 <div>
                   <p className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-apricot-blush font-sans">
-                    Botanical Study 01
+                    Atelier Keepsake Suite 01
                   </p>
                   <p className="font-serif text-base sm:text-lg italic mt-0.5">
-                    Ivory &amp; Caramel Flora
+                    Curated Hampers, Frames &amp; Blooms
                   </p>
                 </div>
                 <span className="text-[9px] sm:text-[10px] tracking-widest font-sans border border-white/30 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1">
-                  Atelier
+                  Handcrafted
                 </span>
               </div>
             </div>

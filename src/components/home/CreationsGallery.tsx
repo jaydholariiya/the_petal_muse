@@ -86,23 +86,16 @@ export default function CreationsGallery() {
     );
   };
 
-  // Lock body scroll and add keyboard navigation when lightbox is active
+  // Keyboard navigation when lightbox is active (zero scroll jumping)
   useEffect(() => {
-    if (activeLightboxIndex !== null) {
-      document.body.style.overflow = "hidden";
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Escape") setActiveLightboxIndex(null);
-        if (e.key === "ArrowRight") handleNext();
-        if (e.key === "ArrowLeft") handlePrev();
-      };
-      window.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.body.style.overflow = "unset";
-        window.removeEventListener("keydown", handleKeyDown);
-      };
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    if (activeLightboxIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveLightboxIndex(null);
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeLightboxIndex, filteredItems.length]);
 
   return (
@@ -438,117 +431,121 @@ export default function CreationsGallery() {
         </div>
       )}
 
-      {/* DESKTOP ARCHITECTURAL EDITORIAL GALLERY — Unique, High-Fashion, Gapless */}
-      <div
-        className={`hidden md:grid gap-6 sm:gap-8 md:gap-10 w-full min-w-0 ${
-          filteredItems.length === 2
-            ? "max-w-5xl mx-auto grid-cols-2"
-            : filteredItems.length === 1
-            ? "max-w-md mx-auto grid-cols-1"
-            : "grid-cols-12"
-        }`}
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredItems.map((item, index) => {
-            // Dynamic high-fashion 12-column editorial spans for "All Creations"
-            let colSpan = "col-span-12 lg:col-span-4";
-            let aspectClass = "aspect-[4/5]";
+      {/* DESKTOP ARCHITECTURAL EDITORIAL GALLERY — Balanced, Gapless, Zero Cutoff */}
+      <div className="hidden md:block w-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`desktop-grid-${selectedCategory}`}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.35 }}
+            className={`w-full min-w-0 ${
+              selectedCategory === "all"
+                ? "grid grid-cols-12 gap-6 sm:gap-8"
+                : filteredItems.length === 2
+                ? "max-w-5xl mx-auto grid grid-cols-2 gap-8"
+                : filteredItems.length === 1
+                ? "max-w-lg mx-auto grid grid-cols-1"
+                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            }`}
+          >
+            {filteredItems.map((item, index) => {
+              // Dynamic editorial spans when viewing "All Creations"
+              let colSpan = "";
+              let aspectClass = "aspect-[4/5]";
 
-            if (filteredItems.length === creations.length) {
-              if (index === 0) {
-                // Monumental Hero Installation
-                colSpan = "col-span-12 lg:col-span-7";
-                aspectClass = "aspect-[16/11]";
-              } else if (index === 1) {
-                // Editorial Bridal Oval
-                colSpan = "col-span-12 lg:col-span-5";
-                aspectClass = "aspect-[4/5]";
-              } else {
-                // Balanced 3-column rows (4 + 4 + 4 = 12 cols)
-                colSpan = "col-span-12 md:col-span-6 lg:col-span-4";
-                aspectClass = "aspect-[4/5]";
+              if (selectedCategory === "all") {
+                if (index === 0) {
+                  // Hero piece (7 columns)
+                  colSpan = "col-span-12 lg:col-span-7";
+                  aspectClass = "aspect-[16/11]";
+                } else if (index === 1) {
+                  // Companion piece (5 columns)
+                  colSpan = "col-span-12 lg:col-span-5";
+                  aspectClass = "aspect-[4/5]";
+                } else {
+                  // 3-column rows (4 + 4 + 4 = 12 columns)
+                  colSpan = "col-span-12 md:col-span-6 lg:col-span-4";
+                  aspectClass = "aspect-[4/5]";
+                }
               }
-            } else if (filteredItems.length === 2) {
-              colSpan = "col-span-1";
-              aspectClass = "aspect-[4/5]";
-            }
 
-            const maskClass =
-              item.maskShape === "arch"
-                ? "rounded-t-[80px] rounded-b-3xl"
-                : item.maskShape === "oval"
-                ? "rounded-[80px]"
-                : "rounded-3xl";
+              // Graceful rounded corners with safe padding
+              const maskClass =
+                item.maskShape === "arch"
+                  ? "rounded-t-[60px] rounded-b-3xl"
+                  : item.maskShape === "oval"
+                  ? "rounded-[48px]"
+                  : "rounded-3xl";
 
-            return (
-              <motion.div
-                key={`desktop-${item.id}`}
-                layout
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: (index % 6) * 0.06 }}
-                onClick={() => setActiveLightboxIndex(index)}
-                className={`group relative cursor-pointer w-full min-w-0 ${colSpan}`}
-                data-cursor="VIEW"
-              >
-                {/* Image Container with Architectural Mask Silhouette */}
-                <div
-                  className={`relative w-full overflow-hidden bg-ink-aubergine/5 shadow-lg group-hover:shadow-2xl transition-all duration-700 ${aspectClass} ${maskClass}`}
+              return (
+                <motion.div
+                  key={`desktop-${item.id}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: index * 0.05 }}
+                  onClick={() => setActiveLightboxIndex(index)}
+                  className={`group relative cursor-pointer w-full min-w-0 ${colSpan}`}
                 >
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
-                  />
+                  {/* Image Container with Architectural Silhouette */}
+                  <div
+                    className={`relative w-full overflow-hidden bg-ink-aubergine/5 shadow-lg group-hover:shadow-2xl transition-all duration-700 ${aspectClass} ${maskClass}`}
+                  >
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
+                    />
 
-                  {/* Gentle Gradient Shade from Bottom */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/95 via-ink-aubergine/40 to-transparent opacity-75 group-hover:opacity-90 transition-opacity duration-500" />
+                    {/* Gentle Gradient Shade from Bottom */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/95 via-ink-aubergine/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                  {/* Archival Catalog Number Disc at Top Left (Never Clips, Perfectly Symmetrical) */}
-                  <div className="absolute top-5 left-5 z-10 w-8 h-8 rounded-full bg-ink-aubergine/60 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/15 shadow-sm group-hover:border-marigold-glow/50 transition-colors">
-                    0{index + 1}
-                  </div>
-
-                  {/* Clean Bottom Editorial Content — Zero Text Overlap, Beautiful Hierarchy */}
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7 z-10 flex flex-col justify-end text-butter-cream">
-                    {/* Category Pill & Season in One Line (Always in Natural Document Flow) */}
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <span className="text-[10px] tracking-[0.25em] uppercase text-apricot-blush font-sans font-medium">
-                        {item.season || "Bespoke Collection"}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 bg-ink-aubergine/70 backdrop-blur-md px-3 py-1 rounded-full text-[9px] uppercase font-sans tracking-widest text-butter-cream border border-white/15 shrink-0 shadow-sm">
-                        <Sparkles className="w-2.5 h-2.5 text-marigold-glow" />
-                        <span>{item.categoryLabel}</span>
-                      </span>
+                    {/* Archival Catalog Number Disc at Top Left */}
+                    <div className="absolute top-5 left-5 z-10 w-8 h-8 rounded-full bg-ink-aubergine/70 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/20 shadow-sm group-hover:border-marigold-glow/50 transition-colors">
+                      0{index + 1}
                     </div>
 
-                    {/* Title */}
-                    <h3 className="font-serif text-2xl sm:text-3xl font-light leading-snug line-clamp-1 group-hover:text-butter-cream transition-colors">
-                      {item.title}
-                    </h3>
+                    {/* Clean Bottom Editorial Content — Zero Overlap, Zero Clipping */}
+                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 z-10 flex flex-col justify-end text-butter-cream">
+                      {/* Category Badge & Season (Left-aligned, Immune to Corner Clipping) */}
+                      <div className="flex flex-wrap items-center gap-2 mb-2">
+                        <span className="inline-flex items-center gap-1.5 bg-ink-aubergine/80 backdrop-blur-md px-2.5 py-1 rounded-full text-[9px] uppercase font-sans tracking-widest text-butter-cream border border-white/15 shadow-sm">
+                          <Sparkles className="w-2.5 h-2.5 text-marigold-glow" />
+                          <span>{item.categoryLabel}</span>
+                        </span>
+                        <span className="text-[9.5px] tracking-[0.2em] uppercase text-apricot-blush font-sans font-medium">
+                          {item.season || "Bespoke Collection"}
+                        </span>
+                      </div>
 
-                    {/* Caption */}
-                    <p className="mt-1.5 text-xs text-butter-cream/80 font-sans font-light line-clamp-2 leading-relaxed">
-                      {item.caption}
-                    </p>
+                      {/* Title - Dedicated block, never overlaps */}
+                      <h3 className="font-serif text-xl sm:text-2xl lg:text-[26px] font-light leading-snug line-clamp-1 group-hover:text-butter-cream transition-colors">
+                        {item.title}
+                      </h3>
 
-                    {/* Footer Action */}
-                    <div className="mt-4 flex items-center justify-between pt-3 border-t border-white/15 text-xs font-sans">
-                      <span className="flex items-center gap-1.5 text-marigold-glow uppercase tracking-widest text-[10px] font-medium group-hover:translate-x-1 transition-transform">
-                        <Maximize2 className="w-3 h-3" /> Tap to view
-                      </span>
-                      <span className="text-butter-cream/50 text-[10px] uppercase tracking-widest">
-                        THE PETAL MUSE
-                      </span>
+                      {/* Caption */}
+                      <p className="mt-1.5 text-xs text-butter-cream/80 font-sans font-light line-clamp-2 leading-relaxed">
+                        {item.caption}
+                      </p>
+
+                      {/* Footer Action */}
+                      <div className="mt-4 flex items-center justify-between pt-3 border-t border-white/15 text-xs font-sans">
+                        <span className="flex items-center gap-1.5 text-marigold-glow uppercase tracking-widest text-[10px] font-medium group-hover:translate-x-1 transition-transform">
+                          <Maximize2 className="w-3 h-3" /> Tap to view
+                        </span>
+                        <span className="text-butter-cream/50 text-[10px] uppercase tracking-widest">
+                          THE PETAL MUSE
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </AnimatePresence>
       </div>
 
@@ -565,7 +562,7 @@ export default function CreationsGallery() {
                 onClick={(e) => {
                   if (e.target === e.currentTarget) setActiveLightboxIndex(null);
                 }}
-                className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-aubergine/95 backdrop-blur-2xl p-3 sm:p-6 md:p-10 select-none overflow-y-auto"
+                className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-aubergine/95 backdrop-blur-2xl p-3 sm:p-6 md:p-10 select-none overflow-y-auto overscroll-contain"
                 style={{ WebkitOverflowScrolling: "touch" }}
               >
                 {/* Fixed High-Contrast Close Button - Stays permanently visible above navbar & all elements */}

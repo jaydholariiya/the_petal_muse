@@ -58,12 +58,14 @@ export default function Footer() {
 
             <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
               {[
-                { num: "01", label: "Philosophy", href: "#philosophy" },
-                { num: "02", label: "Creations", href: "#creations" },
-                { num: "03", label: "Floral Craft", href: "#services" },
-                { num: "04", label: "Studio Reels", href: "#reels" },
-                { num: "05", label: "Journal", href: "#journal" },
-                { num: "06", label: "Enquire", href: "#contact" },
+                { num: "01", label: "Bestsellers", href: "#bestsellers" },
+                { num: "02", label: "15 Collections", href: "#collections" },
+                { num: "03", label: "Creations", href: "#creations" },
+                { num: "04", label: "Combo Gifts", href: "#combos" },
+                { num: "05", label: "Occasions", href: "#occasions" },
+                { num: "06", label: "Handmade Story", href: "#craftsmanship" },
+                { num: "07", label: "Studio Reels", href: "#reels" },
+                { num: "08", label: "Enquire", href: "#contact" },
               ].map((item) => (
                 <a
                   key={item.label}
@@ -161,8 +163,13 @@ export default function Footer() {
             </span>
             <ul className="space-y-2 sm:space-y-2.5 text-xs font-sans uppercase tracking-[0.18em] text-butter-cream/75">
               <li>
-                <a href="#philosophy" className="hover:text-butter-cream transition-colors">
-                  Philosophy
+                <a href="#bestsellers" className="hover:text-butter-cream transition-colors">
+                  Our Bestsellers
+                </a>
+              </li>
+              <li>
+                <a href="#collections" className="hover:text-butter-cream transition-colors">
+                  15 Collections
                 </a>
               </li>
               <li>
@@ -171,18 +178,23 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#stems" className="hover:text-butter-cream transition-colors">
-                  Stem Library
+                <a href="#combos" className="hover:text-butter-cream transition-colors">
+                  Combo Collections
                 </a>
               </li>
               <li>
-                <a href="#workshop" className="hover:text-butter-cream transition-colors">
-                  Mood Workshop
+                <a href="#occasions" className="hover:text-butter-cream transition-colors">
+                  Gifts for Occasions
                 </a>
               </li>
               <li>
-                <a href="#scope" className="hover:text-butter-cream transition-colors">
-                  Event Scope
+                <a href="#craftsmanship" className="hover:text-butter-cream transition-colors">
+                  Handmade Craftsmanship
+                </a>
+              </li>
+              <li>
+                <a href="#philosophy" className="hover:text-butter-cream transition-colors">
+                  Philosophy
                 </a>
               </li>
               <li>

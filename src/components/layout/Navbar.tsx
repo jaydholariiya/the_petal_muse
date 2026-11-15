@@ -8,33 +8,37 @@ import BrandLogo from "@/components/brand/BrandLogo";
 import { SITE_CONTENT } from "@/content/site";
 import { buildWhatsAppUrl } from "@/lib/utils";
 
-// Curated primary links for desktop header
+// Curated primary links for desktop header — balanced luxury marquee links
 const PRIMARY_NAV_LINKS = [
-  { label: "Philosophy", href: "#philosophy" },
-  { label: "Creations", href: "#creations" },
-  { label: "Stem Library", href: "#stems" },
-  { label: "Workshop", href: "#workshop" },
-  { label: "Services", href: "#services" },
+  { label: "Bestsellers", href: "#bestsellers" },
+  { label: "Collections", href: "#collections" },
+  { label: "Combos", href: "#combos" },
+  { label: "Occasions", href: "#occasions" },
+  { label: "Reviews", href: "#reviews" },
 ];
 
 // Full directory of links for desktop full menu
 const FULL_DIRECTORY_LINKS = [
+  { label: "Our Bestsellers", sub: "Most loved creations by the atelier", href: "#bestsellers" },
+  { label: "Explore Collections", sub: "Handcrafted product categories", href: "#collections" },
+  { label: "Creative Combos", sub: "Curated gift pairing combinations", href: "#combos" },
+  { label: "Gifts for Every Occasion", sub: "Birthdays, anniversaries, milestones", href: "#occasions" },
+  { label: "Craftsmanship & Story", sub: "Handmade with love & why choose us", href: "#craftsmanship" },
+  { label: "Client Reviews", sub: "5-star patron stories & real gifting photos", href: "#reviews" },
   { label: "Atelier Philosophy", sub: "The hands behind the petals", href: "#philosophy" },
-  { label: "The Bloom Archive", sub: "Curated floral artworks & gallery", href: "#creations" },
-  { label: "Sensory Stem Library", sub: "Rare heirloom botanicals & varieties", href: "#stems" },
-  { label: "Atmosphere Simulator", sub: "Day to candlelight lighting preview", href: "#stems" },
-  { label: "Mood Workshop", sub: "Design your bespoke floral concept", href: "#workshop" },
-  { label: "Event Scope & Scale", sub: "Weddings, galas & private dining", href: "#scope" },
   { label: "Our Floral Craft", sub: "Installations, bridal & tablescapes", href: "#services" },
   { label: "Instagram Journal", sub: "Recent captures from @the.petalmusee", href: "#journal" },
   { label: "Contact & Concierge", sub: "Direct consultation with Jensi", href: "#contact" },
 ];
 
-// Streamlined essential links for mobile drawer (only active mobile sections)
+// Streamlined essential links for mobile drawer
 const MOBILE_DIRECTORY_LINKS = [
-  { label: "Atelier Philosophy", sub: "The hands behind the petals", href: "#philosophy" },
-  { label: "The Bloom Archive", sub: "Curated floral artworks & gallery", href: "#creations" },
-  { label: "Our Floral Craft", sub: "Installations, bridal & tablescapes", href: "#services" },
+  { label: "Our Bestsellers", sub: "Most loved creations", href: "#bestsellers" },
+  { label: "15 Collections", sub: "Complete product catalog", href: "#collections" },
+  { label: "Combo Gifts", sub: "Suggested gift pairings", href: "#combos" },
+  { label: "Every Occasion", sub: "Birthdays, weddings & more", href: "#occasions" },
+  { label: "Handmade Story", sub: "Why choose The Petal Muse", href: "#craftsmanship" },
+  { label: "Client Reviews", sub: "5-star patron stories & photos", href: "#reviews" },
   { label: "Studio Reels", sub: "Behind the scenes moving petals", href: "#reels" },
   { label: "Instagram Journal", sub: "Recent captures from @the.petalmusee", href: "#journal" },
   { label: "Contact & Concierge", sub: "Direct consultation with Jensi", href: "#contact" },
@@ -70,13 +74,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // Lock body scroll when mobile menu is open
+  // Keyboard Escape listener when mobile/desktop drawer is open (zero scroll jumping)
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    if (!menuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [menuOpen]);
 
   const whatsappDirectUrl = buildWhatsAppUrl({
@@ -87,31 +92,29 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+          } ${isScrolled
             ? "bg-butter-cream/95 backdrop-blur-md border-b border-ink-aubergine/10 shadow-[0_4px_20px_rgba(27,18,32,0.04)] py-2.5 sm:py-3.5"
             : "bg-butter-cream/90 backdrop-blur-sm border-b border-ink-aubergine/5 py-3 sm:py-4"
-        }`}
+          }`}
       >
-        <div className="max-w-7xl mx-auto px-3.5 sm:px-6 md:px-12 flex items-center justify-between">
-          {/* Brand Logo / Wordmark */}
-          <div className="shrink-0 flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-12 flex items-center justify-between">
+          {/* Brand Logo / Wordmark with guaranteed breathing room */}
+          <div className="shrink-0 flex items-center mr-6 lg:mr-10 xl:mr-14">
             <BrandLogo variant="dark" size="sm" className="sm:hidden" />
             <BrandLogo variant="dark" size="md" className="hidden sm:inline-flex" />
           </div>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links — Centered with refined luxury typography */}
           <nav
-            className="hidden lg:flex items-center gap-7 xl:gap-9"
+            className="hidden lg:flex items-center justify-center gap-5 xl:gap-8 mx-auto"
             aria-label="Primary Navigation"
           >
             {PRIMARY_NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="whitespace-nowrap text-xs font-sans uppercase tracking-[0.22em] text-ink-aubergine/80 hover:text-mulberry-wine transition-colors duration-200 relative group py-1"
+                className="whitespace-nowrap text-[11px] xl:text-xs font-sans uppercase tracking-[0.18em] xl:tracking-[0.22em] text-ink-aubergine/80 hover:text-mulberry-wine transition-colors duration-200 relative group py-1"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-marigold-glow transition-all duration-300 group-hover:w-full" />
@@ -119,8 +122,8 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right: Actions for Desktop & Mobile */}
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          {/* Right: Actions for Desktop & Mobile with matching balance */}
+          <div className="flex items-center gap-2 sm:gap-3.5 shrink-0 ml-6 lg:ml-10 xl:ml-14">
             {/* Mobile WhatsApp Quick Action Icon */}
             <a
               href={whatsappDirectUrl}

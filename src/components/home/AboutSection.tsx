@@ -83,11 +83,11 @@ export default function AboutSection() {
         {/* Right Column: Brand Narrative & Atelier Values */}
         <div className="lg:col-span-7 flex flex-col justify-center">
           <span className="text-[10px] sm:text-xs font-sans tracking-[0.22em] sm:tracking-[0.25em] uppercase text-mulberry-wine font-medium">
-            The Hands Behind The Petals
+            The Hands Behind The Keepsakes &amp; Blooms
           </span>
 
           <h3 className="font-serif text-xl sm:text-3xl md:text-5xl text-ink-aubergine font-light mt-2 sm:mt-4 leading-tight">
-            Sculpting living art with intimacy and grandeur.
+            Handcrafting bespoke keepsakes &amp; living botanical art.
           </h3>
 
           <div className="mt-4 sm:mt-8 space-y-3.5 sm:space-y-5 text-ink-aubergine/80 font-sans font-light leading-relaxed text-xs sm:text-base md:text-lg">
@@ -113,7 +113,7 @@ export default function AboutSection() {
           {/* Editorial Signature Note */}
           <div className="mt-6 sm:mt-10 flex flex-wrap items-center justify-between text-xs font-sans text-ink-aubergine/60 gap-2">
             <span className="italic font-serif text-sm sm:text-base text-ink-aubergine">
-              &ldquo;Where every petal finds its voice.&rdquo;
+              &ldquo;Where every personalized creation tells an enduring story.&rdquo;
             </span>
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Sparkles className="w-3.5 h-3.5 text-marigold-glow" />
