@@ -258,6 +258,19 @@ export default function Footer() {
           </p>
           <p>{footer.credits}</p>
         </div>
+
+        {/* Developer Credit - Understated & Not Highlighted */}
+        <div className="pt-4 pb-1 text-center text-[10px] sm:text-[11px] font-sans tracking-wider text-butter-cream/35">
+          Developed by{" "}
+          <a
+            href="https://in.linkedin.com/in/jaydholariyaa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-butter-cream/70 transition-colors underline-offset-2 hover:underline"
+          >
+            Jay Dholariya
+          </a>
+        </div>
       </div>
     </footer>
   );

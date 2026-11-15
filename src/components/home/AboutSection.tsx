@@ -10,7 +10,7 @@ export default function AboutSection() {
   const { intro, brand } = SITE_CONTENT;
 
   return (
-    <section id="philosophy" className="relative py-16 sm:py-28 md:py-36 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
+    <section id="philosophy" className="relative pt-6 sm:pt-10 md:pt-14 pb-16 sm:pb-28 md:pb-36 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
       {/* Eyebrow Label */}
       <div className="flex items-center gap-3 mb-6 sm:mb-10">
         <span className="h-[1px] w-8 sm:w-12 bg-mulberry-wine/30" />

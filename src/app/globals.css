@@ -92,3 +92,33 @@ main, section {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(27, 18, 32, 0.35);
 }
+
+/* Toran Hanging Box Gentle Breeze Swaying Animation */
+@keyframes toranSway {
+  0% {
+    transform: rotate(-3.5deg);
+  }
+  50% {
+    transform: rotate(3.5deg);
+  }
+  100% {
+    transform: rotate(-3.5deg);
+  }
+}
+
+.animate-toran-sway-1 {
+  animation: toranSway 3.2s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.animate-toran-sway-2 {
+  animation: toranSway 2.7s ease-in-out infinite;
+  animation-delay: 0.5s;
+  transform-origin: top center;
+}
+
+.animate-toran-sway-3 {
+  animation: toranSway 3.5s ease-in-out infinite;
+  animation-delay: 1s;
+  transform-origin: top center;
+}

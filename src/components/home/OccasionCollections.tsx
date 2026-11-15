@@ -78,13 +78,23 @@ export default function OccasionCollections() {
     setActiveOccasionIndex((prev) => (prev === 0 ? occasions.length - 1 : prev - 1));
   }, [occasions.length]);
 
-  // Auto-center active tab in horizontal dock
+  // Auto-center active tab in horizontal dock (only scroll horizontal dock container, NEVER the window)
+  const isOccasionMountRef = useRef(true);
+
   useEffect(() => {
+    // Skip on initial page mount/refresh so window never jumps down
+    if (isOccasionMountRef.current) {
+      isOccasionMountRef.current = false;
+      return;
+    }
+
     if (activeTabRef.current && trackRef.current) {
-      activeTabRef.current.scrollIntoView({
+      const container = trackRef.current;
+      const tab = activeTabRef.current;
+      const scrollLeft = tab.offsetLeft - container.clientWidth / 2 + tab.clientWidth / 2;
+      container.scrollTo({
+        left: scrollLeft,
         behavior: "smooth",
-        inline: "center",
-        block: "nearest",
       });
     }
   }, [activeOccasionIndex]);
@@ -241,7 +251,7 @@ export default function OccasionCollections() {
         {/* Milestone Pill Buttons — Single Continuous Horizontal Reel (Zero Wrap, Smooth Scroll) */}
         <div
           ref={trackRef}
-          className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth pb-2 pt-1 w-full min-w-0 touch-pan-x"
+          className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-3 px-1 -my-1 w-full min-w-0 touch-pan-x"
         >
           {occasions.map((occ: OccasionItem, idx: number) => {
             const isActive = idx === activeOccasionIndex;
@@ -259,7 +269,7 @@ export default function OccasionCollections() {
                 }}
                 className={`relative shrink-0 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-sans tracking-[0.12em] uppercase transition-all duration-300 border flex items-center gap-2 ${
                   isActive
-                    ? "bg-ink-aubergine text-butter-cream border-ink-aubergine shadow-lg scale-[1.02] z-10"
+                    ? "bg-ink-aubergine text-butter-cream border-ink-aubergine shadow-sm z-10"
                     : "bg-white/85 text-ink-aubergine/75 border-ink-aubergine/15 hover:bg-white hover:text-ink-aubergine hover:border-ink-aubergine/30"
                 }`}
               >

@@ -1769,6 +1769,8 @@ export const SITE_CONTENT = {
     tagline: "An international floral atelier sculpting living poetry for extraordinary spaces.",
     copyrightNotice: `© ${new Date().getFullYear()} THE PETAL MUSE. All rights reserved.`,
     credits: "Creative Direction & Floral Design by Jensi Dholariya",
+    developerCredit: "Website Developed by Jay Dholariya",
+    developerUrl: "https://in.linkedin.com/in/jaydholariyaa",
   },
 
   // ---------------------------------------------------------------------

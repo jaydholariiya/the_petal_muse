@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/home/HeroSection";
+import EditorialTicker from "@/components/home/EditorialTicker";
 import AboutSection from "@/components/home/AboutSection";
 import BestsellersSection from "@/components/home/BestsellersSection";
 import CollectionsShowcase from "@/components/home/CollectionsShowcase";
@@ -35,6 +36,16 @@ const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), {
 export default function Home() {
   const [loaderComplete, setLoaderComplete] = useState(false);
 
+  // Guarantee that on initial mount or page refresh, the window starts at the top
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   const handleLoaderComplete = React.useCallback(() => {
     setLoaderComplete(true);
   }, []);
@@ -57,6 +68,9 @@ export default function Home() {
       <main className="relative z-10 flex flex-col min-h-screen overflow-x-hidden">
         {/* Dawn: Hero ("Flowers, reimagined.") — Core Essential */}
         <HeroSection />
+
+        {/* Endless Editorial Atelier Ribbon — Seamless Text Slider */}
+        <EditorialTicker />
 
         {/* Morning: Philosophy & About Jensi Dholariya — Core Essential */}
         <AboutSection />

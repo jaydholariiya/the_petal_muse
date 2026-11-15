@@ -67,6 +67,18 @@ export default function CollectionsShowcase() {
 
   useEffect(() => {
     setMounted(true);
+
+    const handleSelectCategory = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        setActiveCategoryId(customEvent.detail);
+        const el = document.getElementById("collections");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+    window.addEventListener("selectCategory", handleSelectCategory);
+    return () => window.removeEventListener("selectCategory", handleSelectCategory);
   }, []);
 
   // Smooth scroll 15 catalogs reel by offset
@@ -84,13 +96,23 @@ export default function CollectionsShowcase() {
     }
   };
 
-  // Auto-center the active category capsule in the reel
+  // Auto-center the active category capsule in the reel (only scroll reel container, NEVER the window)
+  const isCollectionsMountRef = useRef(true);
+
   useEffect(() => {
+    // Skip on initial page mount/refresh so window never jumps down
+    if (isCollectionsMountRef.current) {
+      isCollectionsMountRef.current = false;
+      return;
+    }
+
     if (activeItemRef.current && carouselRef.current) {
-      activeItemRef.current.scrollIntoView({
+      const container = carouselRef.current;
+      const item = activeItemRef.current;
+      const scrollLeft = item.offsetLeft - container.clientWidth / 2 + item.clientWidth / 2;
+      container.scrollTo({
+        left: scrollLeft,
         behavior: "smooth",
-        inline: "center",
-        block: "nearest",
       });
     }
   }, [activeCategoryId]);
@@ -324,7 +346,7 @@ export default function CollectionsShowcase() {
         {/* Single continuous horizontal track on desktop */}
         <div
           ref={carouselRef}
-          className="flex items-center gap-3 overflow-x-auto no-scrollbar scroll-smooth py-2 px-1 w-full min-w-0"
+          className="flex items-center gap-3 overflow-x-auto no-scrollbar scroll-smooth py-4 px-1.5 -my-2 w-full min-w-0"
         >
           {productCategories.map((cat, index) => {
             const isActive = activeCategoryId === cat.id;
@@ -345,8 +367,8 @@ export default function CollectionsShowcase() {
                 }}
                 className={`group relative flex-shrink-0 flex items-center gap-3 rounded-2xl p-2 pr-4 transition-all duration-300 text-left cursor-pointer border ${
                   isActive
-                    ? "bg-gradient-to-r from-ink-aubergine via-ink-aubergine to-[#3d182b] text-butter-cream border-marigold-glow/50 shadow-xl shadow-ink-aubergine/25 scale-[1.02] ring-2 ring-marigold-glow/50"
-                    : "bg-white/90 text-ink-aubergine/80 border-ink-aubergine/12 hover:bg-white hover:text-ink-aubergine hover:border-ink-aubergine/30 hover:shadow-md hover:-translate-y-0.5"
+                    ? "bg-gradient-to-r from-ink-aubergine via-ink-aubergine to-[#3d182b] text-butter-cream border-marigold-glow/80 shadow-md shadow-ink-aubergine/15 ring-1 ring-marigold-glow/40"
+                    : "bg-white/90 text-ink-aubergine/80 border-ink-aubergine/12 hover:bg-white hover:text-ink-aubergine hover:border-ink-aubergine/30 hover:shadow-sm"
                 }`}
               >
                 <div
