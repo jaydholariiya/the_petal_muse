@@ -192,6 +192,7 @@ export default function CollectionsShowcase() {
                 src={CATALOG_WORKS[activeCategoryId]?.[0]?.coverImage || currentCategory.imageUrl}
                 alt={currentCategory.name}
                 fill
+                sizes="44px"
                 className="object-cover"
               />
             </div>
@@ -250,7 +251,7 @@ export default function CollectionsShowcase() {
                       }`}
                     >
                       <div className="relative w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-white/20">
-                        <Image src={thumbnail} alt="" fill className="object-cover" />
+                        <Image src={thumbnail} alt="" fill sizes="32px" className="object-cover" />
                       </div>
                       <div className="min-w-0">
                         <span className="font-mono text-[8.5px] opacity-75 block">№ {String(index + 1).padStart(2, "0")}</span>
@@ -988,6 +989,7 @@ export default function CollectionsShowcase() {
                             alt={`${activeWorkItem.title} - Photo ${activeSlideIndex + 1}`}
                             fill
                             priority
+                            sizes="(max-width: 768px) 100vw, 80vw"
                             className="object-contain"
                           />
                         </motion.div>
@@ -1131,7 +1133,7 @@ export default function CollectionsShowcase() {
                               : "border-white/20 opacity-65"
                           }`}
                         >
-                          <Image src={img} alt="" fill className="object-cover" />
+                          <Image src={img} alt="" fill sizes="44px" className="object-cover" />
                           <span className="absolute bottom-0 inset-x-0 bg-black/85 text-[7px] font-sans text-center text-butter-cream py-0.2">
                             P{idx + 1}
                           </span>

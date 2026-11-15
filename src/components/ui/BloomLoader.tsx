@@ -12,12 +12,7 @@ export default function BloomLoader({ onComplete }: BloomLoaderProps) {
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window !== "undefined") {
-      return !sessionStorage.getItem("petalmuse_entered");
-    }
-    return true;
-  });
+  const [isVisible, setIsVisible] = useState(true);
   const [stage, setStage] = useState<"seed" | "orbit" | "bloom" | "reveal" | "wipe">("seed");
 
   useEffect(() => {

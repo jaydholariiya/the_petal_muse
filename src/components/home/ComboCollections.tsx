@@ -312,6 +312,7 @@ export default function ComboCollections() {
                       alt={activeModalCombo.title}
                       fill
                       priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-ink-aubergine via-transparent to-transparent opacity-85" />

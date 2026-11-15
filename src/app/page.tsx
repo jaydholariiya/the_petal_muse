@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import BloomLoader from "@/components/ui/BloomLoader";
-import CustomCursor from "@/components/ui/CustomCursor";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
-import FloralCanvas from "@/components/canvas/FloralCanvas";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
@@ -20,6 +19,15 @@ import ServicesSection from "@/components/home/ServicesSection";
 import InstagramJournal from "@/components/home/InstagramJournal";
 import ContactSection from "@/components/home/ContactSection";
 import Footer from "@/components/layout/Footer";
+
+// Dynamic imports with ssr: false for WebGL/Canvas and mouse cursor to prevent any hydration mismatch
+const FloralCanvas = dynamic(() => import("@/components/canvas/FloralCanvas"), {
+  ssr: false,
+});
+
+const CustomCursor = dynamic(() => import("@/components/ui/CustomCursor"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [loaderComplete, setLoaderComplete] = useState(false);
