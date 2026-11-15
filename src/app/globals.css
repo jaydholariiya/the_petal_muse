@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Night Garden (deep, luxurious) */
+  --ink-aubergine: #1B1220;
+  --midnight-forest: #10251F;
+  --mulberry-wine: #4A1F3D;
+
+  /* Petal tones */
+  --dusty-orchid: #B78AA8;
+  --apricot-blush: #F4B9A0;
+  --peony-rose: #E58FA0;
+  --coral-accent: #F16B5B;
+  --pale-lilac: #C9B9D9;
+
+  /* Garden greens */
+  --fern: #3F5A45;
+  --pistachio-sage: #B9C9A3;
+  --muted-jade: #668B78;
+  --soft-sage: #C6D3C5;
+
+  /* Light & glow */
+  --butter-cream: #FBF4E6;
+  --porcelain-white: #F7F7F0;
+  --marigold-glow: #E8A93B;
+  --pearl: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  max-width: 100%;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27, 18, 32, 0.15) transparent;
+}
+
+body {
+  background-color: var(--butter-cream);
+  color: var(--ink-aubergine);
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  max-width: 100vw;
+  overflow-x: hidden;
+  selection-background-color: var(--apricot-blush);
+  selection-color: var(--ink-aubergine);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #F4B9A0;
+  color: #1B1220;
+}
+
+/* Hide scrollbars for clean horizontal carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Subtle, refined neutral scrollbar (no bright purple bar) */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(27, 18, 32, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(27, 18, 32, 0.35);
+}
