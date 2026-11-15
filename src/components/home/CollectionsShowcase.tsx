@@ -1184,68 +1184,123 @@ export default function CollectionsShowcase() {
                   {/* Slide-Up Specifications Drawer */}
                   <AnimatePresence>
                     {showMobileSpecs && (
-                      <motion.div
-                        initial={{ opacity: 0, y: "100%" }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: "100%" }}
-                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="absolute inset-x-0 bottom-0 max-h-[82vh] bg-ink-aubergine/98 border-t border-white/20 rounded-t-3xl p-5 z-40 overflow-y-auto overscroll-contain shadow-2xl"
-                      >
-                        <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/15">
-                          <div className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow" />
-                            <span className="font-serif text-sm font-medium text-butter-cream">
-                              Atelier Specifications
-                            </span>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setShowMobileSpecs(false)}
-                            className="p-1.5 rounded-full bg-white/10 text-butter-cream/80 hover:text-white"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-
-                        {/* Specifications Grid */}
-                        {activeWorkItem.specifications && activeWorkItem.specifications.length > 0 && (
-                          <div className="grid grid-cols-2 gap-2 text-xs font-sans mb-3.5">
-                            {activeWorkItem.specifications.map((spec, i) => (
-                              <div key={i} className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex flex-col">
-                                <span className="text-[9px] uppercase tracking-wider text-butter-cream/50">
-                                  {spec.label}
-                                </span>
-                                <span className="font-medium text-butter-cream text-xs mt-0.5 truncate">
-                                  {spec.value}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Customization Options */}
-                        {activeWorkItem.customizationOptions && (
-                          <div className="space-y-1.5 mb-4 text-xs font-sans">
-                            <span className="text-[9.5px] uppercase font-sans tracking-widest text-marigold-glow font-semibold block mb-1">
-                              Bespoke Customization Options:
-                            </span>
-                            {activeWorkItem.customizationOptions.map((opt, i) => (
-                              <div key={i} className="flex items-start gap-2 text-butter-cream/85">
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                                <span>{opt}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        <button
-                          type="button"
+                      <>
+                        {/* Dark Backdrop Scrim (Tap to close) */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
                           onClick={() => setShowMobileSpecs(false)}
-                          className="w-full py-2.5 rounded-full bg-white/10 text-xs font-sans uppercase tracking-wider text-butter-cream text-center active:scale-95 transition-all"
+                          className="absolute inset-0 bg-black/80 backdrop-blur-md z-40"
+                        />
+
+                        {/* Solid Luxury Drawer (Opaque Aubergine Background) */}
+                        <motion.div
+                          initial={{ opacity: 0, y: "100%" }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: "100%" }}
+                          transition={{ type: "spring", damping: 28, stiffness: 320 }}
+                          style={{ backgroundColor: "#1A0E1C" }}
+                          className="absolute inset-x-0 bottom-0 max-h-[85vh] text-butter-cream border-t border-white/20 rounded-t-3xl p-5 sm:p-6 z-50 overflow-y-auto overscroll-contain shadow-[0_-25px_60px_rgba(0,0,0,0.95)]"
                         >
-                          Return to Full-Screen View
-                        </button>
-                      </motion.div>
+                          {/* Drawer Header */}
+                          <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-white/15">
+                            <div className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-marigold-glow animate-pulse" />
+                              <span className="font-serif text-base font-normal text-butter-cream tracking-wide">
+                                Atelier Specifications
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setShowMobileSpecs(false)}
+                              aria-label="Close specifications"
+                              className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-butter-cream border border-white/15 active:scale-90 transition-all"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+
+                          {/* Work Title & Category Summary */}
+                          <div className="mb-4 p-3 rounded-2xl bg-white/5 border border-white/10">
+                            <span className="text-[9px] uppercase font-sans tracking-[0.2em] text-marigold-glow font-semibold block">
+                              {activeWorkItem.categoryName}
+                            </span>
+                            <h4 className="font-serif text-base text-butter-cream font-light mt-0.5">
+                              {activeWorkItem.title}
+                            </h4>
+                            <p className="font-serif italic text-xs text-apricot-blush mt-0.5">
+                              &ldquo;{activeWorkItem.tagline}&rdquo;
+                            </p>
+                          </div>
+
+                          {/* Specifications Grid */}
+                          {activeWorkItem.specifications && activeWorkItem.specifications.length > 0 && (
+                            <div className="mb-4">
+                              <span className="text-[10px] uppercase font-sans tracking-widest text-marigold-glow font-semibold block mb-2">
+                                Piece Dimensions &amp; Architecture:
+                              </span>
+                              <div className="grid grid-cols-2 gap-2 text-xs font-sans">
+                                {activeWorkItem.specifications.map((spec, i) => (
+                                  <div
+                                    key={i}
+                                    className="p-3 rounded-xl bg-white/8 border border-white/15 flex flex-col justify-between"
+                                  >
+                                    <span className="text-[9px] uppercase font-sans tracking-wider text-marigold-glow/90 font-medium">
+                                      {spec.label}
+                                    </span>
+                                    <span className="font-medium text-butter-cream text-xs mt-1 leading-snug">
+                                      {spec.value}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Customization Options */}
+                          {activeWorkItem.customizationOptions && (
+                            <div className="mb-5 space-y-2 text-xs font-sans">
+                              <span className="text-[10px] uppercase font-sans tracking-widest text-marigold-glow font-semibold block mb-1">
+                                Bespoke Customization Options:
+                              </span>
+                              {activeWorkItem.customizationOptions.map((opt, i) => (
+                                <div
+                                  key={i}
+                                  className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5 text-butter-cream/90"
+                                >
+                                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                                  <span className="leading-snug">{opt}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Action Buttons */}
+                          <div className="space-y-2 pt-2 border-t border-white/15">
+                            <a
+                              href={buildWhatsAppUrl({
+                                occasion: activeWorkItem.categoryName,
+                                notes: `Hello Jensi! I am reviewing the atelier specifications for "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
+                              })}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-full py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl active:scale-95"
+                            >
+                              <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
+                              <span className="whitespace-nowrap">Order on WhatsApp</span>
+                            </a>
+
+                            <button
+                              type="button"
+                              onClick={() => setShowMobileSpecs(false)}
+                              className="w-full py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-xs font-sans uppercase tracking-wider text-butter-cream/80 text-center border border-white/15 active:scale-95 transition-all"
+                            >
+                              Return to Full-Screen View
+                            </button>
+                          </div>
+                        </motion.div>
+                      </>
                     )}
                   </AnimatePresence>
                 </div>
