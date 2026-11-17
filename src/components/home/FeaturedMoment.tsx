@@ -4,17 +4,24 @@ import React from "react";
 import Image from "next/image";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { SITE_CONTENT } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 
 export default function FeaturedMoment() {
   const { featuredCreation } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+
+  const imageUrl = settings["featured_imageUrl"] || featuredCreation.imageUrl;
+  const title = settings["featured_title"] || featuredCreation.title;
+  const subtitle = settings["featured_subtitle"] || featuredCreation.subtitle;
+  const description = settings["featured_description"] || featuredCreation.description;
 
   return (
     <section className="relative my-16 sm:my-24 md:my-32 overflow-hidden bg-ink-aubergine text-butter-cream py-16 sm:py-24 md:py-36">
       {/* Background Cinematic Artwork with Subtle Parallax */}
       <div className="absolute inset-0 opacity-40 mix-blend-luminosity">
         <Image
-          src={featuredCreation.imageUrl}
-          alt={featuredCreation.title}
+          src={imageUrl}
+          alt={title}
           fill
           sizes="100vw"
           className="object-cover object-center filter saturate-150"
@@ -36,15 +43,15 @@ export default function FeaturedMoment() {
           </div>
 
           <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-butter-cream leading-tight">
-            {featuredCreation.title}
+            {title}
           </h2>
 
           <p className="font-serif italic text-lg sm:text-xl md:text-2xl text-marigold-glow mt-1.5 sm:mt-2">
-            {featuredCreation.subtitle}
+            {subtitle}
           </p>
 
           <p className="mt-3.5 sm:mt-6 text-xs sm:text-base md:text-lg font-sans font-light text-butter-cream/80 max-w-xl leading-relaxed">
-            {featuredCreation.description}
+            {description}
           </p>
 
           <div className="mt-6 sm:mt-8">

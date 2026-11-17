@@ -14,10 +14,39 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { SITE_CONTENT, BestsellerProduct } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl } from "@/lib/utils";
 
+function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85") {
+  if (!url || typeof url !== "string") return fallback;
+  const trimmed = url.trim();
+  if (trimmed.includes("behance.net/gallery/")) return fallback;
+  return trimmed;
+}
+
 export default function BestsellersSection() {
-  const { bestsellersSection } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+  let bestsellersSection = SITE_CONTENT.bestsellersSection;
+  if (settings["bestsellers_data"]) {
+    try {
+      const parsed = JSON.parse(settings["bestsellers_data"]);
+      if (parsed && Array.isArray(parsed.products)) {
+        bestsellersSection = {
+          ...bestsellersSection,
+          ...parsed,
+          products: parsed.products,
+        };
+      } else if (Array.isArray(parsed)) {
+        bestsellersSection = {
+          ...bestsellersSection,
+          products: parsed,
+        };
+      }
+    } catch {
+      bestsellersSection = SITE_CONTENT.bestsellersSection;
+    }
+  }
+
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
   const [activeProduct, setActiveProduct] = useState<BestsellerProduct | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -174,7 +203,7 @@ export default function BestsellersSection() {
                     className={`relative w-full overflow-hidden bg-ink-aubergine/5 shadow-lg group-hover:shadow-2xl transition-all duration-700 rounded-3xl ${aspectClass}`}
                   >
                     <Image
-                      src={product.imageUrl}
+                      src={getSafeImageUrl(product.imageUrl)}
                       alt={product.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -272,7 +301,7 @@ export default function BestsellersSection() {
                   {/* Left Column: Full Artwork Photography */}
                   <div className="relative w-full md:w-1/2 aspect-[4/5] md:aspect-auto min-h-[260px] md:min-h-[440px] shrink-0 bg-ink-aubergine/40">
                     <Image
-                      src={activeProduct.imageUrl}
+                      src={getSafeImageUrl(activeProduct.imageUrl)}
                       alt={activeProduct.title}
                       fill
                       priority

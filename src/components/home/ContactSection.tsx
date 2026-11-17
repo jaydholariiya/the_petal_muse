@@ -5,10 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Instagram, Mail, MapPin, Send, CheckCircle2, Sparkles, Phone } from "lucide-react";
 import confetti from "canvas-confetti";
 import { SITE_CONTENT } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl, buildMailtoUrl } from "@/lib/utils";
 
 export default function ContactSection() {
   const { contact, brand } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+
+  const whatsappNumber = settings["brand_whatsapp"] || brand.whatsappNumber;
+  const contactEmail = settings["contact_email"] || brand.contactEmail;
+  const locationDisplay = settings["contact_location"] || brand.locationDisplay;
+  const instagramUrl = settings["brand_instagram"] || brand.instagramUrl;
+  const instagramHandle = settings["brand_instagram_handle"] || brand.instagramHandle;
 
   // Form State
   const [formData, setFormData] = useState({
@@ -307,7 +315,7 @@ export default function ContactSection() {
 
             {/* Instagram Card */}
             <a
-              href={brand.instagramUrl}
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="p-4 sm:p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-marigold-glow/50 transition-all duration-300 flex items-start gap-3.5 sm:gap-4 group active:scale-[0.99]"
@@ -320,7 +328,7 @@ export default function ContactSection() {
                   Instagram Direct
                 </span>
                 <p className="font-serif text-base sm:text-lg text-butter-cream group-hover:text-marigold-glow transition-colors">
-                  {brand.instagramHandle}
+                  {instagramHandle}
                 </p>
                 <p className="text-[11px] sm:text-xs text-butter-cream/70 font-sans mt-0.5">
                   Daily atelier stories &amp; recent captures
@@ -338,7 +346,7 @@ export default function ContactSection() {
                   Official Email
                 </span>
                 <p className="font-serif text-sm sm:text-base text-butter-cream">
-                  {brand.contactEmail}
+                  {contactEmail}
                 </p>
                 <p className="text-[11px] sm:text-xs text-butter-cream/70 font-sans mt-0.5">
                   Proposals &amp; editorial commissions
@@ -356,7 +364,7 @@ export default function ContactSection() {
                   Studio Location
                 </span>
                 <p className="font-serif text-sm sm:text-base text-butter-cream">
-                  {brand.locationDisplay}
+                  {locationDisplay}
                 </p>
                 <p className="text-[11px] sm:text-xs text-butter-cream/70 font-sans mt-0.5">
                   Available for destination events globally

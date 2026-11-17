@@ -1,0 +1,18 @@
+CREATE OR ALTER PROCEDURE sp_GetWorkMediaByWorkId
+    @WorkId NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM WorkMedia WHERE WorkId = @WorkId ORDER BY DisplayOrder ASC;
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_DeleteWorkMediaByWorkId
+    @WorkId NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DELETE FROM WorkMedia WHERE WorkId = @WorkId;
+END;
+GO
+

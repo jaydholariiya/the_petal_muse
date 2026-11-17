@@ -16,13 +16,13 @@ export interface CatalogWorkItem {
 
 export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   // -------------------------------------------------------------------------
-  // 1. EDITORIAL KEEPSAKE MAGAZINES (12 Creations from Atelier Covers)
+  // 1. A4 MAGAZINE
   // -------------------------------------------------------------------------
   "cat-01": [
     {
       id: "mag-01",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse Luxury Bridal Edition",
       tagline: "Couture Wedding Ceremony & Vows Publication",
       badge: "Signature Couture",
@@ -52,7 +52,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-02",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Floral Memory Collection",
       tagline: "Archival Dating & Relationship Timeline Edition",
       badge: "Patron Favorite",
@@ -82,7 +82,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-03",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "Blooms That Stay - Keepsake Story",
       tagline: "Bridal Vows & Everlasting Memory Magazine",
       badge: "Bridal Heirloom",
@@ -112,7 +112,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-04",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "Botanical Elegance Magazine",
       tagline: "Nature-Inspired Couple Story with Pressed Flora Graphics",
       badge: "Artisanal Edition",
@@ -142,7 +142,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-05",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse Creating Beauty",
       tagline: "Atelier Masterpiece Cover & Milestone Narrative",
       badge: "Atelier Classic",
@@ -172,7 +172,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-06",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse Magazine Cover (Wedding Edition)",
       tagline: "Ceremony Chronicle & Family Keepsake",
       badge: "Wedding Edition",
@@ -202,7 +202,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-07",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse Elegant Floral Cover",
       tagline: "Pastel Botanical Harmony & Romance Narrative",
       badge: "Floral Elegance",
@@ -232,7 +232,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-08",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse Luxury Floral Magazine",
       tagline: "Grand Wedding Gala & High-Fashion Spread",
       badge: "VIP Edition",
@@ -262,7 +262,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-09",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "A Curated Floral Magazine Edition",
       tagline: "Modern Minimalist Couple Story in Print",
       badge: "Minimalist Modern",
@@ -292,7 +292,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-10",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse A Botanical Magazine Cover",
       tagline: "Heirloom Garden Stories & Poetic Keepsake",
       badge: "Heirloom Edition",
@@ -322,7 +322,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-11",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Petal Muse Elegant Floral Magazine Cover",
       tagline: "Fine Art Photography Edition with Gold Foil",
       badge: "Fine Art Series",
@@ -352,7 +352,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "mag-12",
       categoryId: "cat-01",
-      categoryName: "Editorial Keepsake Magazines",
+      categoryName: "A4 Magazine",
       title: "The Baby Milestone Edition Mini Magazine",
       tagline: "Newborn Arrival, Tiny Footprints & Parenthood Memories",
       badge: "Newborn Keepsake",
@@ -382,387 +382,13 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   ],
 
   // -------------------------------------------------------------------------
-  // 2. BESPOKE ARTISANAL & BRIDAL BOUQUETS
+  // 2. PIPE CLEANER BOUQUET
   // -------------------------------------------------------------------------
   "cat-02": [
     {
-      id: "bq-01",
-      categoryId: "cat-02",
-      categoryName: "Bespoke Artisanal & Bridal Bouquets",
-      title: "The Couture Heirloom Bridal Wedding Bouquet",
-      tagline: "Ecuadorian Garden Roses & Butterfly Ranunculus in Raw Silk",
-      badge: "Bridal Atelier Masterpiece",
-      coverImage: "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "Crafted exclusively for wedding ceremonies and bridal portraits. Hand-tied garden roses, trailing sweet peas, and butterfly ranunculus bound in imported raw silk ribbon with a heated botanical wax crest.",
-      customizationOptions: [
-        "Color palette customized to complement wedding lehenga or gown",
-        "Choice of living fresh dawn stems or 3-year everlasting preserved blooms",
-        "Custom silk ribbon hue with hand-frayed tails",
-        "Heated wax monogram seal and handwritten card",
-      ],
-      suitableOccasions: ["Weddings", "Receptions", "Bridal Portraits", "Grand Anniversaries"],
-      specifications: [
-        { label: "Stems", value: "35+ Heirloom Botanical Stems" },
-        { label: "Ribbon", value: "Imported Raw Silk Velvet Ribbon" },
-        { label: "Seal", value: "Custom Heated Botanical Crest" },
-      ],
-    },
-    {
-      id: "bq-02",
-      categoryId: "cat-02",
-      categoryName: "Bespoke Artisanal & Bridal Bouquets",
-      title: "Pastel Meadow Reverie Bouquet",
-      tagline: "Soft Lilac Delphinium, Blush Peonies & Dancing Sweet Peas",
-      badge: "Romantic Favorite",
-      coverImage: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "An airy, romantic bouquet evocative of a sunlit English garden. Wrapped in archival coffee-toned parchment and finished with delicate deckle-edge notes.",
-      customizationOptions: [
-        "Stem selection adjusted to your favorite pastel blooms",
-        "Personalized calligraphy letter tied with silk twine",
-        "Available in Petite, Standard, and Grand Atelier scales",
-      ],
-      suitableOccasions: ["Anniversaries", "Milestone Birthdays", "Valentine's Day"],
-      specifications: [
-        { label: "Scale", value: "Standard Atelier Bouquet" },
-        { label: "Wrapping", value: "Textured Archival Paper" },
-        { label: "Freshness", value: "Hand-Cut Dawn Selection" },
-      ],
-    },
-    {
-      id: "bq-03",
-      categoryId: "cat-02",
-      categoryName: "Bespoke Artisanal & Bridal Bouquets",
-      title: "Velvet Dawn Scarlet Rose Cascade",
-      tagline: "Deep Crimson Garden Roses & Preserved Seed Pods",
-      badge: "Classic Romance",
-      coverImage: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "Velvety scarlet garden roses paired with toffee carnations, dried eucalyptus, and dark chocolate wrapping. The ultimate dramatic statement of passion.",
-      customizationOptions: [
-        "Choice of rose stem count: 24, 50, or 100 roses",
-        "Personalized wax monogram crest with recipient's initial",
-        "Handwritten deckle-edge love letter included",
-      ],
-      suitableOccasions: ["Valentine's Day", "Proposals", "10th & 25th Anniversaries"],
-      specifications: [
-        { label: "Roses", value: "Premium Ecuadorian Stems" },
-        { label: "Packaging", value: "Signature Black Velvet & Gold Wrap" },
-        { label: "Handover", value: "Temperature-Controlled Delivery" },
-      ],
-    },
-    {
-      id: "bq-04",
-      categoryId: "cat-02",
-      categoryName: "Bespoke Artisanal & Bridal Bouquets",
-      title: "The Preserved Everlasting Floral Cloud",
-      tagline: "3-Year Everlasting Botanical Symphony in Double Silk",
-      badge: "Everlasting Heirloom",
-      coverImage: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "100% natural blooms preserved at their peak bloom through organic botanical dehydration. Retains natural softness, scent, and beauty for over 3 years without water.",
-      customizationOptions: [
-        "Palette selection: Ivory Cream, Dried Cappuccino, Dusty Lilac",
-        "Keepsake glass cylinder vase option for home display",
-        "Archival milestone inscription tag",
-      ],
-      suitableOccasions: ["Home Decor", "Long-Distance Love", "Keepsake Gifting"],
-      specifications: [
-        { label: "Lifespan", value: "3+ Years Without Water" },
-        { label: "Care", value: "Zero Maintenance / Keep Away from Direct Sun" },
-        { label: "Packaging", value: "Couture Gift Box with Satin Handle" },
-      ],
-    },
-  ],
-
-  // -------------------------------------------------------------------------
-  // 3. BOTANICAL & BABY FOOTPRINT FRAMES
-  // -------------------------------------------------------------------------
-  "cat-03": [
-    {
-      id: "frm-01",
-      categoryId: "cat-03",
-      categoryName: "Botanical & Baby Footprint Frames",
-      title: "The Newborn Baby Footprint Botanical Frame",
-      tagline: "Baby's Tiny Footprint Sealed in Real Dried Blooms & Gold Stats",
-      badge: "Newborn Keepsake Favorite",
-      coverImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Preserve the fleeting miracle of your baby's earliest days. Your newborn baby's authentic clay or ink footprint is surrounded by pressed baby's breath, miniature rosebuds, and gilded gold birth statistics (date, time, weight).",
-      customizationOptions: [
-        "Clay cast or ink footprint integration from your hospital stamp",
-        "Baby full name & birth stats hand-lettered in 24k gold calligraphy",
-        "Solid natural teakwood, white nursery lacquer, or antique brass frame",
-        "Choice of pressed floral palette (Pastel Yellow, Blush Pink, Cloud Blue, Ivory)",
-      ],
-      suitableOccasions: ["Baby Welcome", "1st Birthday", "Baby Shower Gift", "New Parents Milestone"],
-      specifications: [
-        { label: "Glass", value: "Double Museum-Grade UV Protective Glass" },
-        { label: "Frame Wood", value: "Solid Hand-Turned Teakwood" },
-        { label: "Size", value: "10 x 12 Inches Tabletop & Wall Mount" },
-      ],
-    },
-    {
-      id: "frm-02",
-      categoryId: "cat-03",
-      categoryName: "Botanical & Baby Footprint Frames",
-      title: "The Floating Double-Glass Couple Wedding Frame",
-      tagline: "Bridal Bouquet Petals Suspended Around Your Ceremony Portrait",
-      badge: "Heirloom Keepsake",
-      coverImage: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Suspends your cherished couple photograph weightlessly between two panes of museum glass, enveloped by hand-pressed flowers that will remain vibrant for decades.",
-      customizationOptions: [
-        "High-definition archival photo printing on metallic luster paper",
-        "Dried floral color temperature matching your home interior",
-        "Gilded anniversary date calligraphy inscription",
-      ],
-      suitableOccasions: ["Weddings", "1st to 25th Anniversaries", "Romantic Bedroom Decor"],
-      specifications: [
-        { label: "Structure", value: "Floating Double-Glass" },
-        { label: "Floral Care", value: "Organic Pressing / Sealed Against Air" },
-        { label: "Dimensions", value: "8 x 10 or 12 x 15 Inches" },
-      ],
-    },
-    {
-      id: "frm-03",
-      categoryId: "cat-03",
-      categoryName: "Botanical & Baby Footprint Frames",
-      title: "The Minimalist Pressed Fern & Larkspur Brass Frame",
-      tagline: "Geometric Solder Brass Frame with Wild Botanical Specimens",
-      badge: "Modern Botanical",
-      coverImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Handcrafted brass frame sealed with lead-free solder. Houses delicate pressed ferns, white larkspur florets, and gold foil text with timeless botanical clarity.",
-      customizationOptions: [
-        "Choice of brass finish: Brushed Antique Gold or Modern Matte Black",
-        "Custom wedding vow or anniversary mantra calligraphy",
-        "Hanging chain or easel back display configuration",
-      ],
-      suitableOccasions: ["Housewarming", "Anniversary Gifts", "Modern Interior Decor"],
-      specifications: [
-        { label: "Frame Metal", value: "Hand-Soldered Pure Brass" },
-        { label: "Weight", value: "750 Grams" },
-        { label: "Packaging", value: "Padded Wooden Gift Box" },
-      ],
-    },
-  ],
-
-  // -------------------------------------------------------------------------
-  // 4. ARTISAN CHOCOLATE BOUQUETS
-  // -------------------------------------------------------------------------
-  "cat-04": [
-    {
-      id: "choc-01",
-      categoryId: "cat-04",
-      categoryName: "Artisan Chocolate Bouquets",
-      title: "The 24-Ferrero Golden Bloom Bouquet",
-      tagline: "Golden Ferrero Rocher Spheres Nestled in Scarlet Ecuadorian Roses",
-      badge: "Sweet Bestseller",
-      coverImage: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "24 imported golden Ferrero Rocher truffles sculpted into floral stems, intertwined with fresh red garden roses and wrapped in matte espresso archival paper.",
-      customizationOptions: [
-        "Truffle count selection: 16, 24, or 36 chocolates",
-        "Rose color preference: Crimson Red, Champagne Ivory, or Peach Glow",
-        "Hand-stamped wax monogram crest on ribbon tails",
-      ],
-      suitableOccasions: ["Valentine's Day", "Birthdays", "Proposal Sweets", "Festive Surprises"],
-      specifications: [
-        { label: "Chocolates", value: "24 Imported Ferrero Rocher" },
-        { label: "Blooms", value: "Fresh Ecuadorian Garden Roses" },
-        { label: "Ribbon", value: "Silk Velvet Tied Monogram" },
-      ],
-    },
-    {
-      id: "choc-02",
-      categoryId: "cat-04",
-      categoryName: "Artisan Chocolate Bouquets",
-      title: "Lindt Swiss Truffle & Blush Peony Bouquet",
-      tagline: "Smooth Melting Lindt Lindor Balls with Apricot Garden Roses",
-      badge: "Gourmet Luxury",
-      coverImage: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "An irresistible pairing of smooth melting Swiss Lindt Lindor truffles and sweet-scented blush roses wrapped in butter-cream parchment.",
-      customizationOptions: [
-        "Lindt chocolate flavors: Milk, Dark 70%, White Vanilla, Salted Caramel",
-        "Handwritten deckle-edge note card tucked inside",
-        "Silk chiffon ribbon bow finish",
-      ],
-      suitableOccasions: ["Mother's Day", "Best Friend's Birthday", "Congratulations"],
-      specifications: [
-        { label: "Chocolates", value: "20 Swiss Lindt Lindor Stems" },
-        { label: "Wrapper", value: "Water-Resistant Archival Paper" },
-        { label: "Freshness", value: "Chilled Temperature Transit" },
-      ],
-    },
-  ],
-
-  // -------------------------------------------------------------------------
-  // 5. THREE-PART LUXURY HAMPERS (Men, Women & Dry Fruits)
-  // -------------------------------------------------------------------------
-  "cat-05": [
-    {
-      id: "hmp-01",
-      categoryId: "cat-05",
-      categoryName: "Three-Part Luxury Hampers",
-      title: "Men's Luxury Grooming & Cologne Hamper",
-      tagline: "Handcrafted Leather Valet, Fine Cologne, Dark Chocolates & Wax Letter",
-      badge: "Men's Executive Suite",
-      coverImage: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Designed specifically for the discerning man. Housed in a rigid midnight emerald velvet box with gilded calligraphy, featuring artisan grooming essentials, luxury cologne, dark hazelnut pralines, and a wax-sealed card.",
-      customizationOptions: [
-        "Gilded recipient name hand-lettered on exterior box lid",
-        "Selection of men's eau de parfum scent profile",
-        "Custom milestone letter with wax monogram seal",
-      ],
-      suitableOccasions: ["Husband's Birthday", "Groomsmen Keepsake", "Father's Day", "Corporate Milestone"],
-      specifications: [
-        { label: "Box Material", value: "Rigid Wood Board with Emerald Velvet" },
-        { label: "Hardware", value: "Brushed Antique Brass Latch" },
-        { label: "Personalization", value: "Hand-Gilded Lid Name Calligraphy" },
-      ],
-    },
-    {
-      id: "hmp-02",
-      categoryId: "cat-05",
-      categoryName: "Three-Part Luxury Hampers",
-      title: "Women's Indulgent Pampering & Rose Hamper",
-      tagline: "Preserved Garden Roses, Soy Candle, French Bath Salts & Silk Scrunchie",
-      badge: "Women's Luxury Suite",
-      coverImage: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "An indulgent sensory spa experience. Scented hand-poured soy candle with rose notes, French lavender bath salts, pure mulberry silk eye mask and scrunchie, preserved floral bouquet, and gourmet chocolates.",
-      customizationOptions: [
-        "Box velvet hue: Mulberry Wine, Rose Quartz, or Sand Ivory",
-        "Custom soy candle fragrance (Vanilla Rose, Wild Jasmine, Sandalwood Amber)",
-        "Gilded name personalization on lid",
-      ],
-      suitableOccasions: ["Wife's Birthday", "Bridal Shower", "Anniversary Surprise", "Mother's Day"],
-      specifications: [
-        { label: "Box Size", value: "30 x 22 x 12 cm Rigid Velvet Box" },
-        { label: "Candle", value: "Hand-Poured Soy Wax (50hr Burn)" },
-        { label: "Inclusions", value: "7 Curated Luxury Elements" },
-      ],
-    },
-    {
-      id: "hmp-03",
-      categoryId: "cat-05",
-      categoryName: "Three-Part Luxury Hampers",
-      title: "Royal Festive Afghan Dry Fruit & Gold Hamper",
-      tagline: "Imported Jumbo Almonds, Afghan Pistachios, Stuffed Dates & 24k Gold Leaf",
-      badge: "Royal Festive Reserve",
-      coverImage: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "The royal gifting tradition elevated. Features 6 compartments of premium Afghan dry fruits: jumbo Mamra almonds, green Iranian pistachios, cashew nuts, walnut halves, stuffed Medjool dates with pistachios, and pure saffron raw honey.",
-      customizationOptions: [
-        "Custom dry fruit combination selection (up to 6 varieties)",
-        "Gilded festive blessing card with family name",
-        "Rich maroon or royal navy velvet box with gold foil latch",
-      ],
-      suitableOccasions: ["Diwali Gifting", "Wedding In-Laws Gifts", "Corporate VIPs", "Grand Housewarming"],
-      specifications: [
-        { label: "Dry Fruits Weight", value: "1.2 kg Premium Hand-Sorted Nuts" },
-        { label: "Jars", value: "Heavy Glass Jars with Gold Lids" },
-        { label: "Box", value: "Handcrafted Velvet Keepsake Case" },
-      ],
-    },
-  ],
-
-  // -------------------------------------------------------------------------
-  // 6. TACTILE PIPE CLEANER BOUQUETS, KEYCHAINS & FRAMES
-  // -------------------------------------------------------------------------
-  "cat-06": [
-    {
       id: "pipe-01",
-      categoryId: "cat-06",
-      categoryName: "Tactile Pipe Cleaner Bouquets, Keychains & Frames",
+      categoryId: "cat-02",
+      categoryName: "Pipe Cleaner bouquet",
       title: "Everlasting Pipe Cleaner Tulip & Daisy Bouquet",
       tagline: "3D Hand-Sculpted Chenille Blooms Bound with Satin Ribbon",
       badge: "Viral Studio Favorite",
@@ -790,8 +416,8 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
     {
       id: "pipe-02",
-      categoryId: "cat-06",
-      categoryName: "Tactile Pipe Cleaner Bouquets, Keychains & Frames",
+      categoryId: "cat-02",
+      categoryName: "Pipe Cleaner bouquet",
       title: "Handmade Floral Chenille Keychains & Bag Charms",
       tagline: "Adorable Miniature Everlasting Flower Charms for Handbags & Keys",
       badge: "Cute Daily Companion",
@@ -819,8 +445,8 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
     {
       id: "pipe-03",
-      categoryId: "cat-06",
-      categoryName: "Tactile Pipe Cleaner Bouquets, Keychains & Frames",
+      categoryId: "cat-02",
+      categoryName: "Pipe Cleaner bouquet",
       title: "Kitchen & Dining Counter Chenille Floral Cloche",
       tagline: "Miniature Glass Cloche with Everlasting Velvet Blooms for Tables",
       badge: "Kitchen & Home Joy",
@@ -849,141 +475,200 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   ],
 
   // -------------------------------------------------------------------------
-  // 7. ATELIER BOTANICAL DESK DECOR
+  // 3. CHOLOCATE BOUQUET
   // -------------------------------------------------------------------------
-  "cat-07": [
+  "cat-03": [
     {
-      id: "desk-01",
-      categoryId: "cat-07",
-      categoryName: "Atelier Botanical Desk Decor",
-      title: "The Enchanted Glass Botanical Cloche",
-      tagline: "Preserved Delphinium, Rosebuds & Lichen Under Glass Dome",
-      badge: "Workspace Muse",
-      coverImage: "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1200&q=85",
+      id: "choc-01",
+      categoryId: "cat-03",
+      categoryName: "Cholocate bouquet",
+      title: "The 24-Ferrero Golden Bloom Bouquet",
+      tagline: "Golden Ferrero Rocher Spheres Nestled in Scarlet Ecuadorian Roses",
+      badge: "Sweet Bestseller",
+      coverImage: "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=1200&q=85",
       images: [
-        "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&w=1200&q=85",
       ],
       videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "Miniature botanical fairy tale encased in blown glass. Preserved everlasting florals remain colorful and fresh forever without sunlight or water, bringing grounding calm to work desks.",
+      description: "24 imported golden Ferrero Rocher truffles sculpted into floral stems, intertwined with fresh red garden roses and wrapped in matte espresso archival paper.",
       customizationOptions: [
-        "Engraved miniature brass plate with custom date or quote",
-        "Wood base material: Walnut Wood or Brushed Antique Brass",
-        "Integrated botanical essential oil fragrance dropper option",
+        "Truffle count selection: 16, 24, or 36 chocolates",
+        "Rose color preference: Crimson Red, Champagne Ivory, or Peach Glow",
+        "Hand-stamped wax monogram crest on ribbon tails",
       ],
-      suitableOccasions: ["New Job", "Promotion", "Self-Care", "Study Desk"],
+      suitableOccasions: ["Valentine's Day", "Birthdays", "Proposal Sweets", "Festive Surprises"],
       specifications: [
-        { label: "Glass", value: "Clear Bell Jar Cloche" },
-        { label: "Base", value: "Turned Walnut Wood" },
-        { label: "Longevity", value: "5+ Years Preserved" },
+        { label: "Chocolates", value: "24 Imported Ferrero Rocher" },
+        { label: "Blooms", value: "Fresh Ecuadorian Garden Roses" },
+        { label: "Ribbon", value: "Silk Velvet Tied Monogram" },
       ],
     },
     {
-      id: "desk-02",
-      categoryId: "cat-07",
-      categoryName: "Atelier Botanical Desk Decor",
-      title: "Crystal Floral Resin Cube Paperweight & Ikebana Dish",
-      tagline: "Solid Crystal Acrylic Cube Freezing Real Petals & Golden Flakes",
-      badge: "Artisan Sculpture",
-      coverImage: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
+      id: "choc-02",
+      categoryId: "cat-03",
+      categoryName: "Cholocate bouquet",
+      title: "Lindt Swiss Truffle & Blush Peony Bouquet",
+      tagline: "Smooth Melting Lindt Lindor Balls with Apricot Garden Roses",
+      badge: "Gourmet Luxury",
+      coverImage: "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=85",
       images: [
-        "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
       ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Precision-cast optical crystal resin cube embedding genuine buttercups, ferns, and floating gold leaf. Functions as a weighty desk paperweight and meditation piece.",
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "An irresistible pairing of smooth melting Swiss Lindt Lindor truffles and sweet-scented blush roses wrapped in butter-cream parchment.",
       customizationOptions: [
-        "Specimen flower choice: Buttercup, Hydrangea, or Mini Daisy",
-        "Bottom laser engraving with personalized motto or anniversary",
-        "Optional velvet desk cushion included",
+        "Lindt chocolate flavors: Milk, Dark 70%, White Vanilla, Salted Caramel",
+        "Handwritten deckle-edge note card tucked inside",
+        "Silk chiffon ribbon bow finish",
       ],
-      suitableOccasions: ["Executive Gifting", "Desk Styling", "Graduation Commemoration"],
+      suitableOccasions: ["Mother's Day", "Best Friend's Birthday", "Congratulations"],
       specifications: [
-        { label: "Material", value: "Optical Clear Resin & 24k Foil" },
-        { label: "Dimensions", value: "6.5cm x 6.5cm Solid Cube" },
-        { label: "Finish", value: "Diamond Hand-Polished Bevels" },
+        { label: "Chocolates", value: "20 Swiss Lindt Lindor Stems" },
+        { label: "Wrapper", value: "Water-Resistant Archival Paper" },
+        { label: "Freshness", value: "Chilled Temperature Transit" },
       ],
     },
   ],
 
   // -------------------------------------------------------------------------
-  // 8. REAL PRESSED FLOWER MOBILE COVERS
+  // 4. BRIDAL BOUQUET
   // -------------------------------------------------------------------------
-  "cat-08": [
+  "cat-04": [
     {
-      id: "mob-01",
-      categoryId: "cat-08",
-      categoryName: "Real Pressed Flower Mobile Covers",
-      title: "Golden Ranunculus & Wild Fern Crystal Case",
-      tagline: "Real Pressed Garden Petals & 24k Gold Leaf in Clear Resin",
-      badge: "Wearable Art",
-      coverImage: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=85",
+      id: "bq-01",
+      categoryId: "cat-04",
+      categoryName: "bridal bouquet",
+      title: "The Couture Heirloom Bridal Wedding Bouquet",
+      tagline: "Ecuadorian Garden Roses & Butterfly Ranunculus in Raw Silk",
+      badge: "Bridal Atelier Masterpiece",
+      coverImage: "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
       images: [
-        "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
       ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Every case is a 1-of-1 botanical original. Real garden petals, ferns, and genuine 24k gold leaf flakes are embedded in yellowing-resistant crystal epoxy resin with shockproof sides.",
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "Crafted exclusively for wedding ceremonies and bridal portraits. Hand-tied garden roses, trailing sweet peas, and butterfly ranunculus bound in imported raw silk ribbon with a heated botanical wax crest.",
       customizationOptions: [
-        "Compatible with iPhone (11-16 Pro Max), Samsung Galaxy, OnePlus",
-        "Personalized name or initials written in gold calligraphy",
-        "Floral palette themes: Peach Blossom, Midnight Violet, Forest Fern",
+        "Color palette customized to complement wedding lehenga or gown",
+        "Choice of living fresh dawn stems or 3-year everlasting preserved blooms",
+        "Custom silk ribbon hue with hand-frayed tails",
+        "Heated wax monogram seal and handwritten card",
       ],
-      suitableOccasions: ["Birthday Treats", "BFF Gifts", "Bridal Party Keepsakes"],
+      suitableOccasions: ["Weddings", "Receptions", "Bridal Portraits", "Grand Anniversaries"],
       specifications: [
-        { label: "Protection", value: "Military Drop-Tested TPU Bumper" },
-        { label: "Resin", value: "Anti-Yellowing UV Resistant Resin" },
-        { label: "Art", value: "100% Genuine Pressed Garden Flora" },
+        { label: "Stems", value: "35+ Heirloom Botanical Stems" },
+        { label: "Ribbon", value: "Imported Raw Silk Velvet Ribbon" },
+        { label: "Seal", value: "Custom Heated Botanical Crest" },
       ],
     },
     {
-      id: "mob-02",
-      categoryId: "cat-08",
-      categoryName: "Real Pressed Flower Mobile Covers",
-      title: "Botanical Queen Anne's Lace & Larkspur Case",
-      tagline: "Ethereal Pressed White Florets & Preserved Delphinium Petals",
-      badge: "Couture Case",
-      coverImage: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85",
+      id: "bq-02",
+      categoryId: "cat-04",
+      categoryName: "bridal bouquet",
+      title: "Pastel Meadow Reverie Bouquet",
+      tagline: "Soft Lilac Delphinium, Blush Peonies & Dancing Sweet Peas",
+      badge: "Romantic Favorite",
+      coverImage: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
       images: [
-        "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85",
       ],
       videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "Delicate lace florets floating alongside pastel purple larkspur petals, finished with silver leaf flakes and edge-to-edge camera protection bezel.",
+      description: "An airy, romantic bouquet evocative of a sunlit English garden. Wrapped in archival coffee-toned parchment and finished with delicate deckle-edge notes.",
       customizationOptions: [
-        "Select case base: Translucent Frosted or Ultra-Clear Glassy",
-        "Silver or Gold leaf speckles customization",
-        "Custom phone model bespoke mold sizing",
+        "Stem selection adjusted to your favorite pastel blooms",
+        "Personalized calligraphy letter tied with silk twine",
+        "Available in Petite, Standard, and Grand Atelier scales",
       ],
-      suitableOccasions: ["Daily Lifestyle Aesthetic", "Matching Bridesmaid Gifts"],
+      suitableOccasions: ["Anniversaries", "Milestone Birthdays", "Valentine's Day"],
       specifications: [
-        { label: "Bumper", value: "Shock-Absorbing Air-Cushion Edges" },
-        { label: "Flora", value: "Genuine Pressed Queen Anne's Lace" },
-        { label: "Clarity", value: "99.8% High-Refraction Crystal Resin" },
+        { label: "Scale", value: "Standard Atelier Bouquet" },
+        { label: "Wrapping", value: "Textured Archival Paper" },
+        { label: "Freshness", value: "Hand-Cut Dawn Selection" },
+      ],
+    },
+    {
+      id: "bq-03",
+      categoryId: "cat-04",
+      categoryName: "bridal bouquet",
+      title: "Velvet Dawn Scarlet Rose Cascade",
+      tagline: "Deep Crimson Garden Roses & Preserved Seed Pods",
+      badge: "Classic Romance",
+      coverImage: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "Velvety scarlet garden roses paired with toffee carnations, dried eucalyptus, and dark chocolate wrapping. The ultimate dramatic statement of passion.",
+      customizationOptions: [
+        "Choice of rose stem count: 24, 50, or 100 roses",
+        "Personalized wax monogram crest with recipient's initial",
+        "Handwritten deckle-edge love letter included",
+      ],
+      suitableOccasions: ["Valentine's Day", "Proposals", "10th & 25th Anniversaries"],
+      specifications: [
+        { label: "Roses", value: "Premium Ecuadorian Stems" },
+        { label: "Packaging", value: "Signature Black Velvet & Gold Wrap" },
+        { label: "Handover", value: "Temperature-Controlled Delivery" },
+      ],
+    },
+    {
+      id: "bq-04",
+      categoryId: "cat-04",
+      categoryName: "bridal bouquet",
+      title: "The Preserved Everlasting Floral Cloud",
+      tagline: "3-Year Everlasting Botanical Symphony in Double Silk",
+      badge: "Everlasting Heirloom",
+      coverImage: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "100% natural blooms preserved at their peak bloom through organic botanical dehydration. Retains natural softness, scent, and beauty for over 3 years without water.",
+      customizationOptions: [
+        "Palette selection: Ivory Cream, Dried Cappuccino, Dusty Lilac",
+        "Keepsake glass cylinder vase option for home display",
+        "Archival milestone inscription tag",
+      ],
+      suitableOccasions: ["Home Decor", "Long-Distance Love", "Keepsake Gifting"],
+      specifications: [
+        { label: "Lifespan", value: "3+ Years Without Water" },
+        { label: "Care", value: "Zero Maintenance / Keep Away from Direct Sun" },
+        { label: "Packaging", value: "Couture Gift Box with Satin Handle" },
       ],
     },
   ],
 
   // -------------------------------------------------------------------------
-  // 9. ANTIQUE VINTAGE BOTANICAL FRAMES
+  // 5. VINTAGE FRAME
   // -------------------------------------------------------------------------
-  "cat-09": [
+  "cat-05": [
     {
       id: "vnt-01",
-      categoryId: "cat-09",
-      categoryName: "Antique Vintage Botanical Frames",
+      categoryId: "cat-05",
+      categoryName: "Vintage frame",
       title: "The Baroque Gilded Heirloom Rose Frame",
       tagline: "Ornate Victorian Baroque Frame with Preserved Dried Garden Roses",
       badge: "Nostalgic Antique",
@@ -1011,8 +696,8 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
     {
       id: "vnt-02",
-      categoryId: "cat-09",
-      categoryName: "Antique Vintage Botanical Frames",
+      categoryId: "cat-05",
+      categoryName: "Vintage frame",
       title: "Victorian Herbarium Pressed Botanical Specimen Frame",
       tagline: "Double-Glass Antique Brass Frame with Aged Latin Botanical Labels",
       badge: "Archival History",
@@ -1041,13 +726,77 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   ],
 
   // -------------------------------------------------------------------------
-  // 10. LUMINOUS GLITTER FRAMES
+  // 6. FRAMES
   // -------------------------------------------------------------------------
-  "cat-10": [
+  "cat-06": [
+    {
+      id: "frm-02",
+      categoryId: "cat-06",
+      categoryName: "Frames",
+      title: "The Floating Double-Glass Couple Wedding Frame",
+      tagline: "Bridal Bouquet Petals Suspended Around Your Ceremony Portrait",
+      badge: "Heirloom Keepsake",
+      coverImage: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Suspends your cherished couple photograph weightlessly between two panes of museum glass, enveloped by hand-pressed flowers that will remain vibrant for decades.",
+      customizationOptions: [
+        "High-definition archival photo printing on metallic luster paper",
+        "Dried floral color temperature matching your home interior",
+        "Gilded anniversary date calligraphy inscription",
+      ],
+      suitableOccasions: ["Weddings", "1st to 25th Anniversaries", "Romantic Bedroom Decor"],
+      specifications: [
+        { label: "Structure", value: "Floating Double-Glass" },
+        { label: "Floral Care", value: "Organic Pressing / Sealed Against Air" },
+        { label: "Dimensions", value: "8 x 10 or 12 x 15 Inches" },
+      ],
+    },
+    {
+      id: "frm-03",
+      categoryId: "cat-06",
+      categoryName: "Frames",
+      title: "The Minimalist Pressed Fern & Larkspur Brass Frame",
+      tagline: "Geometric Solder Brass Frame with Wild Botanical Specimens",
+      badge: "Modern Botanical",
+      coverImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Handcrafted brass frame sealed with lead-free solder. Houses delicate pressed ferns, white larkspur florets, and gold foil text with timeless botanical clarity.",
+      customizationOptions: [
+        "Choice of brass finish: Brushed Antique Gold or Modern Matte Black",
+        "Custom wedding vow or anniversary mantra calligraphy",
+        "Hanging chain or easel back display configuration",
+      ],
+      suitableOccasions: ["Housewarming", "Anniversary Gifts", "Modern Interior Decor"],
+      specifications: [
+        { label: "Frame Metal", value: "Hand-Soldered Pure Brass" },
+        { label: "Weight", value: "750 Grams" },
+        { label: "Packaging", value: "Padded Wooden Gift Box" },
+      ],
+    },
+  ],
+
+  // -------------------------------------------------------------------------
+  // 7. GLITER FRAMES
+  // -------------------------------------------------------------------------
+  "cat-07": [
     {
       id: "glt-01",
-      categoryId: "cat-10",
-      categoryName: "Luminous Glitter Frames",
+      categoryId: "cat-07",
+      categoryName: "Gliter Frames",
       title: "Floating Rose Gold Shimmer Fairy Light Frame",
       tagline: "Sensory Liquid-Suspended Sparkles & Backlit Dried Petals",
       badge: "Radiant Shimmer",
@@ -1075,8 +824,8 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
     {
       id: "glt-02",
-      categoryId: "cat-10",
-      categoryName: "Luminous Glitter Frames",
+      categoryId: "cat-07",
+      categoryName: "Gliter Frames",
       title: "Luminous Starlight Shadowbox with Fairy Lights",
       tagline: "Backlit Warm Fairy Lights Illuminating Preserved Petals & Crystals",
       badge: "Sensory Glow",
@@ -1105,13 +854,263 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   ],
 
   // -------------------------------------------------------------------------
-  // 11. ARTISANAL DECORATIVE FLOWER BASKETS
+  // 8. CELEBRATION CARDS
+  // -------------------------------------------------------------------------
+  "cat-08": [
+    {
+      id: "cel-01",
+      categoryId: "cat-08",
+      categoryName: "Celebration Cards",
+      title: "The Gilded 25th Silver & Gold Milestone Card Folio",
+      tagline: "Statement-Sized Presentation Folio with Hot-Foil & Pressed Blooms",
+      badge: "Statement Stationery",
+      coverImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Statement-sized presentation card crafted from archival linen paper, layered vellum parchment, hot-foil stamping, and sealed with authentic botanical wax seals.",
+      customizationOptions: [
+        "Milestone number customized (1st, 18th, 21st, 25th, 50th)",
+        "Custom printed long-form personal letter or wedding speech insert",
+        "Includes protective handcrafted presentation keepsake folio",
+      ],
+      suitableOccasions: ["Weddings", "Significant Anniversaries", "Retirement", "Graduation"],
+      specifications: [
+        { label: "Paper", value: "350 GSM Heavy Linen Stock" },
+        { label: "Foil", value: "Metallic Hot-Foil Stamping" },
+        { label: "Seal", value: "Hand-Poured Wax Monogram" },
+      ],
+    },
+    {
+      id: "cel-02",
+      categoryId: "cat-08",
+      categoryName: "Celebration Cards",
+      title: "Vellum & Deckle-Edge Wedding Vows Folio",
+      tagline: "Translucent Vellum Overlay with Real Larkspur Petals & Gold Thread",
+      badge: "Vows Keepsake",
+      coverImage: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "Dedicated double-fold ceremony vow cards crafted with translucent Italian vellum bound with gold metallic thread, holding genuinely pressed larkspur petals and hand-lettered vows.",
+      customizationOptions: [
+        "Full calligraphy transcription of your bride and groom vows",
+        "Custom wedding monogram wax stamp",
+        "Pair of 2 booklets (His Vows & Her Vows)",
+      ],
+      suitableOccasions: ["Wedding Ceremony", "Vow Renewals", "Anniversary Retrospective"],
+      specifications: [
+        { label: "Set", value: "Pair of 2 Matching Vow Folios" },
+        { label: "Paper", value: "Translucent Vellum & Heavy Deckle" },
+        { label: "Binding", value: "Metallic Gold Hand-Stitched Thread" },
+      ],
+    },
+    {
+      id: "crd-02",
+      categoryId: "cat-08",
+      categoryName: "Celebration Cards",
+      title: "Deckle-Edge Pressed Flower Wax-Sealed Card",
+      tagline: "Heavyweight Cotton Deckle-Edge Stationery with Real Dried Petals",
+      badge: "Pure Sentiment",
+      coverImage: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Raw torn cotton deckle-edge paper adorned with genuinely pressed ranunculus, pansies, and baby's breath petals. Finished with hand-lettered ink calligraphy and melted botanical wax seal.",
+      customizationOptions: [
+        "Custom handwritten ink message penned inside",
+        "Choice of wax seal design (Rose, Monogram, Olive Branch)",
+        "Deckle-edge paper hue: Cream Linen or Dusty Blush",
+      ],
+      suitableOccasions: ["Love Letters", "Wedding Day Notes", "Heartfelt Thank You"],
+      specifications: [
+        { label: "Paper", value: "300 GSM Handmade Cotton Deckle Paper" },
+        { label: "Floral", value: "100% Genuine Pressed Blooms" },
+        { label: "Seal", value: "Authentic Heated Botanical Wax" },
+      ],
+    },
+  ],
+
+  // -------------------------------------------------------------------------
+  // 9. HAMPERS
+  // -------------------------------------------------------------------------
+  "cat-09": [
+    {
+      id: "hmp-01",
+      categoryId: "cat-09",
+      categoryName: "Hampers",
+      title: "Men's Luxury Grooming & Cologne Hamper",
+      tagline: "Handcrafted Leather Valet, Fine Cologne, Dark Chocolates & Wax Letter",
+      badge: "Men's Executive Suite",
+      coverImage: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Designed specifically for the discerning man. Housed in a rigid midnight emerald velvet box with gilded calligraphy, featuring artisan grooming essentials, luxury cologne, dark hazelnut pralines, and a wax-sealed card.",
+      customizationOptions: [
+        "Gilded recipient name hand-lettered on exterior box lid",
+        "Selection of men's eau de parfum scent profile",
+        "Custom milestone letter with wax monogram seal",
+      ],
+      suitableOccasions: ["Husband's Birthday", "Groomsmen Keepsake", "Father's Day", "Corporate Milestone"],
+      specifications: [
+        { label: "Box Material", value: "Rigid Wood Board with Emerald Velvet" },
+        { label: "Hardware", value: "Brushed Antique Brass Latch" },
+        { label: "Personalization", value: "Hand-Gilded Lid Name Calligraphy" },
+      ],
+    },
+    {
+      id: "hmp-02",
+      categoryId: "cat-09",
+      categoryName: "Hampers",
+      title: "Women's Indulgent Pampering & Rose Hamper",
+      tagline: "Preserved Garden Roses, Soy Candle, French Bath Salts & Silk Scrunchie",
+      badge: "Women's Luxury Suite",
+      coverImage: "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "An indulgent sensory spa experience. Scented hand-poured soy candle with rose notes, French lavender bath salts, pure mulberry silk eye mask and scrunchie, preserved floral bouquet, and gourmet chocolates.",
+      customizationOptions: [
+        "Box velvet hue: Mulberry Wine, Rose Quartz, or Sand Ivory",
+        "Custom soy candle fragrance (Vanilla Rose, Wild Jasmine, Sandalwood Amber)",
+        "Gilded name personalization on lid",
+      ],
+      suitableOccasions: ["Wife's Birthday", "Bridal Shower", "Anniversary Surprise", "Mother's Day"],
+      specifications: [
+        { label: "Box Size", value: "30 x 22 x 12 cm Rigid Velvet Box" },
+        { label: "Candle", value: "Hand-Poured Soy Wax (50hr Burn)" },
+        { label: "Inclusions", value: "7 Curated Luxury Elements" },
+      ],
+    },
+    {
+      id: "hmp-03",
+      categoryId: "cat-09",
+      categoryName: "Hampers",
+      title: "Royal Festive Afghan Dry Fruit & Gold Hamper",
+      tagline: "Imported Jumbo Almonds, Afghan Pistachios, Stuffed Dates & 24k Gold Leaf",
+      badge: "Royal Festive Reserve",
+      coverImage: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "The royal gifting tradition elevated. Features 6 compartments of premium Afghan dry fruits: jumbo Mamra almonds, green Iranian pistachios, cashew nuts, walnut halves, stuffed Medjool dates with pistachios, and pure saffron raw honey.",
+      customizationOptions: [
+        "Custom dry fruit combination selection (up to 6 varieties)",
+        "Gilded festive blessing card with family name",
+        "Rich maroon or royal navy velvet box with gold foil latch",
+      ],
+      suitableOccasions: ["Diwali Gifting", "Wedding In-Laws Gifts", "Corporate VIPs", "Grand Housewarming"],
+      specifications: [
+        { label: "Dry Fruits Weight", value: "1.2 kg Premium Hand-Sorted Nuts" },
+        { label: "Jars", value: "Heavy Glass Jars with Gold Lids" },
+        { label: "Box", value: "Handcrafted Velvet Keepsake Case" },
+      ],
+    },
+  ],
+
+  // -------------------------------------------------------------------------
+  // 10. DESK DECORATIONS
+  // -------------------------------------------------------------------------
+  "cat-10": [
+    {
+      id: "desk-01",
+      categoryId: "cat-10",
+      categoryName: "Desk Decorations",
+      title: "The Enchanted Glass Botanical Cloche",
+      tagline: "Preserved Delphinium, Rosebuds & Lichen Under Glass Dome",
+      badge: "Workspace Muse",
+      coverImage: "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "Miniature botanical fairy tale encased in blown glass. Preserved everlasting florals remain colorful and fresh forever without sunlight or water, bringing grounding calm to work desks.",
+      customizationOptions: [
+        "Engraved miniature brass plate with custom date or quote",
+        "Wood base material: Walnut Wood or Brushed Antique Brass",
+        "Integrated botanical essential oil fragrance dropper option",
+      ],
+      suitableOccasions: ["New Job", "Promotion", "Self-Care", "Study Desk"],
+      specifications: [
+        { label: "Glass", value: "Clear Bell Jar Cloche" },
+        { label: "Base", value: "Turned Walnut Wood" },
+        { label: "Longevity", value: "5+ Years Preserved" },
+      ],
+    },
+    {
+      id: "desk-02",
+      categoryId: "cat-10",
+      categoryName: "Desk Decorations",
+      title: "Crystal Floral Resin Cube Paperweight & Ikebana Dish",
+      tagline: "Solid Crystal Acrylic Cube Freezing Real Petals & Golden Flakes",
+      badge: "Artisan Sculpture",
+      coverImage: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Precision-cast optical crystal resin cube embedding genuine buttercups, ferns, and floating gold leaf. Functions as a weighty desk paperweight and meditation piece.",
+      customizationOptions: [
+        "Specimen flower choice: Buttercup, Hydrangea, or Mini Daisy",
+        "Bottom laser engraving with personalized motto or anniversary",
+        "Optional velvet desk cushion included",
+      ],
+      suitableOccasions: ["Executive Gifting", "Desk Styling", "Graduation Commemoration"],
+      specifications: [
+        { label: "Material", value: "Optical Clear Resin & 24k Foil" },
+        { label: "Dimensions", value: "6.5cm x 6.5cm Solid Cube" },
+        { label: "Finish", value: "Diamond Hand-Polished Bevels" },
+      ],
+    },
+  ],
+
+  // -------------------------------------------------------------------------
+  // 11. FLOWER BASKETS
   // -------------------------------------------------------------------------
   "cat-11": [
     {
       id: "bsk-01",
       categoryId: "cat-11",
-      categoryName: "Artisanal Decorative Flower Baskets",
+      categoryName: "Flower Baskets",
       title: "The Provençal Handwoven Meadow Basket",
       tagline: "Rustic Willow Basket Overflowing with Loose Garden Flora",
       badge: "Rustic Luxury",
@@ -1139,7 +1138,7 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     {
       id: "bsk-02",
       categoryId: "cat-11",
-      categoryName: "Artisanal Decorative Flower Baskets",
+      categoryName: "Flower Baskets",
       title: "The Bridal Morning Ceremony Welcome Basket",
       tagline: "Curated Ceremonial Rattan Tote with Floral Sprigs & Silk Ribbons",
       badge: "Bridal Special",
@@ -1168,106 +1167,13 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   ],
 
   // -------------------------------------------------------------------------
-  // 12. HANDMADE FLOWER CARDS, POLAROID PRINTS & RING ALBUMS
+  // 12. CUSTOMIZE COMBO
   // -------------------------------------------------------------------------
   "cat-12": [
     {
-      id: "crd-01",
-      categoryId: "cat-12",
-      categoryName: "Handmade Flower Cards & Polaroid Albums",
-      title: "The Milestone Polaroid Ring-Bound Album",
-      tagline: "Handmade Ring Album with 20-40 Polaroid Prints & Pressed Flowers",
-      badge: "Sentimental Keepsake",
-      coverImage: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "A vintage-style ring-binder album housing 20 to 40 retro Polaroid photo prints adorned with pressed garden petals, handwritten date captions, and raw silk ribbon tie closures.",
-      customizationOptions: [
-        "Include 20, 30, or 40 custom Polaroid prints with your photos",
-        "Personalized gold foil engraved album cover lettering",
-        "Real pressed petal inserts between pages",
-      ],
-      suitableOccasions: ["Anniversaries", "Dating Scrapbooks", "Proposal Keepsakes", "Travel Memories"],
-      specifications: [
-        { label: "Album", value: "Vintage Metal Ring-Bound Binder" },
-        { label: "Prints", value: "Fuji Instax / Retro Polaroid Prints" },
-        { label: "Pages", value: "Heavyweight Black or Kraft Paper" },
-      ],
-    },
-    {
-      id: "crd-02",
-      categoryId: "cat-12",
-      categoryName: "Handmade Flower Cards & Polaroid Albums",
-      title: "Deckle-Edge Pressed Flower Wax-Sealed Card",
-      tagline: "Heavyweight Cotton Deckle-Edge Stationery with Real Dried Petals",
-      badge: "Pure Sentiment",
-      coverImage: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Raw torn cotton deckle-edge paper adorned with genuinely pressed ranunculus, pansies, and baby's breath petals. Finished with hand-lettered ink calligraphy and melted botanical wax seal.",
-      customizationOptions: [
-        "Custom handwritten ink message penned inside",
-        "Choice of wax seal design (Rose, Monogram, Olive Branch)",
-        "Deckle-edge paper hue: Cream Linen or Dusty Blush",
-      ],
-      suitableOccasions: ["Love Letters", "Wedding Day Notes", "Heartfelt Thank You"],
-      specifications: [
-        { label: "Paper", value: "300 GSM Handmade Cotton Deckle Paper" },
-        { label: "Floral", value: "100% Genuine Pressed Blooms" },
-        { label: "Seal", value: "Authentic Heated Botanical Wax" },
-      ],
-    },
-    {
-      id: "crd-03",
-      categoryId: "cat-12",
-      categoryName: "Handmade Flower Cards & Polaroid Albums",
-      title: "Bespoke Retro Polaroid Keepsake Prints",
-      tagline: "Set of 20 Vintage Polaroid Prints with Pressed Petals & Silk Ribbon",
-      badge: "Nostalgic Prints",
-      coverImage: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "A curated bundle of 20 vintage Polaroid-style photo prints with handwritten dates and memories, bundled with pressed flowers and tied in soft raw silk ribbon.",
-      customizationOptions: [
-        "20 high-definition couple photo prints with custom captions",
-        "Botanical pressed flower garnishes inside the keepsake box",
-        "Handwritten custom title tag",
-      ],
-      suitableOccasions: ["Anniversaries", "Birthday Surprises", "Dating Milestone Memory"],
-      specifications: [
-        { label: "Format", value: "Vintage Polaroid 3.5x4.25 Inch" },
-        { label: "Paper", value: "Glossy Archival Photo Paper" },
-        { label: "Box", value: "Slide-Out Monogram Gift Box" },
-      ],
-    },
-  ],
-
-  // -------------------------------------------------------------------------
-  // 13. CUSTOMIZED COMBO GIFT SUITES
-  // -------------------------------------------------------------------------
-  "cat-13": [
-    {
       id: "cmb-01",
-      categoryId: "cat-13",
-      categoryName: "Customized Combo Gift Suites",
+      categoryId: "cat-12",
+      categoryName: "Customize Combo",
       title: "The Sovereign Romance Suite",
       tagline: "Signature Bouquet + Botanical Frame + Artisan Chocolates + Wax Note",
       badge: "Ultimate Curation",
@@ -1295,8 +1201,8 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
     {
       id: "cmb-02",
-      categoryId: "cat-13",
-      categoryName: "Customized Combo Gift Suites",
+      categoryId: "cat-12",
+      categoryName: "Customize Combo",
       title: "The Editorial Keepsake & Floral Symphony Suite",
       tagline: "Bespoke Couple Magazine + Everlasting Bridal Bouquet + Truffle Box",
       badge: "Best Seller Suite",
@@ -1325,13 +1231,171 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
   ],
 
   // -------------------------------------------------------------------------
-  // 14. DELUXE CHOCOLATE FLORAL ARRANGEMENTS
+  // 13. BABY FOOTPRINTS
+  // -------------------------------------------------------------------------
+  "cat-13": [
+    {
+      id: "frm-01",
+      categoryId: "cat-13",
+      categoryName: "Baby FootPrints",
+      title: "The Newborn Baby Footprint Botanical Frame",
+      tagline: "Baby's Tiny Footprint Sealed in Real Dried Blooms & Gold Stats",
+      badge: "Newborn Keepsake Favorite",
+      coverImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Preserve the fleeting miracle of your baby's earliest days. Your newborn baby's authentic clay or ink footprint is surrounded by pressed baby's breath, miniature rosebuds, and gilded gold birth statistics (date, time, weight).",
+      customizationOptions: [
+        "Clay cast or ink footprint integration from your hospital stamp",
+        "Baby full name & birth stats hand-lettered in 24k gold calligraphy",
+        "Solid natural teakwood, white nursery lacquer, or antique brass frame",
+        "Choice of pressed floral palette (Pastel Yellow, Blush Pink, Cloud Blue, Ivory)",
+      ],
+      suitableOccasions: ["Baby Welcome", "1st Birthday", "Baby Shower Gift", "New Parents Milestone"],
+      specifications: [
+        { label: "Glass", value: "Double Museum-Grade UV Protective Glass" },
+        { label: "Frame Wood", value: "Solid Hand-Turned Teakwood" },
+        { label: "Size", value: "10 x 12 Inches Tabletop & Wall Mount" },
+      ],
+    },
+    {
+      id: "mob-01",
+      categoryId: "cat-13",
+      categoryName: "Baby FootPrints",
+      title: "Newborn Footprint & First Lock Keepsake Frame",
+      tagline: "Double-Glass Ink Footprint with Preserved Larkspur",
+      badge: "Newborn Keepsake",
+      coverImage: "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "Solid double-glass shadowbox encasing your baby's ink footprint alongside preserved pastel larkspur and gold calligraphy stats.",
+      customizationOptions: [
+        "Compatible with iPhone (11-16 Pro Max), Samsung Galaxy, OnePlus",
+        "Personalized name or initials written in gold calligraphy",
+        "Floral palette themes: Peach Blossom, Midnight Violet, Forest Fern",
+      ],
+      suitableOccasions: ["Birthday Treats", "BFF Gifts", "Bridal Party Keepsakes"],
+      specifications: [
+        { label: "Protection", value: "Military Drop-Tested TPU Bumper" },
+        { label: "Resin", value: "Anti-Yellowing UV Resistant Resin" },
+        { label: "Art", value: "100% Genuine Pressed Garden Flora" },
+      ],
+    },
+    {
+      id: "mob-02",
+      categoryId: "cat-13",
+      categoryName: "Baby FootPrints",
+      title: "Cast Clay Baby Footprint & Nursery Floral Shadowbox",
+      tagline: "3D Sculpted Clay Footprint in Hydrangea Blooms",
+      badge: "Handmade Heirloom",
+      coverImage: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "Three-dimensional sculpted clay baby footprint surrounded by real dried hydrangea florets and personalized birth date inscription.",
+      customizationOptions: [
+        "Select case base: Translucent Frosted or Ultra-Clear Glassy",
+        "Silver or Gold leaf speckles customization",
+        "Custom phone model bespoke mold sizing",
+      ],
+      suitableOccasions: ["Daily Lifestyle Aesthetic", "Matching Bridesmaid Gifts"],
+      specifications: [
+        { label: "Bumper", value: "Shock-Absorbing Air-Cushion Edges" },
+        { label: "Flora", value: "Genuine Pressed Queen Anne's Lace" },
+        { label: "Clarity", value: "99.8% High-Refraction Crystal Resin" },
+      ],
+    },
+  ],
+
+  // -------------------------------------------------------------------------
+  // 14. POLAROID PHOTO & ALBUMS
   // -------------------------------------------------------------------------
   "cat-14": [
     {
-      id: "charr-01",
+      id: "crd-01",
       categoryId: "cat-14",
-      categoryName: "Deluxe Chocolate Floral Arrangements",
+      categoryName: "Polaroid photo & albums",
+      title: "The Milestone Polaroid Ring-Bound Album",
+      tagline: "Handmade Ring Album with 20-40 Polaroid Prints & Pressed Flowers",
+      badge: "Sentimental Keepsake",
+      coverImage: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/jensi-reel-01.mp4",
+      description: "A vintage-style ring-binder album housing 20 to 40 retro Polaroid photo prints adorned with pressed garden petals, handwritten date captions, and raw silk ribbon tie closures.",
+      customizationOptions: [
+        "Include 20, 30, or 40 custom Polaroid prints with your photos",
+        "Personalized gold foil engraved album cover lettering",
+        "Real pressed petal inserts between pages",
+      ],
+      suitableOccasions: ["Anniversaries", "Dating Scrapbooks", "Proposal Keepsakes", "Travel Memories"],
+      specifications: [
+        { label: "Album", value: "Vintage Metal Ring-Bound Binder" },
+        { label: "Prints", value: "Fuji Instax / Retro Polaroid Prints" },
+        { label: "Pages", value: "Heavyweight Black or Kraft Paper" },
+      ],
+    },
+    {
+      id: "crd-03",
+      categoryId: "cat-14",
+      categoryName: "Polaroid photo & albums",
+      title: "Bespoke Retro Polaroid Keepsake Prints",
+      tagline: "Set of 20 Vintage Polaroid Prints with Pressed Petals & Silk Ribbon",
+      badge: "Nostalgic Prints",
+      coverImage: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
+      images: [
+        "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
+      ],
+      videoUrl: "/works/videos/atelier-reel-02.mp4",
+      description: "A curated bundle of 20 vintage Polaroid-style photo prints with handwritten dates and memories, bundled with pressed flowers and tied in soft raw silk ribbon.",
+      customizationOptions: [
+        "20 high-definition couple photo prints with custom captions",
+        "Botanical pressed flower garnishes inside the keepsake box",
+        "Handwritten custom title tag",
+      ],
+      suitableOccasions: ["Anniversaries", "Birthday Surprises", "Dating Milestone Memory"],
+      specifications: [
+        { label: "Format", value: "Vintage Polaroid 3.5x4.25 Inch" },
+        { label: "Paper", value: "Glossy Archival Photo Paper" },
+        { label: "Box", value: "Slide-Out Monogram Gift Box" },
+      ],
+    },
+  ],
+
+  // -------------------------------------------------------------------------
+  // 15. CHOLOCATE BASKET
+  // -------------------------------------------------------------------------
+  "cat-15": [
+    {
+      id: "charr-01",
+      categoryId: "cat-15",
+      categoryName: "Cholocate Basket",
       title: "The 36-Piece Velvet Rose & Truffle Tower",
       tagline: "Tiered Circular Velvet Box with Fresh Red Roses & Gold Pralines",
       badge: "Sensory Delight",
@@ -1359,8 +1423,8 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
     {
       id: "charr-02",
-      categoryId: "cat-14",
-      categoryName: "Deluxe Chocolate Floral Arrangements",
+      categoryId: "cat-15",
+      categoryName: "Cholocate Basket",
       title: "The Heart-Shaped Velvet Praline & Blush Rose Medley",
       tagline: "Two-Tier Heart Velvet Box with Preserved Roses & Lindt Truffles",
       badge: "Romantic Grandeur",
@@ -1388,67 +1452,4 @@ export const CATALOG_WORKS: Record<string, CatalogWorkItem[]> = {
     },
   ],
 
-  // -------------------------------------------------------------------------
-  // 15. ARCHIVAL CELEBRATION & MILESTONE CARDS
-  // -------------------------------------------------------------------------
-  "cat-15": [
-    {
-      id: "cel-01",
-      categoryId: "cat-15",
-      categoryName: "Archival Celebration & Milestone Cards",
-      title: "The Gilded 25th Silver & Gold Milestone Card Folio",
-      tagline: "Statement-Sized Presentation Folio with Hot-Foil & Pressed Blooms",
-      badge: "Statement Stationery",
-      coverImage: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/jensi-reel-01.mp4",
-      description: "Statement-sized presentation card crafted from archival linen paper, layered vellum parchment, hot-foil stamping, and sealed with authentic botanical wax seals.",
-      customizationOptions: [
-        "Milestone number customized (1st, 18th, 21st, 25th, 50th)",
-        "Custom printed long-form personal letter or wedding speech insert",
-        "Includes protective handcrafted presentation keepsake folio",
-      ],
-      suitableOccasions: ["Weddings", "Significant Anniversaries", "Retirement", "Graduation"],
-      specifications: [
-        { label: "Paper", value: "350 GSM Heavy Linen Stock" },
-        { label: "Foil", value: "Metallic Hot-Foil Stamping" },
-        { label: "Seal", value: "Hand-Poured Wax Monogram" },
-      ],
-    },
-    {
-      id: "cel-02",
-      categoryId: "cat-15",
-      categoryName: "Archival Celebration & Milestone Cards",
-      title: "Vellum & Deckle-Edge Wedding Vows Folio",
-      tagline: "Translucent Vellum Overlay with Real Larkspur Petals & Gold Thread",
-      badge: "Vows Keepsake",
-      coverImage: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
-      images: [
-        "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=85",
-        "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=85",
-      ],
-      videoUrl: "/works/videos/atelier-reel-02.mp4",
-      description: "Dedicated double-fold ceremony vow cards crafted with translucent Italian vellum bound with gold metallic thread, holding genuinely pressed larkspur petals and hand-lettered vows.",
-      customizationOptions: [
-        "Full calligraphy transcription of your bride and groom vows",
-        "Custom wedding monogram wax stamp",
-        "Pair of 2 booklets (His Vows & Her Vows)",
-      ],
-      suitableOccasions: ["Wedding Ceremony", "Vow Renewals", "Anniversary Retrospective"],
-      specifications: [
-        { label: "Set", value: "Pair of 2 Matching Vow Folios" },
-        { label: "Paper", value: "Translucent Vellum & Heavy Deckle" },
-        { label: "Binding", value: "Metallic Gold Hand-Stitched Thread" },
-      ],
-    },
-  ],
 };

@@ -21,7 +21,15 @@ import {
   Sparkle,
 } from "lucide-react";
 import { SITE_CONTENT, OccasionItem } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl } from "@/lib/utils";
+
+function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=1200&q=85") {
+  if (!url || typeof url !== "string") return fallback;
+  const trimmed = url.trim();
+  if (trimmed.includes("behance.net/gallery/")) return fallback;
+  return trimmed;
+}
 
 // Category slug to readable label and emoji icon mapping
 const CATEGORY_MAP: Record<string, { label: string; icon: string }> = {
@@ -57,7 +65,28 @@ const OCCASION_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function OccasionCollections() {
-  const { occasionCollections } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+  let occasionCollections = SITE_CONTENT.occasionCollections;
+  if (settings["occasions_data"]) {
+    try {
+      const parsed = JSON.parse(settings["occasions_data"]);
+      if (parsed && Array.isArray(parsed.occasions)) {
+        occasionCollections = {
+          ...occasionCollections,
+          ...parsed,
+          occasions: parsed.occasions,
+        };
+      } else if (Array.isArray(parsed)) {
+        occasionCollections = {
+          ...occasionCollections,
+          occasions: parsed,
+        };
+      }
+    } catch {
+      occasionCollections = SITE_CONTENT.occasionCollections;
+    }
+  }
+
   const { occasions } = occasionCollections;
   const [activeOccasionIndex, setActiveOccasionIndex] = useState<number>(0);
   const [direction, setDirection] = useState<number>(1);
@@ -343,7 +372,7 @@ export default function OccasionCollections() {
               <div className="lg:col-span-5 relative w-full min-w-0">
                 <div className="relative aspect-[4/5] sm:aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-2xl bg-black/40 border border-white/20 group">
                   <Image
-                    src={activeOccasion.imageUrl}
+                    src={getSafeImageUrl(activeOccasion.imageUrl)}
                     alt={activeOccasion.name}
                     fill
                     priority
@@ -357,7 +386,7 @@ export default function OccasionCollections() {
                   {/* Top Left Archival Occasion Disc */}
                   <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
                     <span className="px-3 py-1 rounded-full text-[9.5px] uppercase font-sans tracking-widest bg-ink-aubergine/85 text-butter-cream border border-white/20 backdrop-blur-md font-semibold">
-                      Chapter #{String(activeOccasionIndex + 1).padStart(2, "0")} of 10
+                      Chapter #{String(activeOccasionIndex + 1).padStart(2, "0")} of {String(occasions.length).padStart(2, "0")}
                     </span>
                   </div>
 

@@ -30,29 +30,41 @@ import {
 } from "lucide-react";
 import { SITE_CONTENT } from "@/content/site";
 import { CATALOG_WORKS, CatalogWorkItem } from "@/content/catalogWorks";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl } from "@/lib/utils";
 
-// Refined aesthetic short titles for the 15 categories
+// Refined aesthetic short titles for the 15 categories (Matching User Priority 1 to 15)
 const SHORT_TITLES: Record<string, string> = {
-  "cat-01": "Keepsake Magazines",
-  "cat-02": "Bridal Bouquets",
-  "cat-03": "Baby Footprint Frames",
-  "cat-04": "Chocolate Bouquets",
-  "cat-05": "Three-Part Hampers",
-  "cat-06": "Pipe Cleaner Art",
-  "cat-07": "Botanical Desk Decor",
-  "cat-08": "Flower Phone Cases",
-  "cat-09": "Antique Vintage Frames",
-  "cat-10": "Luminous Glitter Frames",
-  "cat-11": "Meadow Flower Baskets",
-  "cat-12": "Polaroid Albums & Cards",
-  "cat-13": "Custom Combo Suites",
-  "cat-14": "Chocolate Towers",
-  "cat-15": "Milestone Cards",
+  "cat-01": "A4 Magazine",
+  "cat-02": "Pipe Cleaner bouquet",
+  "cat-03": "Cholocate bouquet",
+  "cat-04": "bridal bouquet",
+  "cat-05": "Vintage frame",
+  "cat-06": "Frames",
+  "cat-07": "Gliter Frames",
+  "cat-08": "Celebration Cards",
+  "cat-09": "Hampers",
+  "cat-10": "Desk Decorations",
+  "cat-11": "Flower Baskets",
+  "cat-12": "Customize Combo",
+  "cat-13": "Baby FootPrints",
+  "cat-14": "Polaroid photo & albums",
+  "cat-15": "Cholocate Basket",
 };
 
+function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85") {
+  if (!url || typeof url !== "string") return fallback;
+  const trimmed = url.trim();
+  // If user pasted a gallery page rather than direct image
+  if (trimmed.includes("behance.net/gallery/")) {
+    return fallback;
+  }
+  return trimmed;
+}
+
 export default function CollectionsShowcase() {
-  const { productCategories } = SITE_CONTENT;
+  const { categories: dynamicCategories, catalogWorks } = useAtelierContent();
+  const productCategories = dynamicCategories?.length > 0 ? dynamicCategories : SITE_CONTENT.productCategories;
   const [activeCategoryId, setActiveCategoryId] = useState<string>("cat-01");
   const [activeWorkItem, setActiveWorkItem] = useState<CatalogWorkItem | null>(null);
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
@@ -140,7 +152,7 @@ export default function CollectionsShowcase() {
     productCategories.find((cat) => cat.id === activeCategoryId) || productCategories[0];
 
   // Get works for the current category
-  const currentWorks: CatalogWorkItem[] = CATALOG_WORKS[activeCategoryId] || [];
+  const currentWorks: CatalogWorkItem[] = catalogWorks[activeCategoryId] || [];
 
   const handleOpenWork = (work: CatalogWorkItem) => {
     setActiveWorkItem(work);
@@ -211,7 +223,7 @@ export default function CollectionsShowcase() {
           <div className="flex items-center gap-3 min-w-0">
             <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-marigold-glow/50 ring-1 ring-marigold-glow/30">
               <Image
-                src={CATALOG_WORKS[activeCategoryId]?.[0]?.coverImage || currentCategory.imageUrl}
+                src={getSafeImageUrl(catalogWorks[activeCategoryId]?.[0]?.coverImage || currentCategory.imageUrl)}
                 alt={currentCategory.name}
                 fill
                 sizes="44px"
@@ -253,9 +265,9 @@ export default function CollectionsShowcase() {
               <div className="mt-2.5 p-3 rounded-2xl bg-white border border-ink-aubergine/15 shadow-xl grid grid-cols-2 gap-2 max-h-[360px] overflow-y-auto overscroll-contain">
                 {productCategories.map((cat, index) => {
                   const isActive = activeCategoryId === cat.id;
-                  const catWorks = CATALOG_WORKS[cat.id] || [];
+                  const catWorks = catalogWorks[cat.id] || [];
                   const displayTitle = SHORT_TITLES[cat.id] || cat.name.split("&")[0].trim();
-                  const thumbnail = catWorks[0]?.coverImage || cat.imageUrl;
+                  const thumbnail = getSafeImageUrl(catWorks[0]?.coverImage || cat.imageUrl);
 
                   return (
                     <button
@@ -350,11 +362,11 @@ export default function CollectionsShowcase() {
         >
           {productCategories.map((cat, index) => {
             const isActive = activeCategoryId === cat.id;
-            const catWorks = CATALOG_WORKS[cat.id] || [];
+            const catWorks = catalogWorks[cat.id] || [];
             const count = catWorks.length;
             const categoryNumber = String(index + 1).padStart(2, "0");
             const displayTitle = SHORT_TITLES[cat.id] || cat.name.split("&")[0].trim();
-            const thumbnail = catWorks[0]?.coverImage || cat.imageUrl;
+            const thumbnail = getSafeImageUrl(catWorks[0]?.coverImage || cat.imageUrl);
 
             return (
               <button
@@ -550,14 +562,14 @@ export default function CollectionsShowcase() {
                       className="group relative cursor-pointer w-[300px] md:w-[350px] aspect-[3/4.3] shrink-0 snap-start select-none rounded-[2rem] overflow-hidden bg-ink-aubergine shadow-xl hover:shadow-2xl transition-all duration-500 border border-ink-aubergine/15 hover:border-marigold-glow/60 hover:-translate-y-1"
                     >
                       <Image
-                        src={work.coverImage}
+                        src={getSafeImageUrl(work.coverImage)}
                         alt={work.title}
                         fill
                         sizes="350px"
                         className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
                       />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#140817] via-[#140817]/40 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#140817] via-[#140817]/55 via-45% to-transparent opacity-75 group-hover:opacity-85 transition-opacity duration-300 pointer-events-none" />
 
                       <div className="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/20 shadow-sm group-hover:border-marigold-glow/50 transition-colors">
                         {itemNumber}
@@ -623,14 +635,14 @@ export default function CollectionsShowcase() {
                     className="group relative cursor-pointer w-full aspect-[4/5] rounded-[1.75rem] overflow-hidden bg-ink-aubergine shadow-xl border border-ink-aubergine/15 active:scale-[0.99] transition-all"
                   >
                     <Image
-                      src={work.coverImage}
+                      src={getSafeImageUrl(work.coverImage)}
                       alt={work.title}
                       fill
                       sizes="100vw"
                       className="object-cover"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#140817] via-[#140817]/45 to-transparent opacity-95" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#140817] via-[#140817]/55 via-45% to-transparent opacity-80 pointer-events-none" />
 
                     <div className="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/20 shadow-sm">
                       {itemNumber}

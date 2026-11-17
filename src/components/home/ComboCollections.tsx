@@ -18,10 +18,39 @@ import {
   Layers,
 } from "lucide-react";
 import { SITE_CONTENT, ComboCollectionItem } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl } from "@/lib/utils";
 
+function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1200&q=85") {
+  if (!url || typeof url !== "string") return fallback;
+  const trimmed = url.trim();
+  if (trimmed.includes("behance.net/gallery/")) return fallback;
+  return trimmed;
+}
+
 export default function ComboCollections() {
-  const { comboCollections } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+  let comboCollections = SITE_CONTENT.comboCollections;
+  if (settings["combos_data"]) {
+    try {
+      const parsed = JSON.parse(settings["combos_data"]);
+      if (parsed && Array.isArray(parsed.combos)) {
+        comboCollections = {
+          ...comboCollections,
+          ...parsed,
+          combos: parsed.combos,
+        };
+      } else if (Array.isArray(parsed)) {
+        comboCollections = {
+          ...comboCollections,
+          combos: parsed,
+        };
+      }
+    } catch {
+      comboCollections = SITE_CONTENT.comboCollections;
+    }
+  }
+
   const { combos } = comboCollections;
   const [activeComboIndex, setActiveComboIndex] = useState(0);
   const [activeModalCombo, setActiveModalCombo] = useState<ComboCollectionItem | null>(null);
@@ -132,7 +161,7 @@ export default function ComboCollections() {
             className="absolute inset-0 z-0"
           >
             <Image
-              src={currentCombo.imageUrl}
+              src={getSafeImageUrl(currentCombo.imageUrl)}
               alt={currentCombo.title}
               fill
               priority
@@ -163,7 +192,7 @@ export default function ComboCollections() {
             </button>
 
             <span className="px-3 py-1 rounded-full text-[10px] font-sans uppercase tracking-[0.2em] bg-white/15 backdrop-blur-md text-butter-cream border border-white/20">
-              {comboNumber} / 06
+              {comboNumber} / {String(combos.length).padStart(2, "0")}
             </span>
 
             <button
@@ -308,7 +337,7 @@ export default function ComboCollections() {
                   {/* Left Column: Photography */}
                   <div className="relative w-full md:w-1/2 aspect-[4/5] md:aspect-auto min-h-[260px] md:min-h-[460px] shrink-0 bg-ink-aubergine/40">
                     <Image
-                      src={activeModalCombo.imageUrl}
+                      src={getSafeImageUrl(activeModalCombo.imageUrl)}
                       alt={activeModalCombo.title}
                       fill
                       priority

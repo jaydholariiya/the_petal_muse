@@ -6,9 +6,21 @@ import { motion } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import { SITE_CONTENT } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 
 export default function HeroSection() {
   const { hero, brand } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+
+  const headlineLine1 = settings["hero_headlineLine1"] || hero.headlineLine1;
+  const headlineLine2 = settings["hero_headlineLine2"] || hero.headlineLine2;
+  const description = settings["hero_description"] || hero.description;
+  const backgroundImage = settings["hero_backgroundImage"] || hero.backgroundImage;
+  const ctaPrimary = settings["hero_ctaPrimary"] || hero.ctaPrimary;
+  const ctaSecondary = settings["hero_ctaSecondary"] || hero.ctaSecondary;
+  const badgeSuite = settings["hero_badgeSuite"] || "Atelier Keepsake Suite 01";
+  const badgeSubtitle = settings["hero_badgeSubtitle"] || "Curated Hampers, Frames & Blooms";
+  const badgeText = settings["hero_badgeText"] || hero.badgeText;
 
   return (
     <section className="relative min-h-[90vh] sm:min-h-screen flex flex-col justify-between pt-20 sm:pt-28 pb-8 sm:pb-12 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
@@ -46,7 +58,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-xs font-sans tracking-[0.25em] uppercase text-muted-jade"
         >
-          {hero.badgeText}
+          {badgeText}
         </motion.span>
       </div>
 
@@ -60,9 +72,9 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <h1 className="font-serif text-[2.2rem] sm:text-6xl md:text-7xl lg:text-[7.2rem] font-light leading-[1.04] sm:leading-[0.94] text-ink-aubergine tracking-tight">
-              <span className="block italic">{hero.headlineLine1}</span>
+              <span className="block italic">{headlineLine1}</span>
               <span className="block font-normal text-mulberry-wine font-serif">
-                {hero.headlineLine2}
+                {headlineLine2}
               </span>
             </h1>
           </motion.div>
@@ -73,7 +85,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
             className="mt-4 sm:mt-6 md:mt-8 text-sm sm:text-base md:text-lg text-ink-aubergine/80 max-w-xl mx-auto lg:mx-0 font-sans font-light leading-relaxed"
           >
-            {hero.description}
+            {description}
           </motion.p>
 
           {/* Action CTAs (Mobile Stack, Desktop Row) */}
@@ -85,7 +97,7 @@ export default function HeroSection() {
           >
             <a href="#collections" className="w-full sm:w-auto">
               <MagneticButton variant="primary" className="w-full sm:w-auto py-3.5">
-                <span>{hero.ctaPrimary}</span>
+                <span>{ctaPrimary}</span>
               </MagneticButton>
             </a>
 
@@ -93,7 +105,7 @@ export default function HeroSection() {
             <a href="#contact" className="hidden sm:inline-block w-auto">
               <MagneticButton variant="outline" className="w-auto py-3.5">
                 <Sparkles className="w-3.5 h-3.5 text-marigold-glow" />
-                <span>{hero.ctaSecondary}</span>
+                <span>{ctaSecondary}</span>
               </MagneticButton>
             </a>
 
@@ -136,7 +148,7 @@ export default function HeroSection() {
               data-cursor="BLOOM"
             >
               <Image
-                src={hero.backgroundImage}
+                src={backgroundImage}
                 alt="THE PETAL MUSE Botanical Sculpture"
                 fill
                 priority
@@ -151,10 +163,10 @@ export default function HeroSection() {
               <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-butter-cream z-10 flex items-end justify-between">
                 <div>
                   <p className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-apricot-blush font-sans">
-                    Atelier Keepsake Suite 01
+                    {badgeSuite}
                   </p>
                   <p className="font-serif text-base sm:text-lg italic mt-0.5">
-                    Curated Hampers, Frames &amp; Blooms
+                    {badgeSubtitle}
                   </p>
                 </div>
                 <span className="text-[9px] sm:text-[10px] tracking-widest font-sans border border-white/30 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1">

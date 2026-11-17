@@ -16,11 +16,13 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { SITE_CONTENT, CustomerReview } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl } from "@/lib/utils";
 
 export default function CustomerReviewsSection() {
+  const { reviews: dynamicReviews } = useAtelierContent();
   const { customerReviewsSection } = SITE_CONTENT;
-  const { reviews } = customerReviewsSection;
+  const reviews = dynamicReviews?.length > 0 ? dynamicReviews : customerReviewsSection.reviews;
   const [activeIndex, setActiveIndex] = useState(0);
 
   // Keyboard navigation for desktop arrow keys

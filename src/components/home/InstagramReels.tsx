@@ -4,9 +4,12 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { Play, Pause, Volume2, VolumeX, Instagram, Film } from "lucide-react";
 import { SITE_CONTENT, ReelItem } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 
 export default function InstagramReels() {
-  const { reels, brand } = SITE_CONTENT;
+  const { reels: dynamicReels } = useAtelierContent();
+  const reels = dynamicReels?.length > 0 ? dynamicReels : SITE_CONTENT.reels;
+  const { brand } = SITE_CONTENT;
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});

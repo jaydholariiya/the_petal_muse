@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope, Italiana } from "next/font/google";
 import "./globals.css";
 import { SITE_CONTENT } from "@/content/site";
+import { AtelierContentProvider } from "@/context/AtelierContentContext";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -112,7 +113,9 @@ export default function RootLayout({
         className="font-sans antialiased bg-butter-cream text-ink-aubergine min-h-screen relative"
         suppressHydrationWarning
       >
-        {children}
+        <AtelierContentProvider>
+          {children}
+        </AtelierContentProvider>
       </body>
     </html>
   );

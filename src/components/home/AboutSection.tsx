@@ -5,9 +5,19 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { SITE_CONTENT } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 
 export default function AboutSection() {
   const { intro, brand } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+
+  const quoteLarge = settings["about_quoteLarge"] || intro.quoteLarge;
+  const philosophyHeadline = settings["about_philosophyHeadline"] || brand.philosophyHeadline;
+  const portraitImage = settings["about_portraitImage"] || intro.portraitImage;
+  const detailImage = settings["about_detailImage"] || intro.detailImage;
+  const storyPara1 = settings["about_storyPara1"] || brand.brandStory[0];
+  const storyPara2 = settings["about_storyPara2"] || brand.brandStory[1];
+  const storyPara3 = settings["about_storyPara3"] || brand.brandStory[2];
 
   return (
     <section id="philosophy" className="relative pt-6 sm:pt-10 md:pt-14 pb-16 sm:pb-28 md:pb-36 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
@@ -22,10 +32,10 @@ export default function AboutSection() {
       {/* Oversized Editorial Quote */}
       <div className="mb-10 sm:mb-20 md:mb-28 max-w-5xl">
         <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-light text-ink-aubergine leading-[1.18] sm:leading-[1.1] tracking-tight">
-          &ldquo;{intro.quoteLarge}&rdquo;
+          &ldquo;{quoteLarge}&rdquo;
         </h2>
         <p className="mt-3 sm:mt-6 font-serif italic text-base sm:text-xl md:text-2xl text-muted-jade">
-          — {brand.philosophyHeadline}
+          — {philosophyHeadline}
         </p>
       </div>
 
@@ -43,7 +53,7 @@ export default function AboutSection() {
               data-cursor="JENSI"
             >
               <Image
-                src={intro.portraitImage}
+                src={portraitImage}
                 alt="Jensi Dholariya - Founder & Creative Director of THE PETAL MUSE"
                 fill
                 sizes="(max-width: 640px) 280px, (max-width: 1024px) 40vw, 450px"
@@ -70,7 +80,7 @@ export default function AboutSection() {
             {/* Secondary small detail photograph */}
             <div className="hidden sm:block absolute -bottom-6 -right-6 w-32 h-44 rounded-2xl overflow-hidden shadow-2xl border-4 border-butter-cream">
               <Image
-                src={intro.detailImage}
+                src={detailImage}
                 alt="Delicate floral stems"
                 fill
                 sizes="150px"
@@ -91,7 +101,7 @@ export default function AboutSection() {
           </h3>
 
           <div className="mt-4 sm:mt-8 space-y-3.5 sm:space-y-5 text-ink-aubergine/80 font-sans font-light leading-relaxed text-xs sm:text-base md:text-lg">
-            {brand.brandStory.map((paragraph, idx) => (
+            {[storyPara1, storyPara2, storyPara3].filter(Boolean).map((paragraph, idx) => (
               <p key={idx}>{paragraph}</p>
             ))}
           </div>

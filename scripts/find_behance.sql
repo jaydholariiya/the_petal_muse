@@ -1,0 +1,1 @@
+﻿SELECT 'CatalogWorks' as tbl, Id, CoverImage FROM CatalogWorks WHERE CoverImage LIKE '%behance%' UNION ALL SELECT 'Categories', Id, ImageUrl FROM Categories WHERE ImageUrl LIKE '%behance%' UNION ALL SELECT 'SiteSettings', SettingKey, SettingValue FROM SiteSettings WHERE SettingValue LIKE '%behance%'

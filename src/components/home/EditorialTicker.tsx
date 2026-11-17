@@ -17,12 +17,12 @@ interface CategoryCharm {
 }
 
 const CATEGORY_CHARMS: CategoryCharm[] = [
-  // 1. Editorial Keepsake Magazines
+  // 1. A4 Magazine
   {
     id: "cat-01",
-    name: "Editorial Keepsake Magazines",
-    slug: "magazine",
-    badge: "Bridal Story",
+    name: "A4 Magazine",
+    slug: "a4-magazine",
+    badge: "Signature Craft",
     icon: ({ className }) => (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
         <path d="M3 5a2 2 0 0 1 2-2h6a1.5 1.5 0 0 1 1.5 1.5V19a1 1 0 0 0-1-1H5a2 2 0 0 0-2 2V5z" fill="currentColor" fillOpacity="0.18" />
@@ -35,78 +35,12 @@ const CATEGORY_CHARMS: CategoryCharm[] = [
       </svg>
     ),
   },
-  // 2. Bespoke Artisanal & Bridal Bouquets
+  // 2. Pipe Cleaner bouquet
   {
     id: "cat-02",
-    name: "Bespoke Bridal Bouquets",
-    slug: "bouquets",
-    badge: "Silk Velvet",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <circle cx="8.5" cy="7.5" r="2.8" fill="currentColor" fillOpacity="0.25" />
-        <circle cx="15.5" cy="7.5" r="2.8" fill="currentColor" fillOpacity="0.25" />
-        <circle cx="12" cy="5" r="2.8" fill="currentColor" fillOpacity="0.4" />
-        <path d="M8 12.5l3.5 8m4.5-8l-3.5 8m-1-4.5h2" strokeLinecap="round" />
-        <path d="M9.5 14c1.5 1 3.5 1 5 0" />
-        <circle cx="12" cy="9.5" r="1" fill="currentColor" />
-      </svg>
-    ),
-  },
-  // 3. Botanical & Baby Footprint Frames
-  {
-    id: "cat-03",
-    name: "Botanical Baby & Photo Frames",
-    slug: "photo-frames",
-    badge: "Newborn Art",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <rect x="4" y="3" width="16" height="18" rx="2" fill="currentColor" fillOpacity="0.15" />
-        <rect x="6.5" y="5.5" width="11" height="13" rx="1" strokeDasharray="1 1.5" />
-        <ellipse cx="11.5" cy="12.5" rx="1.6" ry="2.6" fill="currentColor" />
-        <circle cx="10" cy="8.8" r="0.65" fill="currentColor" />
-        <circle cx="11.5" cy="8.2" r="0.75" fill="currentColor" />
-        <circle cx="13" cy="8.8" r="0.65" fill="currentColor" />
-      </svg>
-    ),
-  },
-  // 4. Artisan Chocolate Bouquets
-  {
-    id: "cat-04",
-    name: "Artisan Chocolate Bouquets",
-    slug: "chocolate-bouquets",
-    badge: "Ferrero Roses",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <circle cx="12" cy="7.5" r="3.8" fill="currentColor" fillOpacity="0.3" />
-        <circle cx="12" cy="7.5" r="1.8" fill="currentColor" />
-        <path d="M7.5 10.5l4.5 10.5 4.5-10.5" strokeLinecap="round" />
-        <path d="M6.5 10.5c2.5-1.5 8.5-1.5 11 0" />
-        <line x1="12" y1="12" x2="12" y2="20" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  // 5. Three-Part Luxury Hampers
-  {
-    id: "cat-05",
-    name: "Three-Part Luxury Hampers",
-    slug: "hamper-boxes",
-    badge: "VIP Curation",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <rect x="3" y="9" width="18" height="12" rx="2" fill="currentColor" fillOpacity="0.22" />
-        <path d="M2 9h20v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z" />
-        <line x1="12" y1="6" x2="12" y2="21" />
-        <path d="M12 6c-2-2-4-2-4 0s2 2 4 0zm0 0c2-2 4-2 4 0s-2 2-4 0z" fill="currentColor" />
-        <circle cx="12" cy="6" r="1" fill="#E8A93B" />
-      </svg>
-    ),
-  },
-  // 6. Tactile Pipe Cleaner Blooms
-  {
-    id: "cat-06",
-    name: "Tactile Pipe Cleaner Blooms",
-    slug: "pipe-cleaner-frames",
-    badge: "Never Wilts",
+    name: "Pipe Cleaner bouquet",
+    slug: "pipe-cleaner-bouquet",
+    badge: "Handcrafted Art",
     icon: ({ className }) => (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
         <circle cx="12" cy="9" r="2.8" fill="currentColor" fillOpacity="0.3" />
@@ -119,12 +53,122 @@ const CATEGORY_CHARMS: CategoryCharm[] = [
       </svg>
     ),
   },
-  // 7. Atelier Botanical Desk Cloches
+  // 3. Cholocate bouquet
+  {
+    id: "cat-03",
+    name: "Cholocate bouquet",
+    slug: "cholocate-bouquet",
+    badge: "Sweet Indulgence",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <circle cx="12" cy="7.5" r="3.8" fill="currentColor" fillOpacity="0.3" />
+        <circle cx="12" cy="7.5" r="1.8" fill="currentColor" />
+        <path d="M7.5 10.5l4.5 10.5 4.5-10.5" strokeLinecap="round" />
+        <path d="M6.5 10.5c2.5-1.5 8.5-1.5 11 0" />
+        <line x1="12" y1="12" x2="12" y2="20" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  // 4. bridal bouquet
+  {
+    id: "cat-04",
+    name: "bridal bouquet",
+    slug: "bridal-bouquet",
+    badge: "Bridal Classic",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <circle cx="8.5" cy="7.5" r="2.8" fill="currentColor" fillOpacity="0.25" />
+        <circle cx="15.5" cy="7.5" r="2.8" fill="currentColor" fillOpacity="0.25" />
+        <circle cx="12" cy="5" r="2.8" fill="currentColor" fillOpacity="0.4" />
+        <path d="M8 12.5l3.5 8m4.5-8l-3.5 8m-1-4.5h2" strokeLinecap="round" />
+        <path d="M9.5 14c1.5 1 3.5 1 5 0" />
+        <circle cx="12" cy="9.5" r="1" fill="currentColor" />
+      </svg>
+    ),
+  },
+  // 5. Vintage frame
+  {
+    id: "cat-05",
+    name: "Vintage frame",
+    slug: "vintage-frame",
+    badge: "Nostalgic Art",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <ellipse cx="12" cy="12" rx="7.5" ry="9.5" fill="currentColor" fillOpacity="0.18" />
+        <ellipse cx="12" cy="12" rx="5.2" ry="7.2" strokeDasharray="1 1.5" />
+        <circle cx="12" cy="1.8" r="1.2" fill="currentColor" />
+        <circle cx="12" cy="22.2" r="1.2" fill="currentColor" />
+        <path d="M12 9c-1 2-1 4 0 6" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  // 6. Frames
+  {
+    id: "cat-06",
+    name: "Frames",
+    slug: "frames",
+    badge: "Botanical Art",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <rect x="4" y="3" width="16" height="18" rx="2" fill="currentColor" fillOpacity="0.15" />
+        <rect x="6.5" y="5.5" width="11" height="13" rx="1" strokeDasharray="1 1.5" />
+        <path d="M9 14l2-3 2 2 3-4" strokeLinecap="round" />
+        <circle cx="10" cy="8.5" r="1" fill="currentColor" />
+      </svg>
+    ),
+  },
+  // 7. Gliter Frames
   {
     id: "cat-07",
-    name: "Atelier Botanical Desk Cloches",
-    slug: "desk-decor",
-    badge: "Walnut Base",
+    name: "Gliter Frames",
+    slug: "gliter-frames",
+    badge: "Radiant Shimmer",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z" fill="currentColor" fillOpacity="0.3" />
+        <circle cx="12" cy="12" r="2.2" fill="currentColor" />
+        <circle cx="5" cy="5" r="0.9" fill="currentColor" />
+        <circle cx="19" cy="19" r="0.9" fill="currentColor" />
+      </svg>
+    ),
+  },
+  // 8. Celebration Cards
+  {
+    id: "cat-08",
+    name: "Celebration Cards",
+    slug: "celebration-cards",
+    badge: "Statement Stationery",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <rect x="3" y="5" width="18" height="14" rx="1.5" fill="currentColor" fillOpacity="0.18" />
+        <path d="M3 6l9 7 9-7" />
+        <circle cx="12" cy="13" r="2.6" fill="currentColor" />
+        <path d="M12 11.6c-.6.6-.6 1.6 0 2.2" stroke="#1B1220" strokeWidth="1.2" />
+      </svg>
+    ),
+  },
+  // 9. Hampers
+  {
+    id: "cat-09",
+    name: "Hampers",
+    slug: "hampers",
+    badge: "VIP Luxury",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <rect x="3" y="9" width="18" height="12" rx="2" fill="currentColor" fillOpacity="0.22" />
+        <path d="M2 9h20v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z" />
+        <line x1="12" y1="6" x2="12" y2="21" />
+        <path d="M12 6c-2-2-4-2-4 0s2 2 4 0zm0 0c2-2 4-2 4 0s-2 2-4 0z" fill="currentColor" />
+        <circle cx="12" cy="6" r="1" fill="#E8A93B" />
+      </svg>
+    ),
+  },
+  // 10. Desk Decorations
+  {
+    id: "cat-10",
+    name: "Desk Decorations",
+    slug: "desk-decorations",
+    badge: "Workspace Muse",
     icon: ({ className }) => (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
         <circle cx="12" cy="2" r="1.2" fill="currentColor" />
@@ -136,59 +180,12 @@ const CATEGORY_CHARMS: CategoryCharm[] = [
       </svg>
     ),
   },
-  // 8. Real Pressed Flower Mobile Covers
-  {
-    id: "cat-08",
-    name: "Real Pressed Flower Mobile Covers",
-    slug: "mobile-covers",
-    badge: "24k Gold Flakes",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <rect x="6" y="2" width="12" height="20" rx="3" fill="currentColor" fillOpacity="0.12" />
-        <circle cx="12" cy="18" r="0.8" fill="currentColor" />
-        <path d="M12 7c-1.5 1.5-1.5 3.5 0 5 1.5-1.5 1.5-3.5 0-5z" fill="currentColor" fillOpacity="0.35" />
-        <path d="M10 9.5c1.5-1.5 3.5-1.5 5 0-1.5 1.5-3.5 1.5-5 0z" fill="currentColor" fillOpacity="0.35" />
-        <circle cx="12" cy="9.5" r="0.9" fill="currentColor" />
-      </svg>
-    ),
-  },
-  // 9. Antique Vintage Botanical Frames
-  {
-    id: "cat-09",
-    name: "Antique Vintage Frames",
-    slug: "vintage-frames",
-    badge: "Heirloom Patina",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <ellipse cx="12" cy="12" rx="7.5" ry="9.5" fill="currentColor" fillOpacity="0.18" />
-        <ellipse cx="12" cy="12" rx="5.2" ry="7.2" strokeDasharray="1 1.5" />
-        <circle cx="12" cy="1.8" r="1.2" fill="currentColor" />
-        <circle cx="12" cy="22.2" r="1.2" fill="currentColor" />
-        <path d="M12 9c-1 2-1 4 0 6" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  // 10. Luminous Glitter Frames
-  {
-    id: "cat-10",
-    name: "Luminous Glitter Frames",
-    slug: "glitter-frames",
-    badge: "LED Sparkle",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z" fill="currentColor" fillOpacity="0.3" />
-        <circle cx="12" cy="12" r="2.2" fill="currentColor" />
-        <circle cx="5" cy="5" r="0.9" fill="currentColor" />
-        <circle cx="19" cy="19" r="0.9" fill="currentColor" />
-      </svg>
-    ),
-  },
-  // 11. Artisanal Decorative Flower Baskets
+  // 11. Flower Baskets
   {
     id: "cat-11",
-    name: "Decorative Flower Baskets",
-    slug: "decorative-baskets",
-    badge: "Woven Willow",
+    name: "Flower Baskets",
+    slug: "flower-baskets",
+    badge: "Rustic Elegance",
     icon: ({ className }) => (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
         <path d="M6 10a6 6 0 0 1 12 0" />
@@ -199,25 +196,11 @@ const CATEGORY_CHARMS: CategoryCharm[] = [
       </svg>
     ),
   },
-  // 12. Handmade Flower Cards & Polaroid Albums
+  // 12. Customize Combo
   {
     id: "cat-12",
-    name: "Polaroid Albums & Cards",
-    slug: "flower-cards",
-    badge: "Deckle Cotton",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <rect x="4" y="3" width="16" height="18" rx="1.5" fill="currentColor" fillOpacity="0.18" />
-        <rect x="6" y="5" width="12" height="10" rx="0.5" fill="currentColor" fillOpacity="0.35" />
-        <circle cx="12" cy="19" r="1.1" fill="currentColor" />
-      </svg>
-    ),
-  },
-  // 13. Customized Combo Gift Suites
-  {
-    id: "cat-13",
-    name: "Customized Combo Suites",
-    slug: "combo-gifts",
+    name: "Customize Combo",
+    slug: "customize-combo",
     badge: "Ultimate Curation",
     icon: ({ className }) => (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
@@ -228,33 +211,49 @@ const CATEGORY_CHARMS: CategoryCharm[] = [
       </svg>
     ),
   },
-  // 14. Deluxe Chocolate Floral Towers
+  // 13. Baby FootPrints
+  {
+    id: "cat-13",
+    name: "Baby FootPrints",
+    slug: "baby-footprints",
+    badge: "Newborn Keepsake",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <rect x="4" y="3" width="16" height="18" rx="2" fill="currentColor" fillOpacity="0.15" />
+        <rect x="6.5" y="5.5" width="11" height="13" rx="1" strokeDasharray="1 1.5" />
+        <ellipse cx="11.5" cy="12.5" rx="1.6" ry="2.6" fill="currentColor" />
+        <circle cx="10" cy="8.8" r="0.65" fill="currentColor" />
+        <circle cx="11.5" cy="8.2" r="0.75" fill="currentColor" />
+        <circle cx="13" cy="8.8" r="0.65" fill="currentColor" />
+      </svg>
+    ),
+  },
+  // 14. Polaroid photo & albums
   {
     id: "cat-14",
-    name: "Chocolate Floral Towers",
-    slug: "chocolate-arrangements",
-    badge: "3-Tier Gourmet",
+    name: "Polaroid photo & albums",
+    slug: "polaroid-photo-albums",
+    badge: "Retro Keepsake",
+    icon: ({ className }) => (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+        <rect x="4" y="3" width="16" height="18" rx="1.5" fill="currentColor" fillOpacity="0.18" />
+        <rect x="6" y="5" width="12" height="10" rx="0.5" fill="currentColor" fillOpacity="0.35" />
+        <circle cx="12" cy="19" r="1.1" fill="currentColor" />
+      </svg>
+    ),
+  },
+  // 15. Cholocate Basket
+  {
+    id: "cat-15",
+    name: "Cholocate Basket",
+    slug: "cholocate-basket",
+    badge: "Sensory Delight",
     icon: ({ className }) => (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
         <rect x="4" y="15" width="16" height="6" rx="1" fill="currentColor" fillOpacity="0.2" />
         <rect x="6" y="9.5" width="12" height="5.5" rx="1" fill="currentColor" fillOpacity="0.3" />
         <rect x="8.5" y="4.5" width="7" height="5" rx="1" fill="currentColor" fillOpacity="0.4" />
         <circle cx="12" cy="2.2" r="1.1" fill="currentColor" />
-      </svg>
-    ),
-  },
-  // 15. Archival Celebration & Milestone Cards
-  {
-    id: "cat-15",
-    name: "Milestone Celebration Cards",
-    slug: "celebration-cards",
-    badge: "Gilded Hot-Foil",
-    icon: ({ className }) => (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-        <rect x="3" y="5" width="18" height="14" rx="1.5" fill="currentColor" fillOpacity="0.18" />
-        <path d="M3 6l9 7 9-7" />
-        <circle cx="12" cy="13" r="2.6" fill="currentColor" />
-        <path d="M12 11.6c-.6.6-.6 1.6 0 2.2" stroke="#1B1220" strokeWidth="1.2" />
       </svg>
     ),
   },

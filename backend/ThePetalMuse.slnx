@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="ThePetalMuse.API/ThePetalMuse.API.csproj" />
+  <Project Path="ThePetalMuse.Application/ThePetalMuse.Application.csproj" />
+  <Project Path="ThePetalMuse.Domain/ThePetalMuse.Domain.csproj" />
+  <Project Path="ThePetalMuse.Infrastructure/ThePetalMuse.Infrastructure.csproj" />
+</Solution>

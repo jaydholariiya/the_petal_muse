@@ -14,11 +14,59 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { SITE_CONTENT } from "@/content/site";
+import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl } from "@/lib/utils";
+
+function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&w=1200&q=85") {
+  if (!url || typeof url !== "string") return fallback;
+  const trimmed = url.trim();
+  if (trimmed.includes("behance.net/gallery/")) return fallback;
+  return trimmed;
+}
 
 export default function CraftsmanshipStory() {
   const { craftsmanship } = SITE_CONTENT;
-  const { handmadeWithLove, personalizedGifts, whyChooseUs } = craftsmanship;
+  const { settings } = useAtelierContent();
+
+  let handmadeWithLove = craftsmanship.handmadeWithLove;
+  if (settings["craft_handmade_data"]) {
+    try {
+      const parsed = JSON.parse(settings["craft_handmade_data"]);
+      handmadeWithLove = { ...handmadeWithLove, ...parsed };
+    } catch {
+      // fallback
+    }
+  } else {
+    handmadeWithLove = {
+      ...handmadeWithLove,
+      eyebrow: settings["craft_handmade_eyebrow"] || handmadeWithLove.eyebrow,
+      title: settings["craft_handmade_title"] || handmadeWithLove.title,
+      subtitle: settings["craft_handmade_subtitle"] || handmadeWithLove.subtitle,
+      description: settings["craft_handmade_description"] || handmadeWithLove.description,
+      imageUrl: settings["craft_handmade_imageUrl"] || handmadeWithLove.imageUrl,
+    };
+  }
+
+  let personalizedGifts = craftsmanship.personalizedGifts;
+  if (settings["craft_steps_data"]) {
+    try {
+      const parsed = JSON.parse(settings["craft_steps_data"]);
+      personalizedGifts = { ...personalizedGifts, ...parsed };
+    } catch {
+      // fallback
+    }
+  } else {
+    personalizedGifts = {
+      ...personalizedGifts,
+      eyebrow: settings["craft_personal_eyebrow"] || personalizedGifts.eyebrow,
+      title: settings["craft_personal_title"] || personalizedGifts.title,
+      subtitle: settings["craft_personal_subtitle"] || personalizedGifts.subtitle,
+      description: settings["craft_personal_description"] || personalizedGifts.description,
+      imageUrl: settings["craft_personal_imageUrl"] || personalizedGifts.imageUrl,
+    };
+  }
+
+  const { whyChooseUs } = craftsmanship;
 
   const pillarIcons: Record<string, React.ReactNode> = {
     Heart: <Heart className="w-5 h-5 text-mulberry-wine" />,
@@ -35,7 +83,7 @@ export default function CraftsmanshipStory() {
         <div className="lg:col-span-6 relative w-full min-w-0">
           <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-ink-aubergine/5">
             <Image
-              src={handmadeWithLove.imageUrl}
+              src={getSafeImageUrl(handmadeWithLove.imageUrl)}
               alt={handmadeWithLove.title}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -155,7 +203,7 @@ export default function CraftsmanshipStory() {
         <div className="lg:col-span-6 order-1 lg:order-2 relative w-full min-w-0">
           <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-ink-aubergine/5">
             <Image
-              src={personalizedGifts.imageUrl}
+              src={getSafeImageUrl(personalizedGifts.imageUrl)}
               alt={personalizedGifts.title}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
