@@ -6,7 +6,7 @@ import { MessageCircle, Instagram, Mail, MapPin, Send, CheckCircle2, Sparkles, P
 import confetti from "canvas-confetti";
 import { SITE_CONTENT } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl, buildMailtoUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, buildMailtoUrl, openInstagramInquiry } from "@/lib/utils";
 
 export default function ContactSection() {
   const { contact, brand } = SITE_CONTENT;
@@ -17,6 +17,9 @@ export default function ContactSection() {
   const locationDisplay = settings["contact_location"] || brand.locationDisplay;
   const instagramUrl = settings["brand_instagram"] || brand.instagramUrl;
   const instagramHandle = settings["brand_instagram_handle"] || brand.instagramHandle;
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(brand.enableWhatsApp);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -30,7 +33,9 @@ export default function ContactSection() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submissionChannel, setSubmissionChannel] = useState<"whatsapp" | "email">("whatsapp");
+  const [submissionChannel, setSubmissionChannel] = useState<"whatsapp" | "email" | "instagram">(
+    enableWhatsApp ? "whatsapp" : "instagram"
+  );
 
   // Validate form
   const validateForm = () => {
@@ -45,12 +50,9 @@ export default function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleWhatsAppSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-
-    setSubmissionChannel("whatsapp");
-    setIsSubmitted(true);
 
     // Trigger luxury floral confetti
     confetti({
@@ -60,18 +62,33 @@ export default function ContactSection() {
       colors: ["#F4B9A0", "#E8A93B", "#B78AA8", "#E58FA0", "#FBF4E6"],
     });
 
-    const url = buildWhatsAppUrl({
-      name: formData.name,
-      service: formData.enquiryType,
-      date: formData.preferredDate,
-      notes: `${formData.message} (Email: ${formData.email}, Phone: ${formData.phone || "N/A"})`,
-    });
-
-    // Open WhatsApp
-    setTimeout(() => {
-      window.open(url, "_blank", "noopener,noreferrer");
-    }, 400);
+    if (enableWhatsApp) {
+      setSubmissionChannel("whatsapp");
+      setIsSubmitted(true);
+      const url = buildWhatsAppUrl({
+        name: formData.name,
+        service: formData.enquiryType,
+        date: formData.preferredDate,
+        notes: `${formData.message} (Email: ${formData.email}, Phone: ${formData.phone || "N/A"})`,
+      });
+      setTimeout(() => {
+        window.open(url, "_blank", "noopener,noreferrer");
+      }, 400);
+    } else {
+      setSubmissionChannel("instagram");
+      setIsSubmitted(true);
+      openInstagramInquiry({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        service: formData.enquiryType,
+        date: formData.preferredDate,
+        details: formData.message,
+      });
+    }
   };
+
+  const handleWhatsAppSubmit = handleSubmit;
 
   const handleEmailFallback = () => {
     if (!validateForm()) return;
@@ -234,13 +251,23 @@ export default function ContactSection() {
 
                   {/* Submit Actions: Mobile-first Stack */}
                   <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-                    <button
-                      type="submit"
-                      className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-marigold-glow text-ink-aubergine font-sans text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold hover:bg-white transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
-                    >
-                      <MessageCircle className="w-4 h-4 fill-ink-aubergine stroke-none" />
-                      <span>Send Enquiry via WhatsApp</span>
-                    </button>
+                    {enableWhatsApp ? (
+                      <button
+                        type="submit"
+                        className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-marigold-glow text-ink-aubergine font-sans text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold hover:bg-white transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                      >
+                        <MessageCircle className="w-4 h-4 fill-ink-aubergine stroke-none" />
+                        <span>Send Enquiry via WhatsApp</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white font-sans text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold hover:opacity-95 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                      >
+                        <Instagram className="w-4 h-4 text-white" />
+                        <span>Send Enquiry via Instagram DM</span>
+                      </button>
+                    )}
 
                     <button
                       type="button"
@@ -273,8 +300,8 @@ export default function ContactSection() {
                   </h3>
 
                   <p className="mt-3 sm:mt-4 text-xs sm:text-sm font-sans font-light text-butter-cream/80 max-w-md leading-relaxed">
-                    Thank you for reaching out to THE PETAL MUSE. Your details have been formatted for{" "}
-                    {submissionChannel === "whatsapp" ? "WhatsApp" : "direct email"}. Jensi Dholariya will review your vision with the utmost care.
+                    Thank you for reaching out to THE PETAL MUSE. Your details have been formatted and copied for{" "}
+                    {submissionChannel === "whatsapp" ? "WhatsApp" : submissionChannel === "instagram" ? "Instagram Direct Message" : "direct email"}. Jensi Dholariya will review your vision with the utmost care.
                   </p>
 
                   <button
@@ -290,48 +317,50 @@ export default function ContactSection() {
 
           {/* Right Column: Direct Atelier Concierge Cards */}
           <div className="lg:col-span-4 flex flex-col gap-3.5 sm:gap-5">
-            {/* WhatsApp Card */}
-            <a
-              href={buildWhatsAppUrl({ occasion: "Direct Concierge Chat" })}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 sm:p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-marigold-glow/50 transition-all duration-300 flex items-start gap-3.5 sm:gap-4 group active:scale-[0.99]"
-            >
-              <div className="w-10 h-10 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center shrink-0">
-                <MessageCircle className="w-5 h-5 fill-[#25D366] stroke-none" />
-              </div>
-              <div>
-                <span className="text-[9.5px] sm:text-[10px] font-sans uppercase tracking-widest text-butter-cream/50">
-                  Instant Message
-                </span>
-                <p className="font-serif text-base sm:text-lg text-butter-cream group-hover:text-marigold-glow transition-colors">
-                  WhatsApp Concierge
-                </p>
-                <p className="text-[11px] sm:text-xs text-butter-cream/70 font-sans mt-0.5">
-                  Direct conversation with Jensi Dholariya
-                </p>
-              </div>
-            </a>
+            {/* WhatsApp Card (Hidden when enableWhatsApp is false) */}
+            {enableWhatsApp && (
+              <a
+                href={buildWhatsAppUrl({ occasion: "Direct Concierge Chat" })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 sm:p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-marigold-glow/50 transition-all duration-300 flex items-start gap-3.5 sm:gap-4 group active:scale-[0.99]"
+              >
+                <div className="w-10 h-10 rounded-full bg-[#25D366]/20 text-[#25D366] flex items-center justify-center shrink-0">
+                  <MessageCircle className="w-5 h-5 fill-[#25D366] stroke-none" />
+                </div>
+                <div>
+                  <span className="text-[9.5px] sm:text-[10px] font-sans uppercase tracking-widest text-butter-cream/50">
+                    Instant Message
+                  </span>
+                  <p className="font-serif text-base sm:text-lg text-butter-cream group-hover:text-marigold-glow transition-colors">
+                    WhatsApp Concierge
+                  </p>
+                  <p className="text-[11px] sm:text-xs text-butter-cream/70 font-sans mt-0.5">
+                    Direct conversation with Jensi Dholariya
+                  </p>
+                </div>
+              </a>
+            )}
 
             {/* Instagram Card */}
             <a
-              href={instagramUrl}
+              href={enableWhatsApp ? instagramUrl : (brand.instagramDmUrl || "https://ig.me/m/the.petalmusee")}
               target="_blank"
               rel="noopener noreferrer"
               className="p-4 sm:p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-marigold-glow/50 transition-all duration-300 flex items-start gap-3.5 sm:gap-4 group active:scale-[0.99]"
             >
-              <div className="w-10 h-10 rounded-full bg-peony-rose/20 text-peony-rose flex items-center justify-center shrink-0">
-                <Instagram className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shrink-0 shadow-md">
+                <Instagram className="w-5 h-5 text-white" />
               </div>
               <div>
                 <span className="text-[9.5px] sm:text-[10px] font-sans uppercase tracking-widest text-butter-cream/50">
-                  Instagram Direct
+                  {enableWhatsApp ? "Instagram Direct" : "Direct Concierge"}
                 </span>
                 <p className="font-serif text-base sm:text-lg text-butter-cream group-hover:text-marigold-glow transition-colors">
-                  {instagramHandle}
+                  {enableWhatsApp ? instagramHandle : "Instagram DM (@the.petalmusee)"}
                 </p>
                 <p className="text-[11px] sm:text-xs text-butter-cream/70 font-sans mt-0.5">
-                  Daily atelier stories &amp; recent captures
+                  {enableWhatsApp ? "Daily atelier stories & recent captures" : "Direct chat with Jensi Dholariya on Instagram"}
                 </p>
               </div>
             </a>

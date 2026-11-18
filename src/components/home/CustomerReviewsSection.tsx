@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   Heart,
   MessageCircle,
+  Instagram,
   Sparkles,
   MapPin,
   Gift,
@@ -17,10 +18,13 @@ import {
 } from "lucide-react";
 import { SITE_CONTENT, CustomerReview } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 export default function CustomerReviewsSection() {
-  const { reviews: dynamicReviews } = useAtelierContent();
+  const { reviews: dynamicReviews, settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   const { customerReviewsSection } = SITE_CONTENT;
   const reviews = dynamicReviews?.length > 0 ? dynamicReviews : customerReviewsSection.reviews;
   const [activeIndex, setActiveIndex] = useState(0);
@@ -215,16 +219,34 @@ export default function CustomerReviewsSection() {
 
                 {/* Action CTA & Slider Controls */}
                 <div className="mt-8 pt-6 border-t border-ink-aubergine/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-                  <a
-                    href={waUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-xs font-sans uppercase tracking-wider font-semibold text-white bg-[#25D366] hover:bg-[#20bd5a] transition-all shadow-md active:scale-95"
-                  >
-                    <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
-                    <span className="whitespace-nowrap">Order Keepsake on WhatsApp</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 opacity-80 shrink-0" />
-                  </a>
+                  {enableWhatsApp ? (
+                    <a
+                      href={waUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-xs font-sans uppercase tracking-wider font-semibold text-white bg-[#25D366] hover:bg-[#20bd5a] transition-all shadow-md active:scale-95"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
+                      <span className="whitespace-nowrap">Order Keepsake on WhatsApp</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-80 shrink-0" />
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openInstagramInquiry({
+                          title: currentReview.giftedItem,
+                          occasion: currentReview.occasion,
+                          notes: `Hello Jensi! I read the review by ${currentReview.name} regarding "${currentReview.giftedItem}" and would love to craft a similar bespoke keepsake for my upcoming celebration!`,
+                        })
+                      }
+                      className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-xs font-sans uppercase tracking-wider font-semibold text-white bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 transition-all shadow-md active:scale-95"
+                    >
+                      <Instagram className="w-4 h-4 text-white shrink-0" />
+                      <span className="whitespace-nowrap">Order Keepsake via Instagram DM</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-80 shrink-0" />
+                    </button>
+                  )}
 
                   {/* Previous / Next Arrow Controls */}
                   <div className="flex items-center justify-center sm:justify-end gap-2 shrink-0">

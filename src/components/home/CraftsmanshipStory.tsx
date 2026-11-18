@@ -10,12 +10,13 @@ import {
   ShieldCheck,
   Truck,
   MessageCircle,
+  Instagram,
   Flower,
   CheckCircle2,
 } from "lucide-react";
 import { SITE_CONTENT } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
@@ -27,6 +28,9 @@ function getSafeImageUrl(url?: string, fallback: string = "https://images.unspla
 export default function CraftsmanshipStory() {
   const { craftsmanship } = SITE_CONTENT;
   const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
 
   let handmadeWithLove = craftsmanship.handmadeWithLove;
   if (settings["craft_handmade_data"]) {
@@ -185,18 +189,35 @@ export default function CraftsmanshipStory() {
           </div>
 
           <div className="mt-5">
-            <a
-              href={buildWhatsAppUrl({
-                occasion: "Personalized Gift Consultation",
-                notes: "Hello Jensi! I want to create a personalized gift with custom photo, flowers, and handwritten message. Can we start a consultation?",
-              })}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold shadow-sm transition-all duration-300 active:scale-95"
-            >
-              <MessageCircle className="w-3.5 h-3.5 fill-white stroke-none shrink-0" />
-              <span className="whitespace-nowrap">Personalize on WhatsApp</span>
-            </a>
+            {enableWhatsApp ? (
+              <a
+                href={buildWhatsAppUrl({
+                  occasion: "Personalized Gift Consultation",
+                  notes: "Hello Jensi! I want to create a personalized gift with custom photo, flowers, and handwritten message. Can we start a consultation?",
+                })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold shadow-sm transition-all duration-300 active:scale-95"
+              >
+                <MessageCircle className="w-3.5 h-3.5 fill-white stroke-none shrink-0" />
+                <span className="whitespace-nowrap">Personalize on WhatsApp</span>
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={() =>
+                  openInstagramInquiry({
+                    title: "Personalized Gift Consultation",
+                    occasion: "Personalized Gift Consultation",
+                    details: "Hello Jensi! I want to create a personalized gift with custom photo, flowers, and handwritten message. Can we start a consultation?",
+                  })
+                }
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold shadow-sm transition-all duration-300 active:scale-95"
+              >
+                <Instagram className="w-3.5 h-3.5 text-white shrink-0" />
+                <span className="whitespace-nowrap">Personalize via Instagram DM</span>
+              </button>
+            )}
           </div>
         </div>
 

@@ -2,12 +2,17 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, MessageCircle, RefreshCw, Check } from "lucide-react";
+import { Sparkles, MessageCircle, Instagram, RefreshCw, Check } from "lucide-react";
 import { SITE_CONTENT } from "@/content/site";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { useAtelierContent } from "@/context/AtelierContentContext";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 export default function BouquetMoodWorkshop() {
   const { moodDesigner } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
 
   // Selected state
   const [occasion, setOccasion] = useState(moodDesigner.occasions[0].name);
@@ -22,15 +27,26 @@ export default function BouquetMoodWorkshop() {
   // Number of petals based on fullness
   const petalCount = activeStyle.id === "sculptural" ? 6 : activeStyle.id === "organic" ? 12 : 18;
 
-  const handleSendToWhatsApp = () => {
-    const url = buildWhatsAppUrl({
-      occasion,
-      palette: `${activePalette.name} (${activePalette.moodTag})`,
-      style: `${activeStyle.name} - ${activeStyle.detail}`,
-      notes: "I created this bespoke floral concept in your online workshop and would love to bring it to life!",
-    });
-    window.open(url, "_blank", "noopener,noreferrer");
+  const handleSendAction = () => {
+    if (enableWhatsApp) {
+      const url = buildWhatsAppUrl({
+        occasion,
+        palette: `${activePalette.name} (${activePalette.moodTag})`,
+        style: `${activeStyle.name} - ${activeStyle.detail}`,
+        notes: "I created this bespoke floral concept in your online workshop and would love to bring it to life!",
+      });
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      openInstagramInquiry({
+        occasion,
+        palette: `${activePalette.name} (${activePalette.moodTag})`,
+        style: `${activeStyle.name} - ${activeStyle.detail}`,
+        details: "I created this bespoke floral concept in your online workshop and would love to bring it to life!",
+      });
+    }
   };
+
+  const handleSendToWhatsApp = handleSendAction;
 
   return (
     <section id="workshop" className="relative py-20 sm:py-28 md:py-36 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
@@ -302,15 +318,25 @@ export default function BouquetMoodWorkshop() {
             </div>
           </div>
 
-          {/* WhatsApp Direct Action */}
+          {/* Direct Action: WhatsApp or Instagram DM */}
           <div className="pt-3 sm:pt-4 border-t border-ink-aubergine/10 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-            <button
-              onClick={handleSendToWhatsApp}
-              className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#25D366] text-white font-sans text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold hover:bg-[#20ba59] transition-all shadow-lg hover:shadow-xl hover:scale-[1.02]"
-            >
-              <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-              <span>Send This Idea on WhatsApp</span>
-            </button>
+            {enableWhatsApp ? (
+              <button
+                onClick={handleSendToWhatsApp}
+                className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#25D366] text-white font-sans text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold hover:bg-[#20ba59] transition-all shadow-lg hover:shadow-xl hover:scale-[1.02]"
+              >
+                <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                <span>Send This Idea on WhatsApp</span>
+              </button>
+            ) : (
+              <button
+                onClick={handleSendToWhatsApp}
+                className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white font-sans text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] font-semibold hover:opacity-95 transition-all shadow-lg hover:shadow-xl hover:scale-[1.02]"
+              >
+                <Instagram className="w-4 h-4 text-white" />
+                <span>Send This Idea via Instagram DM</span>
+              </button>
+            )}
 
             <span className="text-[10px] sm:text-[11px] text-ink-aubergine/50 font-sans text-center sm:text-left">
               Direct consultation with Jensi • No commitment

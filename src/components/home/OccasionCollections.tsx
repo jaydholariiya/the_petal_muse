@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
   MessageCircle,
+  Instagram,
   CalendarHeart,
   ChevronLeft,
   ChevronRight,
@@ -22,7 +23,7 @@ import {
 } from "lucide-react";
 import { SITE_CONTENT, OccasionItem } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
@@ -66,6 +67,9 @@ const OCCASION_ICONS: Record<string, React.ReactNode> = {
 
 export default function OccasionCollections() {
   const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   let occasionCollections = SITE_CONTENT.occasionCollections;
   if (settings["occasions_data"]) {
     try {
@@ -489,21 +493,38 @@ export default function OccasionCollections() {
                 </div>
 
                 {/* --------------------------------------------------------- */}
-                {/* ACTION SUITE (Direct WhatsApp Concierge & Repertoire CTA) */}
+                {/* ACTION SUITE (Direct Inquiry & Repertoire CTA) */}
                 {/* --------------------------------------------------------- */}
                 <div className="mt-4 lg:mt-7 pt-3 lg:pt-5 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
-                  <a
-                    href={buildWhatsAppUrl({
-                      occasion: activeOccasion.name,
-                      notes: `Hello Jensi! I am looking for a special bespoke gift for an upcoming ${activeOccasion.name} from THE PETAL MUSE. Could you please share your curated recommendations and customization possibilities?`,
-                    })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 py-3 sm:py-3.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl transition-all duration-300 active:scale-95"
-                  >
-                    <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
-                    <span className="whitespace-nowrap">Enquire on WhatsApp</span>
-                  </a>
+                  {enableWhatsApp ? (
+                    <a
+                      href={buildWhatsAppUrl({
+                        occasion: activeOccasion.name,
+                        notes: `Hello Jensi! I am looking for a special bespoke gift for an upcoming ${activeOccasion.name} from THE PETAL MUSE. Could you please share your curated recommendations and customization possibilities?`,
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-3 sm:py-3.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl transition-all duration-300 active:scale-95"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
+                      <span className="whitespace-nowrap">Enquire on WhatsApp</span>
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openInstagramInquiry({
+                          occasion: activeOccasion.name,
+                          title: activeOccasion.name,
+                          details: `Hello Jensi! I am looking for a special bespoke gift for an upcoming ${activeOccasion.name} from THE PETAL MUSE. Could you please share your curated recommendations and customization possibilities?`,
+                        })
+                      }
+                      className="flex-1 py-3 sm:py-3.5 px-6 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl transition-all duration-300 active:scale-95"
+                    >
+                      <Instagram className="w-4 h-4 text-white shrink-0" />
+                      <span className="whitespace-nowrap">Enquire via Instagram DM</span>
+                    </button>
+                  )}
 
                   <a
                     href="#collections"

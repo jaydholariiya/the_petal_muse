@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
   MessageCircle,
+  Instagram,
   X,
   Maximize2,
   HeartHandshake,
@@ -19,7 +20,7 @@ import {
 } from "lucide-react";
 import { SITE_CONTENT, ComboCollectionItem } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
@@ -30,6 +31,9 @@ function getSafeImageUrl(url?: string, fallback: string = "https://images.unspla
 
 export default function ComboCollections() {
   const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   let comboCollections = SITE_CONTENT.comboCollections;
   if (settings["combos_data"]) {
     try {
@@ -257,17 +261,34 @@ export default function ComboCollections() {
                 </div>
               </div>
 
-              {/* Action Bar: Direct WhatsApp Enquiry & Full Story Modal */}
+              {/* Action Bar: Direct Order Enquiry & Full Story Modal */}
               <div className="mt-6 pt-4 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto py-3 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold inline-flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
-                >
-                  <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
-                  <span className="whitespace-nowrap">Order Combo on WhatsApp</span>
-                </a>
+                {enableWhatsApp ? (
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto py-3 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold inline-flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
+                    <span className="whitespace-nowrap">Order Combo on WhatsApp</span>
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openInstagramInquiry({
+                        title: currentCombo.title,
+                        occasion: `Combo Suite - ${currentCombo.title}`,
+                        details: `Hello Jensi! I am enquiring about "${currentCombo.title}" (${currentCombo.subtitle}) from your Combo Collections. Could you share customization possibilities and pricing?`,
+                      })
+                    }
+                    className="w-full sm:w-auto py-3 px-6 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold inline-flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                  >
+                    <Instagram className="w-4 h-4 text-white shrink-0" />
+                    <span className="whitespace-nowrap">Order Combo via Instagram DM</span>
+                  </button>
+                )}
 
                 <button
                   type="button"
@@ -417,20 +438,37 @@ export default function ComboCollections() {
                       </div>
                     </div>
 
-                    {/* WhatsApp Action Button */}
+                    {/* Action Button: WhatsApp or Instagram DM */}
                     <div className="mt-6 pt-5 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                      <a
-                        href={buildWhatsAppUrl({
-                          occasion: `Combo Suite - ${activeModalCombo.title}`,
-                          notes: `Hello Jensi! I am enquiring about "${activeModalCombo.title}" from your curated combo suites. Could you share customization possibilities and pricing?`,
-                        })}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="py-3 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
-                      >
-                        <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                        <span>Enquire on WhatsApp</span>
-                      </a>
+                      {enableWhatsApp ? (
+                        <a
+                          href={buildWhatsAppUrl({
+                            occasion: `Combo Suite - ${activeModalCombo.title}`,
+                            notes: `Hello Jensi! I am enquiring about "${activeModalCombo.title}" from your curated combo suites. Could you share customization possibilities and pricing?`,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="py-3 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                        >
+                          <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                          <span>Enquire on WhatsApp</span>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openInstagramInquiry({
+                              title: activeModalCombo.title,
+                              occasion: `Combo Suite - ${activeModalCombo.title}`,
+                              details: `Hello Jensi! I am enquiring about "${activeModalCombo.title}" from your curated combo suites. Could you share customization possibilities and pricing?`,
+                            })
+                          }
+                          className="py-3 px-6 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                        >
+                          <Instagram className="w-4 h-4 text-white" />
+                          <span>Enquire via Instagram DM</span>
+                        </button>
+                      )}
 
                       <button
                         type="button"

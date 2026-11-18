@@ -4,12 +4,18 @@ import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Flower, Wind, Info, MessageCircle } from "lucide-react";
+import { Sparkles, Flower, Wind, Info, MessageCircle, Instagram } from "lucide-react";
 import { SITE_CONTENT, StemItem } from "@/content/site";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { useAtelierContent } from "@/context/AtelierContentContext";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 export default function StemArchiveSection() {
   const { stemLibrary } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
+
   const [activeSeason, setActiveSeason] = useState<string>("all");
   const [selectedStem, setSelectedStem] = useState<StemItem | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -23,11 +29,19 @@ export default function StemArchiveSection() {
   );
 
   const handleRequestStem = (stem: StemItem) => {
-    const url = buildWhatsAppUrl({
-      occasion: "Stem Inquiry",
-      notes: `Hello Jensi! I was exploring your Sensory Stem Library on the website and would love to feature ${stem.commonName} (${stem.botanicalName}) in our floral design.`,
-    });
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (enableWhatsApp) {
+      const url = buildWhatsAppUrl({
+        occasion: "Stem Inquiry",
+        notes: `Hello Jensi! I was exploring your Sensory Stem Library on the website and would love to feature ${stem.commonName} (${stem.botanicalName}) in our floral design.`,
+      });
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      openInstagramInquiry({
+        title: stem.commonName,
+        occasion: "Stem Inquiry",
+        details: `Hello Jensi! I was exploring your Sensory Stem Library on the website and would love to feature ${stem.commonName} (${stem.botanicalName}) in our floral design.`,
+      });
+    }
   };
 
   return (
@@ -134,10 +148,18 @@ export default function StemArchiveSection() {
                   e.stopPropagation();
                   handleRequestStem(stem);
                 }}
-                className="mt-2 w-full py-1.5 rounded-full bg-[#25D366] text-white font-sans text-[9px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all"
+                className={`mt-2 w-full py-1.5 rounded-full ${
+                  enableWhatsApp
+                    ? "bg-[#25D366]"
+                    : "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045]"
+                } text-white font-sans text-[9px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-all`}
               >
-                <MessageCircle className="w-2.5 h-2.5 fill-white stroke-none" />
-                <span>WhatsApp</span>
+                {enableWhatsApp ? (
+                  <MessageCircle className="w-2.5 h-2.5 fill-white stroke-none" />
+                ) : (
+                  <Instagram className="w-2.5 h-2.5 text-white" />
+                )}
+                <span>{enableWhatsApp ? "WhatsApp" : "Instagram"}</span>
               </button>
             </div>
           </motion.div>
@@ -232,8 +254,17 @@ export default function StemArchiveSection() {
                     }}
                     className="inline-flex items-center gap-1.5 text-[10.5px] sm:text-[11px] uppercase tracking-wider sm:tracking-widest font-semibold text-mulberry-wine hover:text-marigold-glow transition-colors"
                   >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-                    <span>Request on WhatsApp</span>
+                    {enableWhatsApp ? (
+                      <>
+                        <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                        <span>Request on WhatsApp</span>
+                      </>
+                    ) : (
+                      <>
+                        <Instagram className="w-3.5 h-3.5 text-[#E1306C]" />
+                        <span>Request on Instagram</span>
+                      </>
+                    )}
                   </button>
 
                   <span className="text-[9.5px] sm:text-[10px] uppercase tracking-widest text-ink-aubergine/40 shrink-0">
@@ -322,10 +353,22 @@ export default function StemArchiveSection() {
                       handleRequestStem(selectedStem);
                       setSelectedStem(null);
                     }}
-                    className="mt-6 w-full py-3.5 rounded-full bg-[#25D366] text-white font-sans text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#20ba59] transition-colors flex items-center justify-center gap-2 shadow-md"
+                    className={`mt-6 w-full py-3.5 rounded-full ${
+                      enableWhatsApp
+                        ? "bg-[#25D366] hover:bg-[#20ba59]"
+                        : "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95"
+                    } text-white font-sans text-xs uppercase tracking-[0.2em] font-semibold transition-colors flex items-center justify-center gap-2 shadow-md`}
                   >
-                    <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                    <span>Include in My Bespoke Design</span>
+                    {enableWhatsApp ? (
+                      <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                    ) : (
+                      <Instagram className="w-4 h-4 text-white" />
+                    )}
+                    <span>
+                      {enableWhatsApp
+                        ? "Include in My Bespoke Design"
+                        : "Enquire via Instagram DM"}
+                    </span>
                   </button>
                 </div>
               </div>

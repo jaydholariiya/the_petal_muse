@@ -234,6 +234,7 @@ export default function AdminPage() {
     featured_imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2400&q=90",
 
     // Contact & Social Media
+    enable_whatsapp: "false",
     brand_whatsapp: "ADD_PHONE_HERE",
     contact_email: "ADD_EMAIL_HERE",
     contact_location: "Gujarat, India | Handcrafted & Delivered Across India & Worldwide",
@@ -1714,10 +1715,26 @@ export default function AdminPage() {
 
 
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-xs uppercase text-stone-400 mb-1">
-                        WhatsApp Number (with country code, e.g. 919876543210)
+                        WhatsApp Feature Visibility
+                      </label>
+                      <select
+                        value={sectionsData.enable_whatsapp || "false"}
+                        onChange={(e) =>
+                          setSectionsData((prev) => ({ ...prev, enable_whatsapp: e.target.value }))
+                        }
+                        className="w-full bg-stone-950 border border-stone-800 rounded-xl px-3.5 py-2.5 text-sm text-white font-sans focus:border-amber-500"
+                      >
+                        <option value="false">Hidden (Instagram DM Mode)</option>
+                        <option value="true">Visible (WhatsApp Active)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs uppercase text-stone-400 mb-1">
+                        WhatsApp Number (with country code)
                       </label>
                       <input
                         type="text"

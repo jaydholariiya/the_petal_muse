@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Instagram, ArrowUpRight, MessageCircle } from "lucide-react";
 import BrandLogo from "@/components/brand/BrandLogo";
 import { SITE_CONTENT } from "@/content/site";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { useAtelierContent } from "@/context/AtelierContentContext";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 // Curated primary links for desktop header — balanced luxury marquee links
 const PRIMARY_NAV_LINKS = [
@@ -84,6 +85,11 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [menuOpen]);
 
+  const { settings } = useAtelierContent();
+  const enableWhatsApp = settings["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
+
   const whatsappDirectUrl = buildWhatsAppUrl({
     occasion: "Bespoke Mobile Consultation",
     notes: "Hello Jensi! I am browsing THE PETAL MUSE on my phone and would love to discuss floral styling.",
@@ -124,16 +130,32 @@ export default function Navbar() {
 
           {/* Right: Actions for Desktop & Mobile with matching balance */}
           <div className="flex items-center gap-2 sm:gap-3.5 shrink-0 ml-6 lg:ml-10 xl:ml-14">
-            {/* Mobile WhatsApp Quick Action Icon */}
-            <a
-              href={whatsappDirectUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp Concierge"
-              className="sm:hidden p-2 rounded-full bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 transition-colors"
-            >
-              <MessageCircle className="w-4 h-4 fill-[#25D366] stroke-none" />
-            </a>
+            {/* Mobile Quick Action Icon */}
+            {enableWhatsApp ? (
+              <a
+                href={whatsappDirectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp Concierge"
+                className="sm:hidden p-2 rounded-full bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 fill-[#25D366] stroke-none" />
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={() =>
+                  openInstagramInquiry({
+                    occasion: "Bespoke Mobile Consultation",
+                    notes: "Hello Jensi! I am browsing THE PETAL MUSE on my phone and would love to discuss floral styling.",
+                  })
+                }
+                aria-label="Instagram Concierge"
+                className="sm:hidden p-2 rounded-full bg-gradient-to-tr from-amber-500/20 to-rose-500/20 text-rose-300 hover:text-white transition-colors"
+              >
+                <Instagram className="w-4 h-4 text-rose-300" />
+              </button>
+            )}
 
             {/* Desktop Instagram Link */}
             <a

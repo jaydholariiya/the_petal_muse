@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
   MessageCircle,
+  Instagram,
   X,
   Maximize2,
   CalendarHeart,
@@ -15,7 +16,7 @@ import {
 } from "lucide-react";
 import { SITE_CONTENT, BestsellerProduct } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
@@ -26,6 +27,9 @@ function getSafeImageUrl(url?: string, fallback: string = "https://images.unspla
 
 export default function BestsellersSection() {
   const { settings } = useAtelierContent();
+  const enableWhatsApp = settings["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   let bestsellersSection = SITE_CONTENT.bestsellersSection;
   if (settings["bestsellers_data"]) {
     try {
@@ -368,20 +372,38 @@ export default function BestsellersSection() {
                       </div>
                     </div>
 
-                    {/* WhatsApp Ordering Action Button */}
+                    {/* Ordering Action Button: Instagram DM or WhatsApp */}
                     <div className="mt-6 pt-5 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                      <a
-                        href={buildWhatsAppUrl({
-                          occasion: activeProduct.categoryName,
-                          notes: `Hello Jensi! I saw "${activeProduct.title}" in your Bestsellers on THE PETAL MUSE and would love to enquire about customizing one.`,
-                        })}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="py-3 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
-                      >
-                        <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                        <span>Enquire on WhatsApp</span>
-                      </a>
+                      {enableWhatsApp ? (
+                        <a
+                          href={buildWhatsAppUrl({
+                            occasion: activeProduct.categoryName,
+                            notes: `Hello Jensi! I saw "${activeProduct.title}" in your Bestsellers on THE PETAL MUSE and would love to enquire about customizing one.`,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="py-3 px-6 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                        >
+                          <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                          <span>Enquire on WhatsApp</span>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openInstagramInquiry({
+                              title: activeProduct.title,
+                              category: activeProduct.categoryName,
+                              occasion: activeProduct.featuredOccasion,
+                              notes: `Hello Jensi! I saw "${activeProduct.title}" in your Bestsellers on THE PETAL MUSE and would love to enquire about customizing one.`,
+                            })
+                          }
+                          className="py-3 px-6 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-purple-600 hover:opacity-90 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                        >
+                          <Instagram className="w-4 h-4 text-white" />
+                          <span>Enquire on Instagram</span>
+                        </button>
+                      )}
 
                       <button
                         onClick={() => setActiveProduct(null)}

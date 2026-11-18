@@ -220,9 +220,13 @@ export const SITE_CONTENT = {
     subtagline: "Personalized Keepsakes, Luxury Hampers & Floral Art.",
     statement: "Bespoke handcrafted gifts, personalized keepsake frames, couture magazines, chocolate bouquets, luxury hampers, and poetic floral creations.",
 
-    // Official Instagram profile
+    // Official Instagram profile & direct messaging
     instagramHandle: "@the.petalmusee",
     instagramUrl: "https://www.instagram.com/the.petalmusee/",
+    instagramDmUrl: "https://ig.me/m/the.petalmusee",
+
+    // Communication channel preferences: Set to true whenever you want to un-hide WhatsApp
+    enableWhatsApp: false,
 
     // Contact Information (Owner placeholders until verified)
     whatsappNumber: "ADD_PHONE_HERE", 

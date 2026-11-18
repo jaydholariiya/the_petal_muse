@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Manrope, Italiana } from "next/font/google";
 import "./globals.css";
 import { SITE_CONTENT } from "@/content/site";
 import { AtelierContentProvider } from "@/context/AtelierContentContext";
+import GlobalToast from "@/components/ui/GlobalToast";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -114,6 +115,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <AtelierContentProvider>
+          <GlobalToast />
           {children}
         </AtelierContentProvider>
       </body>

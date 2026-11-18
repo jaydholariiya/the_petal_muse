@@ -1,23 +1,37 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, Sparkles, MessageCircle, Clock, Layers, ArrowRight } from "lucide-react";
+import { Check, Sparkles, MessageCircle, Instagram, Clock, Layers, ArrowRight } from "lucide-react";
 import { SITE_CONTENT, EventScope } from "@/content/site";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { useAtelierContent } from "@/context/AtelierContentContext";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 export default function EventScopeCalculator() {
   const { eventScopes } = SITE_CONTENT;
+  const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
+
   const [selectedTierId, setSelectedTierId] = useState<string>(eventScopes.tiers[1].id);
 
   const selectedTier =
     eventScopes.tiers.find((t) => t.id === selectedTierId) || eventScopes.tiers[1];
 
   const handleDiscussScope = (tier: EventScope) => {
-    const url = buildWhatsAppUrl({
-      occasion: tier.title,
-      notes: `Hello Jensi! I reviewed your Event Scope Guide on the website and would like to discuss ${tier.title} (${tier.subtitle}) for our celebration.`,
-    });
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (enableWhatsApp) {
+      const url = buildWhatsAppUrl({
+        occasion: tier.title,
+        notes: `Hello Jensi! I reviewed your Event Scope Guide on the website and would like to discuss ${tier.title} (${tier.subtitle}) for our celebration.`,
+      });
+      window.open(url, "_blank", "noopener,noreferrer");
+    } else {
+      openInstagramInquiry({
+        title: tier.title,
+        occasion: tier.title,
+        details: `Hello Jensi! I reviewed your Event Scope Guide on the website and would like to discuss ${tier.title} (${tier.subtitle}) for our celebration.`,
+      });
+    }
   };
 
   return (
@@ -164,13 +178,23 @@ export default function EventScopeCalculator() {
             </div>
           </div>
 
-          <button
-            onClick={() => handleDiscussScope(selectedTier)}
-            className="mt-8 w-full py-4 rounded-full bg-[#25D366] text-white font-sans text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#20ba59] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-          >
-            <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-            <span>Enquire For This Scale</span>
-          </button>
+          {enableWhatsApp ? (
+            <button
+              onClick={() => handleDiscussScope(selectedTier)}
+              className="mt-8 w-full py-4 rounded-full bg-[#25D366] text-white font-sans text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#20ba59] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:scale-95"
+            >
+              <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+              <span>Enquire For This Scale</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => handleDiscussScope(selectedTier)}
+              className="mt-8 w-full py-4 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-sans text-xs uppercase tracking-[0.2em] font-semibold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:scale-95"
+            >
+              <Instagram className="w-4 h-4 text-white" />
+              <span>Enquire via Instagram DM</span>
+            </button>
+          )}
         </div>
       </div>
     </section>

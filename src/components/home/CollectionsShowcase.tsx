@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
   MessageCircle,
+  Instagram,
   X,
   ChevronLeft,
   ChevronRight,
@@ -31,7 +32,7 @@ import {
 import { SITE_CONTENT } from "@/content/site";
 import { CATALOG_WORKS, CatalogWorkItem } from "@/content/catalogWorks";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 // Refined aesthetic short titles for the 15 categories (Matching User Priority 1 to 15)
 const SHORT_TITLES: Record<string, string> = {
@@ -63,7 +64,10 @@ function getSafeImageUrl(url?: string, fallback: string = "https://images.unspla
 }
 
 export default function CollectionsShowcase() {
-  const { categories: dynamicCategories, catalogWorks } = useAtelierContent();
+  const { categories: dynamicCategories, catalogWorks, settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   const productCategories = dynamicCategories?.length > 0 ? dynamicCategories : SITE_CONTENT.productCategories;
   const [activeCategoryId, setActiveCategoryId] = useState<string>("cat-01");
   const [activeWorkItem, setActiveWorkItem] = useState<CatalogWorkItem | null>(null);
@@ -974,20 +978,38 @@ export default function CollectionsShowcase() {
                       )}
                     </div>
 
-                    {/* WhatsApp Direct Ordering Action */}
+                    {/* Ordering Action: Instagram DM or WhatsApp */}
                     <div className="mt-6 pt-5 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                      <a
-                        href={buildWhatsAppUrl({
-                          occasion: activeWorkItem.categoryName,
-                          notes: `Hello Jensi! I saw "${activeWorkItem.title}" in your ${activeWorkItem.categoryName} catalog on THE PETAL MUSE. Could you please share bespoke customization details, available dates, and pricing?`,
-                        })}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
-                      >
-                        <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                        <span>Order on WhatsApp</span>
-                      </a>
+                      {enableWhatsApp ? (
+                        <a
+                          href={buildWhatsAppUrl({
+                            occasion: activeWorkItem.categoryName,
+                            notes: `Hello Jensi! I saw "${activeWorkItem.title}" in your ${activeWorkItem.categoryName} catalog on THE PETAL MUSE. Could you please share bespoke customization details, available dates, and pricing?`,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                        >
+                          <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                          <span>Order on WhatsApp</span>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openInstagramInquiry({
+                              title: activeWorkItem.title,
+                              category: activeWorkItem.categoryName,
+                              occasion: activeWorkItem.categoryName,
+                              notes: `Hello Jensi! I saw "${activeWorkItem.title}" in your ${activeWorkItem.categoryName} catalog on THE PETAL MUSE. Could you please share bespoke customization details, available dates, and pricing?`,
+                            })
+                          }
+                          className="flex-1 py-3 px-5 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-purple-600 hover:opacity-90 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
+                        >
+                          <Instagram className="w-4 h-4 text-white" />
+                          <span>Enquire on Instagram</span>
+                        </button>
+                      )}
 
                       <button
                         type="button"
@@ -1191,20 +1213,38 @@ export default function CollectionsShowcase() {
                       </button>
                     </div>
 
-                    {/* Action Bar (WhatsApp + Specs Toggle) */}
+                    {/* Action Bar (Instagram DM / WhatsApp + Specs Toggle) */}
                     <div className="flex items-center gap-2">
-                      <a
-                        href={buildWhatsAppUrl({
-                          occasion: activeWorkItem.categoryName,
-                          notes: `Hello Jensi! I watched the full studio reel of "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
-                        })}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 py-3 px-4 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-95"
-                      >
-                        <MessageCircle className="w-4 h-4 fill-white stroke-none" />
-                        <span>Order on WhatsApp</span>
-                      </a>
+                      {enableWhatsApp ? (
+                        <a
+                          href={buildWhatsAppUrl({
+                            occasion: activeWorkItem.categoryName,
+                            notes: `Hello Jensi! I watched the full studio reel of "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-3 px-4 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                        >
+                          <MessageCircle className="w-4 h-4 fill-white stroke-none" />
+                          <span>Order on WhatsApp</span>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openInstagramInquiry({
+                              title: activeWorkItem.title,
+                              category: activeWorkItem.categoryName,
+                              occasion: activeWorkItem.categoryName,
+                              notes: `Hello Jensi! I watched the full studio reel of "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
+                            })
+                          }
+                          className="flex-1 py-3 px-4 rounded-full bg-gradient-to-r from-amber-500 via-rose-500 to-purple-600 hover:opacity-90 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg active:scale-95"
+                        >
+                          <Instagram className="w-4 h-4 text-white" />
+                          <span>Enquire on Instagram</span>
+                        </button>
+                      )}
 
                       <button
                         type="button"
@@ -1314,18 +1354,35 @@ export default function CollectionsShowcase() {
 
                           {/* Action Buttons */}
                           <div className="space-y-2 pt-2 border-t border-white/15">
-                            <a
-                              href={buildWhatsAppUrl({
-                                occasion: activeWorkItem.categoryName,
-                                notes: `Hello Jensi! I am reviewing the atelier specifications for "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
-                              })}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="w-full py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl active:scale-95"
-                            >
-                              <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
-                              <span className="whitespace-nowrap">Order on WhatsApp</span>
-                            </a>
+                            {enableWhatsApp ? (
+                              <a
+                                href={buildWhatsAppUrl({
+                                  occasion: activeWorkItem.categoryName,
+                                  notes: `Hello Jensi! I am reviewing the atelier specifications for "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
+                                })}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full py-3 px-5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl active:scale-95"
+                              >
+                                <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
+                                <span className="whitespace-nowrap">Order on WhatsApp</span>
+                              </a>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  openInstagramInquiry({
+                                    title: activeWorkItem.title,
+                                    occasion: activeWorkItem.categoryName,
+                                    details: `Hello Jensi! I am reviewing the atelier specifications for "${activeWorkItem.title}" (${activeWorkItem.categoryName}) on THE PETAL MUSE. Could you please share bespoke customization details and pricing?`,
+                                  })
+                                }
+                                className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-all"
+                              >
+                                <Instagram className="w-4 h-4 text-white shrink-0" />
+                                <span className="whitespace-nowrap">Order via Instagram DM</span>
+                              </button>
+                            )}
 
                             <button
                               type="button"

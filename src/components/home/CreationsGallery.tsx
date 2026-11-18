@@ -18,9 +18,14 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { SITE_CONTENT, CreationItem } from "@/content/site";
-import { buildWhatsAppUrl } from "@/lib/utils";
+import { useAtelierContent } from "@/context/AtelierContentContext";
+import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 export default function CreationsGallery() {
+  const { settings } = useAtelierContent();
+  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
+    ? settings["enable_whatsapp"] === "true"
+    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   const { galleryCategories, creations } = SITE_CONTENT;
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [activeLightboxIndex, setActiveLightboxIndex] = useState<number | null>(null);
@@ -351,18 +356,35 @@ export default function CreationsGallery() {
 
               {/* Action Buttons Row */}
               <div className="mt-3.5 pt-3 border-t border-white/15 flex items-center justify-between gap-2 pointer-events-auto">
-                <a
-                  href={buildWhatsAppUrl({
-                    occasion: currentSlide.categoryLabel,
-                    notes: `Hello Jensi! I loved "${currentSlide.title}" from your Bloom Archive and want to enquire about a bespoke creation like this.`,
-                  })}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 py-2 px-3 rounded-full bg-[#25D366] text-white font-sans text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
-                >
-                  <MessageCircle className="w-3 h-3 fill-white stroke-none" />
-                  <span>Enquire on WhatsApp</span>
-                </a>
+                {enableWhatsApp ? (
+                  <a
+                    href={buildWhatsAppUrl({
+                      occasion: currentSlide.categoryLabel,
+                      notes: `Hello Jensi! I loved "${currentSlide.title}" from your Bloom Archive and want to enquire about a bespoke creation like this.`,
+                    })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2 px-3 rounded-full bg-[#25D366] text-white font-sans text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                  >
+                    <MessageCircle className="w-3 h-3 fill-white stroke-none" />
+                    <span>Enquire on WhatsApp</span>
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openInstagramInquiry({
+                        title: currentSlide.title,
+                        occasion: currentSlide.categoryLabel,
+                        details: `Hello Jensi! I loved "${currentSlide.title}" from your Bloom Archive and want to enquire about a bespoke creation like this.`,
+                      })
+                    }
+                    className="flex-1 py-2 px-3 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white font-sans text-[10px] uppercase tracking-wider font-semibold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all"
+                  >
+                    <Instagram className="w-3 h-3 text-white" />
+                    <span>Enquire via Instagram</span>
+                  </button>
+                )}
 
                 <button
                   onClick={() => setActiveLightboxIndex(activeSlideIndex)}
