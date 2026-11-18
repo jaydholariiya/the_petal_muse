@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -56,6 +56,23 @@ export default function CustomerReviewsSection() {
     setActiveIndex((prev) => (prev + 1) % reviews.length);
   };
 
+  const touchStartXRef = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const diff = touchStartXRef.current - e.changedTouches[0].clientX;
+    if (diff > 40) {
+      setActiveIndex((prev) => (prev + 1) % reviews.length);
+    } else if (diff < -40) {
+      setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    }
+    touchStartXRef.current = null;
+  };
+
   const waUrl = buildWhatsAppUrl({
     service: `Patron Keepsake Inquiry: ${currentReview.giftedItem}`,
     occasion: currentReview.occasion,
@@ -65,37 +82,37 @@ export default function CustomerReviewsSection() {
   return (
     <section
       id="reviews"
-      className="relative py-14 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden w-full min-w-0"
+      className="relative py-8 sm:py-24 md:py-32 px-3 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden w-full min-w-0"
     >
       {/* Editorial Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-ink-aubergine/10 pb-5 sm:pb-8 mb-8 sm:mb-12 w-full min-w-0 gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-ink-aubergine/10 pb-4 sm:pb-8 mb-4 sm:mb-12 w-full min-w-0 gap-3 sm:gap-4">
         <div className="w-full md:w-auto min-w-0">
-          <div className="flex items-center gap-2 mb-2 sm:mb-3">
+          <div className="flex items-center gap-2 mb-1.5 sm:mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
             <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.25em] sm:tracking-[0.3em] text-mulberry-wine font-medium">
               {customerReviewsSection.eyebrow}
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-ink-aubergine font-normal tracking-tight">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif text-ink-aubergine font-normal tracking-tight">
             {customerReviewsSection.title}
           </h2>
-          <p className="mt-1 text-sm sm:text-base text-ink-aubergine/70 font-light max-w-xl">
+          <p className="mt-0.5 sm:mt-1 text-xs sm:text-base text-ink-aubergine/70 font-light max-w-xl">
             {customerReviewsSection.subtitle}
           </p>
         </div>
 
         {/* Patron Confidence Stats */}
-        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4 shrink-0">
           {customerReviewsSection.stats.map((stat, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/70 border border-ink-aubergine/10 shadow-xs"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white/70 border border-ink-aubergine/10 shadow-xs"
             >
-              <Sparkles className="w-3.5 h-3.5 text-marigold-glow flex-shrink-0" />
-              <span className="text-xs font-serif font-medium text-ink-aubergine">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-marigold-glow flex-shrink-0" />
+              <span className="text-[11px] sm:text-xs font-serif font-medium text-ink-aubergine">
                 {stat.value}
               </span>
-              <span className="text-[11px] font-sans text-ink-aubergine/60 font-light">
+              <span className="text-[10px] sm:text-[11px] font-sans text-ink-aubergine/60 font-light">
                 {stat.label}
               </span>
             </div>
@@ -103,19 +120,23 @@ export default function CustomerReviewsSection() {
         </div>
       </div>
 
-      {/* UNIQUE CINEMATIC LOVE STORY SLIDER (Split Exhibition Stage - Non-Card Layout) */}
-      <div className="relative w-full rounded-3xl sm:rounded-[36px] bg-gradient-to-br from-white/90 via-cream-linen/60 to-warm-parchment/80 border border-ink-aubergine/10 shadow-xl overflow-hidden p-6 sm:p-10 md:p-14">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center w-full min-w-0">
+      {/* UNIQUE CINEMATIC LOVE STORY SLIDER (Compact on Mobile, Grand on Desktop) */}
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="relative w-full rounded-2xl sm:rounded-[36px] bg-gradient-to-br from-white/95 via-cream-linen/70 to-warm-parchment/85 border border-ink-aubergine/10 shadow-lg sm:shadow-xl overflow-hidden p-3.5 sm:p-8 md:p-14 select-none"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-8 lg:gap-14 items-center w-full min-w-0">
           {/* LEFT: ARCHITECTURAL PORTRAIT & GIFT PHOTOGRAPHY */}
           <div className="lg:col-span-5 relative w-full min-w-0">
-            <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-[32px] overflow-hidden shadow-2xl bg-ink-aubergine/10 border border-ink-aubergine/10">
+            <div className="relative aspect-[16/10] sm:aspect-[4/5] w-full rounded-xl sm:rounded-[32px] overflow-hidden shadow-md sm:shadow-2xl bg-ink-aubergine/10 border border-ink-aubergine/10">
               <AnimatePresence initial={false} mode="wait">
                 <motion.div
                   key={currentReview.id}
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
                   className="absolute inset-0"
                 >
                   <Image
@@ -132,30 +153,30 @@ export default function CustomerReviewsSection() {
               </AnimatePresence>
 
               {/* Floating Top Rating Badge */}
-              <div className="absolute top-4 left-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-amber-900/10">
+              <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-10 flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-0.5 sm:py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-amber-900/10">
                 <div className="flex items-center text-amber-500">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-3.5 h-3.5 fill-amber-400 text-amber-500"
+                      className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-500"
                     />
                   ))}
                 </div>
-                <span className="text-xs font-sans font-bold text-ink-aubergine ml-0.5">
+                <span className="text-[10.5px] sm:text-xs font-sans font-bold text-ink-aubergine ml-0.5">
                   5.0
                 </span>
               </div>
 
               {/* Occasion Pill (Top Right) */}
-              <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-[9.5px] font-sans uppercase tracking-wider text-butter-cream border border-white/20">
+              <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-[8.5px] sm:text-[9.5px] font-sans uppercase tracking-wider text-butter-cream border border-white/20">
                 {currentReview.occasion}
               </div>
 
               {/* Bottom Inset: Gifted Item Tag */}
-              <div className="absolute bottom-4 inset-x-4 z-10 p-3 rounded-2xl bg-ink-aubergine/90 backdrop-blur-md text-butter-cream border border-white/10 flex items-center gap-2">
-                <Gift className="w-4 h-4 text-marigold-glow shrink-0" />
+              <div className="absolute bottom-2 inset-x-2 sm:bottom-4 sm:inset-x-4 z-10 p-2 sm:p-3 rounded-lg sm:rounded-2xl bg-ink-aubergine/90 backdrop-blur-md text-butter-cream border border-white/10 flex items-center gap-2">
+                <Gift className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-marigold-glow shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-[9px] uppercase font-sans tracking-widest text-apricot-blush block">
+                  <span className="text-[7.5px] sm:text-[9px] uppercase font-sans tracking-widest text-apricot-blush block">
                     Bespoke Creation Gifted
                   </span>
                   <p className="font-serif italic text-xs sm:text-sm truncate text-butter-cream">
@@ -171,64 +192,64 @@ export default function CustomerReviewsSection() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentReview.id}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
               >
-                {/* Large Decorative Serif Quotation Mark */}
-                <div className="text-5xl sm:text-6xl md:text-7xl font-serif text-mulberry-wine/25 leading-none select-none -mb-3">
+                {/* Large Decorative Serif Quotation Mark (Desktop only to save vertical mobile space) */}
+                <div className="hidden sm:block text-5xl sm:text-6xl md:text-7xl font-serif text-mulberry-wine/25 leading-none select-none -mb-3">
                   “
                 </div>
 
                 {/* The Emotional Testimonial Quote */}
-                <blockquote className="font-serif italic text-lg sm:text-2xl md:text-3xl text-ink-aubergine font-light leading-relaxed pl-1 sm:pl-2">
+                <blockquote className="font-serif italic text-xs sm:text-xl md:text-2xl text-ink-aubergine font-normal sm:font-light leading-relaxed sm:leading-relaxed pl-0 sm:pl-2 line-clamp-4 sm:line-clamp-none">
                   &ldquo;{currentReview.quote}&rdquo;
                 </blockquote>
 
                 {/* Patron Details & Verification */}
-                <div className="mt-8 pt-6 border-t border-ink-aubergine/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h4 className="text-base sm:text-lg font-serif font-medium text-ink-aubergine">
+                <div className="mt-3 sm:mt-6 pt-2.5 sm:pt-5 border-t border-ink-aubergine/10 flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <h4 className="text-xs sm:text-base md:text-lg font-serif font-medium text-ink-aubergine truncate">
                         {currentReview.name}
                       </h4>
                       {currentReview.verified && (
                         <span
                           title="Verified Patron Experience"
-                          className="inline-flex items-center text-emerald-600"
+                          className="inline-flex items-center text-emerald-600 shrink-0"
                         >
-                          <CheckCircle2 className="w-4 h-4 fill-emerald-100" />
+                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-emerald-100" />
                         </span>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-xs font-sans text-ink-aubergine/65 mt-1">
-                      <MapPin className="w-3.5 h-3.5 text-ink-aubergine/40" />
-                      <span>{currentReview.location}</span>
-                      <span className="mx-1">•</span>
-                      <span>Verified {currentReview.date}</span>
+                    <div className="flex items-center gap-1 text-[10px] sm:text-xs font-sans text-ink-aubergine/65 mt-0.5 truncate">
+                      <MapPin className="w-3 h-3 text-ink-aubergine/40 shrink-0" />
+                      <span className="truncate">{currentReview.location}</span>
+                      <span className="mx-0.5">•</span>
+                      <span className="shrink-0">{currentReview.date}</span>
                     </div>
                   </div>
 
-                  <span className="self-start sm:self-auto inline-flex items-center gap-1.5 text-[10.5px] uppercase tracking-wider font-sans font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="hidden sm:inline-flex items-center gap-1.5 text-[10.5px] uppercase tracking-wider font-sans font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                     <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                     <span>Verified Purchase</span>
                   </span>
                 </div>
 
-                {/* Action CTA & Slider Controls */}
-                <div className="mt-8 pt-6 border-t border-ink-aubergine/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                {/* Action CTA & Slider Controls (Side-by-side compact row on all screens) */}
+                <div className="mt-3 sm:mt-6 pt-2.5 sm:pt-5 border-t border-ink-aubergine/10 flex items-center justify-between gap-2 sm:gap-4">
                   {enableWhatsApp ? (
                     <a
                       href={waUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-xs font-sans uppercase tracking-wider font-semibold text-white bg-[#25D366] hover:bg-[#20bd5a] transition-all shadow-md active:scale-95"
+                      className="flex-1 py-2 sm:py-3 px-3 sm:px-6 rounded-full text-[11px] sm:text-xs font-sans uppercase tracking-wider font-semibold text-white bg-[#25D366] hover:bg-[#20bd5a] transition-all shadow-sm sm:shadow-md active:scale-95 flex items-center justify-center gap-1.5 truncate"
                     >
-                      <MessageCircle className="w-4 h-4 fill-white stroke-none shrink-0" />
-                      <span className="whitespace-nowrap">Order Keepsake on WhatsApp</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 opacity-80 shrink-0" />
+                      <MessageCircle className="w-3.5 h-3.5 fill-white stroke-none shrink-0" />
+                      <span className="whitespace-nowrap">Order Keepsake</span>
+                      <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-80 shrink-0" />
                     </a>
                   ) : (
                     <button
@@ -240,26 +261,26 @@ export default function CustomerReviewsSection() {
                           notes: `Hello Jensi! I read the review by ${currentReview.name} regarding "${currentReview.giftedItem}" and would love to craft a similar bespoke keepsake for my upcoming celebration!`,
                         })
                       }
-                      className="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full text-xs font-sans uppercase tracking-wider font-semibold text-white bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 transition-all shadow-md active:scale-95"
+                      className="flex-1 py-2 sm:py-3 px-3 sm:px-6 rounded-full text-[11px] sm:text-xs font-sans uppercase tracking-wider font-semibold text-white bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 transition-all shadow-sm sm:shadow-md active:scale-95 flex items-center justify-center gap-1.5 truncate"
                     >
-                      <Instagram className="w-4 h-4 text-white shrink-0" />
-                      <span className="whitespace-nowrap">Order Keepsake via Instagram DM</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 opacity-80 shrink-0" />
+                      <Instagram className="w-3.5 h-3.5 text-white shrink-0" />
+                      <span className="whitespace-nowrap">Order Keepsake</span>
+                      <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-80 shrink-0" />
                     </button>
                   )}
 
                   {/* Previous / Next Arrow Controls */}
-                  <div className="flex items-center justify-center sm:justify-end gap-2 shrink-0">
+                  <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                     <button
                       type="button"
                       onClick={handlePrev}
                       aria-label="Previous story"
-                      className="w-10 h-10 rounded-full bg-white border border-ink-aubergine/15 text-ink-aubergine hover:bg-ink-aubergine hover:text-warm-parchment flex items-center justify-center transition-all shadow-xs active:scale-95"
+                      className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-white border border-ink-aubergine/15 text-ink-aubergine hover:bg-ink-aubergine hover:text-warm-parchment flex items-center justify-center transition-all shadow-xs active:scale-95"
                     >
-                      <ChevronLeft className="w-4 h-4" />
+                      <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </button>
 
-                    <span className="px-3.5 py-1.5 rounded-full text-xs font-sans uppercase tracking-widest text-ink-aubergine/70 bg-white/70 border border-ink-aubergine/10 font-medium">
+                    <span className="px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-sans uppercase tracking-widest text-ink-aubergine/70 bg-white/70 border border-ink-aubergine/10 font-medium">
                       {slideNumber} / 06
                     </span>
 
@@ -267,9 +288,9 @@ export default function CustomerReviewsSection() {
                       type="button"
                       onClick={handleNext}
                       aria-label="Next story"
-                      className="w-10 h-10 rounded-full bg-white border border-ink-aubergine/15 text-ink-aubergine hover:bg-ink-aubergine hover:text-warm-parchment flex items-center justify-center transition-all shadow-xs active:scale-95"
+                      className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-white border border-ink-aubergine/15 text-ink-aubergine hover:bg-ink-aubergine hover:text-warm-parchment flex items-center justify-center transition-all shadow-xs active:scale-95"
                     >
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </button>
                   </div>
                 </div>
@@ -280,7 +301,7 @@ export default function CustomerReviewsSection() {
       </div>
 
       {/* Pagination Slider Dots */}
-      <div className="flex items-center justify-center gap-2 mt-6">
+      <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-3.5 sm:mt-6">
         {reviews.map((rev, idx) => (
           <button
             key={rev.id}
@@ -289,8 +310,8 @@ export default function CustomerReviewsSection() {
             aria-label={`Jump to review ${idx + 1}`}
             className={`transition-all duration-300 rounded-full ${
               idx === activeIndex
-                ? "w-8 h-2 bg-ink-aubergine"
-                : "w-2 h-2 bg-ink-aubergine/25 hover:bg-ink-aubergine/50"
+                ? "w-5 sm:w-8 h-1.5 sm:h-2 bg-ink-aubergine"
+                : "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-ink-aubergine/25 hover:bg-ink-aubergine/50"
             }`}
           />
         ))}
