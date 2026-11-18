@@ -7,6 +7,23 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Sanitizes image URLs: strips broken Behance links and auto-converts Cloudinary .heic URLs to .jpg
+ * so web browsers never fail to display them.
+ */
+export function getSafeImageUrl(
+  url?: string,
+  fallback: string = "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85"
+): string {
+  if (!url || typeof url !== "string") return fallback;
+  let trimmed = url.trim();
+  if (!trimmed || trimmed.includes("behance.net/gallery/")) return fallback;
+  if (trimmed.toLowerCase().endsWith(".heic") && trimmed.includes("cloudinary.com")) {
+    trimmed = trimmed.replace(/\.heic$/i, ".jpg");
+  }
+  return trimmed;
+}
+
+/**
  * Builds a clean WhatsApp outbound URL with prefilled enquiry message.
  */
 export function buildWhatsAppUrl(details: {
@@ -19,7 +36,7 @@ export function buildWhatsAppUrl(details: {
   notes?: string;
 }) {
   const phone = SITE_CONTENT.brand.whatsappNumber.replace(/[^0-9]/g, "");
-  
+
   // Format message cleanly
   const lines: string[] = [
     `*Hello Jensi & THE PETAL MUSE Atelier,*`,
@@ -61,26 +78,18 @@ export function buildInstagramDmUrl(handle?: string): string {
   return `https://ig.me/m/${cleanHandle}`;
 }
 
-export interface InquiryDetails {
+/**
+ * Formats a bespoke inquiry message for copying to clipboard before opening Instagram DM.
+ */
+export function formatInquiryMessage(details: {
   title?: string;
   category?: string;
   occasion?: string;
   name?: string;
-  email?: string;
-  phone?: string;
   service?: string;
-  palette?: string;
-  style?: string;
   date?: string;
   notes?: string;
-  details?: string;
-  handle?: string;
-}
-
-/**
- * Formats a bespoke inquiry message for copying to clipboard before opening Instagram DM.
- */
-export function formatInquiryMessage(details: InquiryDetails): string {
+}): string {
   const lines: string[] = [
     `Hello Jensi & THE PETAL MUSE Atelier! ✨`,
     `I would love to enquire regarding a bespoke creation:`,
@@ -90,19 +99,13 @@ export function formatInquiryMessage(details: InquiryDetails): string {
   if (details.title) lines.push(`• Creation: ${details.title}`);
   if (details.category) lines.push(`• Category: ${details.category}`);
   if (details.occasion) lines.push(`• Occasion / Milestone: ${details.occasion}`);
-  if (details.palette) lines.push(`• Palette: ${details.palette}`);
-  if (details.style) lines.push(`• Style: ${details.style}`);
   if (details.name) lines.push(`• Client Name: ${details.name}`);
-  if (details.email) lines.push(`• Email: ${details.email}`);
-  if (details.phone) lines.push(`• Phone: ${details.phone}`);
   if (details.service) lines.push(`• Service Type: ${details.service}`);
   if (details.date) lines.push(`• Preferred Date: ${details.date}`);
-
-  const extraNotes = details.notes || details.details;
-  if (extraNotes) {
+  if (details.notes) {
     lines.push(``);
     lines.push(`Notes & Vision:`);
-    lines.push(extraNotes);
+    lines.push(details.notes);
   }
 
   lines.push(``);
@@ -113,7 +116,16 @@ export function formatInquiryMessage(details: InquiryDetails): string {
 /**
  * Copies the inquiry details to the user's clipboard and immediately opens Instagram DM.
  */
-export async function openInstagramInquiry(details: InquiryDetails): Promise<void> {
+export async function openInstagramInquiry(details: {
+  title?: string;
+  category?: string;
+  occasion?: string;
+  name?: string;
+  service?: string;
+  date?: string;
+  notes?: string;
+  handle?: string;
+}): Promise<void> {
   const message = formatInquiryMessage(details);
   const dmUrl = buildInstagramDmUrl(details.handle);
 
@@ -122,7 +134,7 @@ export async function openInstagramInquiry(details: InquiryDetails): Promise<voi
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(message);
       }
-    } catch {}
+    } catch { }
 
     window.dispatchEvent(
       new CustomEvent("the_petal_muse_toast", {

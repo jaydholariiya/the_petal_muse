@@ -409,7 +409,10 @@ export default function AdminPage() {
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
 
-      const url = json.data?.secureUrl || json.data?.url;
+      let url = json.data?.secureUrl || json.data?.url;
+      if (url && url.toLowerCase().endsWith(".heic") && url.includes("cloudinary.com")) {
+        url = url.replace(/\.heic$/i, ".jpg");
+      }
 
       if (targetField === "hero_image") {
         setSectionsData((prev) => ({ ...prev, hero_backgroundImage: url }));
@@ -459,7 +462,10 @@ export default function AdminPage() {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
-      const url = json.data?.secureUrl || json.data?.url;
+      let url = json.data?.secureUrl || json.data?.url;
+      if (url && url.toLowerCase().endsWith(".heic") && url.includes("cloudinary.com")) {
+        url = url.replace(/\.heic$/i, ".jpg");
+      }
       if (json.data?.source === "cloudinary") {
         showMessage("Uploaded successfully to Cloudinary cloud!", "success");
       } else {

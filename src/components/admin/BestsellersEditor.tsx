@@ -5,6 +5,16 @@ import Image from "next/image";
 import { Sparkles, Plus, Trash2, Edit, UploadCloud, CheckCircle2, Eye, RefreshCw, Loader2 } from "lucide-react";
 import { BestsellerProduct } from "@/content/site";
 
+function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85") {
+  if (!url || typeof url !== "string") return fallback;
+  let trimmed = url.trim();
+  if (trimmed.includes("behance.net/gallery/")) return fallback;
+  if (trimmed.toLowerCase().endsWith(".heic") && trimmed.includes("cloudinary.com")) {
+    trimmed = trimmed.replace(/\.heic$/i, ".jpg");
+  }
+  return trimmed;
+}
+
 interface BestsellersEditorProps {
   products: BestsellerProduct[];
   categories: { Id: string; Name: string; Slug: string }[];
@@ -163,7 +173,7 @@ export default function BestsellersEditor({
           >
             <div className="relative aspect-[16/10] w-full bg-black/40 overflow-hidden">
               <Image
-                src={prod.imageUrl}
+                src={getSafeImageUrl(prod.imageUrl)}
                 alt={prod.title}
                 fill
                 sizes="350px"
@@ -350,7 +360,7 @@ export default function BestsellersEditor({
                 {editProduct.imageUrl && (
                   <div className="mt-2 relative w-24 h-24 rounded-lg overflow-hidden border border-stone-800 bg-stone-950">
                     <Image
-                      src={editProduct.imageUrl}
+                      src={getSafeImageUrl(editProduct.imageUrl)}
                       alt="Preview"
                       fill
                       className="object-cover"

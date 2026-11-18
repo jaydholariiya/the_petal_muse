@@ -27,8 +27,11 @@ import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
-  const trimmed = url.trim();
+  let trimmed = url.trim();
   if (trimmed.includes("behance.net/gallery/")) return fallback;
+  if (trimmed.toLowerCase().endsWith(".heic") && trimmed.includes("cloudinary.com")) {
+    trimmed = trimmed.replace(/\.heic$/i, ".jpg");
+  }
   return trimmed;
 }
 

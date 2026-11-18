@@ -20,16 +20,16 @@ import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
-  const trimmed = url.trim();
+  let trimmed = url.trim();
   if (trimmed.includes("behance.net/gallery/")) return fallback;
+  if (trimmed.toLowerCase().endsWith(".heic") && trimmed.includes("cloudinary.com")) {
+    trimmed = trimmed.replace(/\.heic$/i, ".jpg");
+  }
   return trimmed;
 }
 
 export default function BestsellersSection() {
   const { settings } = useAtelierContent();
-  const enableWhatsApp = settings["enable_whatsapp"] !== undefined
-    ? settings["enable_whatsapp"] === "true"
-    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   let bestsellersSection = SITE_CONTENT.bestsellersSection;
   if (settings["bestsellers_data"]) {
     try {
@@ -131,16 +131,14 @@ export default function BestsellersSection() {
                 e.preventDefault();
                 setSelectedFilter(tab.id);
               }}
-              className={`py-2 px-3.5 sm:px-5 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-sans tracking-[0.14em] uppercase transition-all duration-300 border flex items-center gap-2 ${
-                isActive
-                  ? "bg-ink-aubergine text-butter-cream border-ink-aubergine shadow-md"
-                  : "bg-white/70 text-ink-aubergine/75 border-ink-aubergine/15 hover:bg-white hover:text-ink-aubergine"
-              }`}
+              className={`py-2 px-3.5 sm:px-5 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-sans tracking-[0.14em] uppercase transition-all duration-300 border flex items-center gap-2 ${isActive
+                ? "bg-ink-aubergine text-butter-cream border-ink-aubergine shadow-md"
+                : "bg-white/70 text-ink-aubergine/75 border-ink-aubergine/15 hover:bg-white hover:text-ink-aubergine"
+                }`}
             >
               <span
-                className={`w-1.5 h-1.5 rounded-full ${
-                  isActive ? "bg-marigold-glow animate-pulse" : "bg-ink-aubergine/20"
-                }`}
+                className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-marigold-glow animate-pulse" : "bg-ink-aubergine/20"
+                  }`}
               />
               <span>{tab.label}</span>
             </button>
@@ -157,15 +155,14 @@ export default function BestsellersSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.35 }}
-            className={`w-full min-w-0 ${
-              selectedFilter === "all"
-                ? "grid grid-cols-12 gap-6 sm:gap-8"
-                : filteredProducts.length === 2
+            className={`w-full min-w-0 ${selectedFilter === "all"
+              ? "grid grid-cols-12 gap-6 sm:gap-8"
+              : filteredProducts.length === 2
                 ? "max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
                 : filteredProducts.length === 1
-                ? "max-w-lg mx-auto grid grid-cols-1"
-                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            }`}
+                  ? "max-w-lg mx-auto grid grid-cols-1"
+                  : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              }`}
           >
             {filteredProducts.map((product, index) => {
               const originalIndex = bestsellersSection.products.findIndex(
@@ -374,7 +371,7 @@ export default function BestsellersSection() {
 
                     {/* Ordering Action Button: Instagram DM or WhatsApp */}
                     <div className="mt-6 pt-5 border-t border-white/15 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                      {enableWhatsApp ? (
+                      {SITE_CONTENT.brand.enableWhatsApp ? (
                         <a
                           href={buildWhatsAppUrl({
                             occasion: activeProduct.categoryName,

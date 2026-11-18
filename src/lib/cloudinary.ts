@@ -21,24 +21,41 @@ export async function uploadMedia(
     resource_type?: 'image' | 'video' | 'auto';
     public_id?: string;
     cloudName?: string;
+    format?: string;
   } = {}
 ) {
   const instance     = configureCloudinary(options.cloudName);
   const resourceType = options.resource_type || 'auto';
   const folder       = options.folder || 'the-petal-muse';
 
-  const res = await instance.uploader.upload(fileBase64OrUrl, {
+  const uploadParams: any = {
     folder,
     resource_type: resourceType,
     public_id:     options.public_id,
     overwrite:     true,
-  });
+  };
+
+  // If resourceType is image or auto, specify format 'jpg' so Cloudinary always stores/serves web-compatible JPEG
+  if (resourceType === 'image' || options.format === 'jpg') {
+    uploadParams.format = 'jpg';
+  }
+
+  const res = await instance.uploader.upload(fileBase64OrUrl, uploadParams);
+
+  let secureUrl = res.secure_url;
+  let url = res.url;
+  if (secureUrl && secureUrl.toLowerCase().endsWith('.heic')) {
+    secureUrl = secureUrl.replace(/\.heic$/i, '.jpg');
+  }
+  if (url && url.toLowerCase().endsWith('.heic')) {
+    url = url.replace(/\.heic$/i, '.jpg');
+  }
 
   return {
     publicId:     res.public_id,
-    url:          res.url,
-    secureUrl:    res.secure_url,
-    format:       res.format,
+    url:          url,
+    secureUrl:    secureUrl,
+    format:       res.format === 'heic' ? 'jpg' : res.format,
     width:        res.width,
     height:       res.height,
     resourceType: res.resource_type,
