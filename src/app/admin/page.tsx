@@ -1397,7 +1397,7 @@ export default function AdminPage() {
                           <span>Upload Photo</span>
                           <input
                             type="file"
-                            accept="image/*"
+                            accept="image/*,.heic,.HEIC"
                             onChange={(e) => {
                               const f = e.target.files?.[0];
                               if (f) handleFileUpload(f, "hero_image");
@@ -1560,7 +1560,7 @@ export default function AdminPage() {
                         <span>Upload Photo</span>
                         <input
                           type="file"
-                          accept="image/*"
+                          accept="image/*,.heic,.HEIC"
                           onChange={(e) => {
                             const f = e.target.files?.[0];
                             if (f) handleFileUpload(f, "about_portrait");
@@ -1591,7 +1591,7 @@ export default function AdminPage() {
                         <span>Upload Photo</span>
                         <input
                           type="file"
-                          accept="image/*"
+                          accept="image/*,.heic,.HEIC"
                           onChange={(e) => {
                             const f = e.target.files?.[0];
                             if (f) handleFileUpload(f, "about_detail");
@@ -1687,7 +1687,7 @@ export default function AdminPage() {
                         <span>Upload Banner</span>
                         <input
                           type="file"
-                          accept="image/*"
+                          accept="image/*,.heic,.HEIC"
                           onChange={(e) => {
                             const f = e.target.files?.[0];
                             if (f) handleFileUpload(f, "featured_image");
@@ -2436,7 +2436,7 @@ export default function AdminPage() {
                     if (f) handleFileUpload(f, "standalone");
                   }}
                   className="hidden"
-                  accept="image/*,video/*"
+                  accept="image/*,video/*,.heic,.HEIC"
                 />
 
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-300 group-hover:scale-110 transition">
@@ -2744,7 +2744,7 @@ export default function AdminPage() {
                     <span>Upload</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,.heic,.HEIC"
                       onChange={(e) => {
                         const f = e.target.files?.[0];
                         if (f) handleFileUpload(f, "work");
@@ -2814,7 +2814,7 @@ export default function AdminPage() {
                           <span>Upload</span>
                           <input
                             type="file"
-                            accept="image/*"
+                            accept="image/*,.heic,.HEIC"
                             onChange={async (e) => {
                               const f = e.target.files?.[0];
                               if (!f) return;
@@ -3024,7 +3024,7 @@ export default function AdminPage() {
                     <span>Upload</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,.heic,.HEIC"
                       onChange={(e) => {
                         const f = e.target.files?.[0];
                         if (f) handleFileUpload(f, "category");
@@ -3131,7 +3131,7 @@ export default function AdminPage() {
                     <span>Upload Poster</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,.heic,.HEIC"
                       onChange={(e) => {
                         const f = e.target.files?.[0];
                         if (f) handleFileUpload(f, "reel_poster");
@@ -3332,7 +3332,7 @@ export default function AdminPage() {
                     <span>Upload</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,.heic,.HEIC"
                       onChange={(e) => {
                         const f = e.target.files?.[0];
                         if (f) handleFileUpload(f, "review");

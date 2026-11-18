@@ -342,7 +342,7 @@ export default function CombosEditor({
                     <span>{isUploading ? "Uploading..." : "Upload Photo"}</span>
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/*,.heic,.HEIC"
                       disabled={isUploading}
                       onChange={handleFileChange}
                       className="hidden"

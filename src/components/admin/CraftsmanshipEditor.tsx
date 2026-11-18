@@ -266,7 +266,7 @@ export default function CraftsmanshipEditor({
                 <span>{isUploadingSteps ? "Uploading..." : "Upload Photo"}</span>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/*,.heic,.HEIC"
                   disabled={isUploadingSteps}
                   onChange={handleUploadStepsPhoto}
                   className="hidden"
