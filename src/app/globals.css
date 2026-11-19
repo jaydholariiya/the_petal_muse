@@ -122,3 +122,8 @@ main, section {
   animation-delay: 1s;
   transform-origin: top center;
 }
+
+/* Immediate zero-flicker suppression of loader on repeat visits */
+.petalmuse-entered #bloom-loader-root {
+  display: none !important;
+}

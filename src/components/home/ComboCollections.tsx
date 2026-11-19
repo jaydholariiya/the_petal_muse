@@ -283,7 +283,7 @@ export default function ComboCollections() {
                       openInstagramInquiry({
                         title: currentCombo.title,
                         occasion: `Combo Suite - ${currentCombo.title}`,
-                        details: `Hello Jensi! I am enquiring about "${currentCombo.title}" (${currentCombo.subtitle}) from your Combo Collections. Could you share customization possibilities and pricing?`,
+                        notes: `Hello Jensi! I am enquiring about "${currentCombo.title}" (${currentCombo.subtitle}) from your Combo Collections. Could you share customization possibilities and pricing?`,
                       })
                     }
                     className="w-full sm:w-auto py-3 px-6 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold inline-flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"
@@ -463,7 +463,7 @@ export default function ComboCollections() {
                             openInstagramInquiry({
                               title: activeModalCombo.title,
                               occasion: `Combo Suite - ${activeModalCombo.title}`,
-                              details: `Hello Jensi! I am enquiring about "${activeModalCombo.title}" from your curated combo suites. Could you share customization possibilities and pricing?`,
+                              notes: `Hello Jensi! I am enquiring about "${activeModalCombo.title}" from your curated combo suites. Could you share customization possibilities and pricing?`,
                             })
                           }
                           className="py-3 px-6 rounded-full bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-xs font-sans uppercase tracking-wider font-semibold flex items-center justify-center gap-2 shadow-lg transition-all duration-300 active:scale-95"

@@ -106,6 +106,11 @@ export default function RootLayout({
     >
       <head>
         <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem('petalmuse_entered')){document.documentElement.classList.add('petalmuse-entered')}}catch(e){}`,
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />

@@ -86,9 +86,15 @@ export function formatInquiryMessage(details: {
   category?: string;
   occasion?: string;
   name?: string;
+  email?: string;
+  phone?: string;
   service?: string;
+  palette?: string;
+  style?: string;
   date?: string;
   notes?: string;
+  details?: string;
+  [key: string]: any;
 }): string {
   const lines: string[] = [
     `Hello Jensi & THE PETAL MUSE Atelier! ✨`,
@@ -100,12 +106,17 @@ export function formatInquiryMessage(details: {
   if (details.category) lines.push(`• Category: ${details.category}`);
   if (details.occasion) lines.push(`• Occasion / Milestone: ${details.occasion}`);
   if (details.name) lines.push(`• Client Name: ${details.name}`);
+  if (details.email) lines.push(`• Email: ${details.email}`);
+  if (details.phone) lines.push(`• Phone: ${details.phone}`);
   if (details.service) lines.push(`• Service Type: ${details.service}`);
+  if (details.palette) lines.push(`• Color Palette: ${details.palette}`);
+  if (details.style) lines.push(`• Style: ${details.style}`);
   if (details.date) lines.push(`• Preferred Date: ${details.date}`);
-  if (details.notes) {
+  const extraNotes = details.notes || details.details;
+  if (extraNotes) {
     lines.push(``);
     lines.push(`Notes & Vision:`);
-    lines.push(details.notes);
+    lines.push(extraNotes);
   }
 
   lines.push(``);
@@ -121,10 +132,16 @@ export async function openInstagramInquiry(details: {
   category?: string;
   occasion?: string;
   name?: string;
+  email?: string;
+  phone?: string;
   service?: string;
+  palette?: string;
+  style?: string;
   date?: string;
   notes?: string;
+  details?: string;
   handle?: string;
+  [key: string]: any;
 }): Promise<void> {
   const message = formatInquiryMessage(details);
   const dmUrl = buildInstagramDmUrl(details.handle);

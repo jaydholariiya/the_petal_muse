@@ -19,11 +19,9 @@ import ServicesSection from "@/components/home/ServicesSection";
 import InstagramJournal from "@/components/home/InstagramJournal";
 import ContactSection from "@/components/home/ContactSection";
 import Footer from "@/components/layout/Footer";
+import BloomLoader from "@/components/ui/BloomLoader";
 
 // Dynamic imports with ssr: false for client-only animations, WebGL canvas, and cursor to prevent extension attribute mismatches
-const BloomLoader = dynamic(() => import("@/components/ui/BloomLoader"), {
-  ssr: false,
-});
 
 const FloralCanvas = dynamic(() => import("@/components/canvas/FloralCanvas"), {
   ssr: false,
