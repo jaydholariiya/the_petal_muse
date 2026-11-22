@@ -19,7 +19,7 @@ interface BestsellersEditorProps {
   products: BestsellerProduct[];
   categories: { Id: string; Name: string; Slug: string }[];
   onSave: (updatedProducts: BestsellerProduct[]) => Promise<void>;
-  onUploadImage: (file: File) => Promise<string | null>;
+  onUploadImage: (file: File, previousUrl?: string) => Promise<string | null>;
 }
 
 export default function BestsellersEditor({
@@ -68,6 +68,10 @@ export default function BestsellersEditor({
   const handleDelete = async (index: number) => {
     const itemTitle = products[index]?.title || "this bestseller";
     if (!confirm(`Are you sure you want to delete "${itemTitle}" from bestsellers? This will immediately remove it from the website.`)) return;
+    const removedItem = products[index];
+    if (removedItem?.imageUrl && removedItem.imageUrl.includes("cloudinary.com")) {
+      fetch(`/api/admin/upload?url=${encodeURIComponent(removedItem.imageUrl)}`, { method: "DELETE" }).catch(() => {});
+    }
     const updated = products.filter((_, i) => i !== index);
     setProducts(updated);
     if (editingIndex === index) {
@@ -112,7 +116,7 @@ export default function BestsellersEditor({
     if (!file) return;
     setIsUploading(true);
     try {
-      const url = await onUploadImage(file);
+      const url = await onUploadImage(file, editProduct?.imageUrl);
       if (url && editProduct) {
         setEditProduct({ ...editProduct, imageUrl: url });
       }

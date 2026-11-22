@@ -12,7 +12,7 @@ interface CraftsmanshipEditorProps {
     updatedHandmade: CraftsmanshipStory["handmadeWithLove"],
     updatedSteps: CraftsmanshipStory["personalizedGifts"]
   ) => Promise<void>;
-  onUploadImage: (file: File) => Promise<string | null>;
+  onUploadImage: (file: File, previousUrl?: string) => Promise<string | null>;
 }
 
 export default function CraftsmanshipEditor({
@@ -42,7 +42,7 @@ export default function CraftsmanshipEditor({
     if (!file) return;
     setIsUploadingHandmade(true);
     try {
-      const url = await onUploadImage(file);
+      const url = await onUploadImage(file, handmade.imageUrl);
       if (url) setHandmade((prev) => ({ ...prev, imageUrl: url }));
     } finally {
       setIsUploadingHandmade(false);
@@ -54,7 +54,7 @@ export default function CraftsmanshipEditor({
     if (!file) return;
     setIsUploadingSteps(true);
     try {
-      const url = await onUploadImage(file);
+      const url = await onUploadImage(file, steps.imageUrl);
       if (url) setSteps((prev) => ({ ...prev, imageUrl: url }));
     } finally {
       setIsUploadingSteps(false);

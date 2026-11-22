@@ -391,15 +391,34 @@ export default function AdminPage() {
   // ---------------- Cloudinary Direct Uploader ----------------
   const handleFileUpload = async (
     file: File,
-    targetField?: "work" | "category" | "reel_video" | "reel_poster" | "review" | "hero_image" | "about_portrait" | "about_detail" | "featured_image" | "standalone"
+    targetField?: "work" | "category" | "reel_video" | "reel_poster" | "review" | "hero_image" | "about_portrait" | "about_detail" | "featured_image" | "standalone",
+    customPreviousUrl?: string
   ) => {
     setIsUploading(true);
     try {
+      // Automatically detect if replacing an existing asset on Cloudinary
+      let previousUrl = customPreviousUrl;
+      if (!previousUrl) {
+        if (targetField === "hero_image") previousUrl = sectionsData.hero_backgroundImage;
+        else if (targetField === "about_portrait") previousUrl = sectionsData.about_portraitImage;
+        else if (targetField === "about_detail") previousUrl = sectionsData.about_detailImage;
+        else if (targetField === "featured_image") previousUrl = sectionsData.featured_imageUrl;
+        else if (targetField === "work") previousUrl = editingWork?.CoverImageUrl;
+        else if (targetField === "category") previousUrl = editingCategory?.ImageUrl;
+        else if (targetField === "reel_poster") previousUrl = editingReel?.PosterUrl;
+        else if (targetField === "reel_video") previousUrl = editingReel?.VideoUrl;
+        else if (targetField === "review") previousUrl = editingReview?.PhotoUrl;
+        else if (targetField === "standalone") previousUrl = uploadedUrl;
+      }
+
       const isVid = file.type.startsWith("video/");
       const formData = new FormData();
       formData.append("file", file);
       formData.append("resourceType", isVid ? "video" : "image");
       formData.append("cloudName", cloudName);
+      if (previousUrl && previousUrl.includes("cloudinary.com")) {
+        formData.append("previousUrl", previousUrl);
+      }
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",
@@ -437,7 +456,11 @@ export default function AdminPage() {
       }
 
       if (json.data?.source === "cloudinary") {
-        showMessage("Uploaded successfully to Cloudinary cloud!", "success");
+        if (json.data?.previousDeleted) {
+          showMessage("Uploaded to Cloudinary & destroyed previous file (quota saved)!", "success");
+        } else {
+          showMessage("Uploaded successfully to Cloudinary cloud!", "success");
+        }
       } else {
         showMessage(json.warning || "Saved locally. Enter valid Cloud Name in settings for Cloudinary cloud.", "error");
       }
@@ -448,13 +471,16 @@ export default function AdminPage() {
     }
   };
 
-  const uploadMediaFile = async (file: File): Promise<string | null> => {
+  const uploadMediaFile = async (file: File, previousUrl?: string): Promise<string | null> => {
     try {
       const isVid = file.type.startsWith("video/");
       const formData = new FormData();
       formData.append("file", file);
       formData.append("resourceType", isVid ? "video" : "image");
       if (cloudName) formData.append("cloudName", cloudName);
+      if (previousUrl && previousUrl.includes("cloudinary.com")) {
+        formData.append("previousUrl", previousUrl);
+      }
 
       const res = await fetch("/api/admin/upload", {
         method: "POST",
@@ -467,7 +493,11 @@ export default function AdminPage() {
         url = url.replace(/\.heic$/i, ".jpg");
       }
       if (json.data?.source === "cloudinary") {
-        showMessage("Uploaded successfully to Cloudinary cloud!", "success");
+        if (json.data?.previousDeleted) {
+          showMessage("Uploaded to Cloudinary & destroyed replaced file (quota saved)!", "success");
+        } else {
+          showMessage("Uploaded successfully to Cloudinary cloud!", "success");
+        }
       } else {
         showMessage(json.warning || "Saved locally. Enter valid Cloud Name in settings for Cloudinary cloud.", "error");
       }
@@ -712,10 +742,22 @@ export default function AdminPage() {
   const handleDeleteWork = async (id: string) => {
     if (!confirm("Are you sure you want to delete this creation from the catalog?")) return;
     try {
+      const workToDelete = works.find((w) => w.Id === id);
+      if (workToDelete) {
+        const urlsToClean = [
+          workToDelete.CoverImageUrl,
+          workToDelete.VideoUrl,
+          ...(workToDelete.Images || []),
+        ].filter((u): u is string => Boolean(u && u.includes("cloudinary.com")));
+        urlsToClean.forEach((u) => {
+          fetch(`/api/admin/upload?url=${encodeURIComponent(u)}`, { method: "DELETE" }).catch(() => {});
+        });
+      }
+
       const res = await fetch(`/api/admin/works/${id}`, { method: "DELETE" });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
-      showMessage("Work deleted successfully from database.", "success");
+      showMessage("Work deleted successfully from database & storage.", "success");
       try {
         localStorage.setItem("the_petal_muse_content_updated", String(Date.now()));
         window.dispatchEvent(new Event("the_petal_muse_refresh"));
@@ -771,6 +813,11 @@ export default function AdminPage() {
   const handleDeleteCategory = async (id: string) => {
     if (!confirm("Are you sure you want to delete this category?")) return;
     try {
+      const catToDelete = categories.find((c) => c.Id === id);
+      if (catToDelete?.ImageUrl && catToDelete.ImageUrl.includes("cloudinary.com")) {
+        fetch(`/api/admin/upload?url=${encodeURIComponent(catToDelete.ImageUrl)}`, { method: "DELETE" }).catch(() => {});
+      }
+
       const res = await fetch(`/api/admin/categories/${id}`, { method: "DELETE" });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
@@ -829,6 +876,15 @@ export default function AdminPage() {
   const handleDeleteReel = async (id: string) => {
     if (!confirm("Are you sure you want to delete this reel?")) return;
     try {
+      const reelToDelete = reels.find((r) => r.Id === id);
+      if (reelToDelete) {
+        [reelToDelete.PosterUrl, reelToDelete.VideoUrl]
+          .filter((u): u is string => Boolean(u && u.includes("cloudinary.com")))
+          .forEach((u) => {
+            fetch(`/api/admin/upload?url=${encodeURIComponent(u)}`, { method: "DELETE" }).catch(() => {});
+          });
+      }
+
       const res = await fetch(`/api/admin/reels/${id}`, { method: "DELETE" });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
@@ -887,6 +943,11 @@ export default function AdminPage() {
   const handleDeleteReview = async (id: string) => {
     if (!confirm("Are you sure you want to delete this customer review?")) return;
     try {
+      const revToDelete = reviews.find((r) => r.Id === id);
+      if (revToDelete?.PhotoUrl && revToDelete.PhotoUrl.includes("cloudinary.com")) {
+        fetch(`/api/admin/upload?url=${encodeURIComponent(revToDelete.PhotoUrl)}`, { method: "DELETE" }).catch(() => {});
+      }
+
       const res = await fetch(`/api/admin/reviews/${id}`, { method: "DELETE" });
       const json = await res.json();
       if (!json.success) throw new Error(json.message);
@@ -2824,7 +2885,7 @@ export default function AdminPage() {
                             onChange={async (e) => {
                               const f = e.target.files?.[0];
                               if (!f) return;
-                              const url = await uploadMediaFile(f);
+                              const url = await uploadMediaFile(f, currentImg);
                               if (url) {
                                 const currentImgs = [
                                   ...(editingWork?.Images || [
@@ -2876,7 +2937,7 @@ export default function AdminPage() {
                         onChange={async (e) => {
                           const f = e.target.files?.[0];
                           if (!f) return;
-                          const url = await uploadMediaFile(f);
+                          const url = await uploadMediaFile(f, editingWork?.VideoUrl);
                           if (url) {
                             setEditingWork((prev) => ({ ...prev, VideoUrl: url }));
                           }

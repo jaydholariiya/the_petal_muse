@@ -8,7 +8,7 @@ import { OccasionItem } from "@/content/site";
 interface OccasionsEditorProps {
   occasions: OccasionItem[];
   onSave: (updatedOccasions: OccasionItem[]) => Promise<void>;
-  onUploadImage: (file: File) => Promise<string | null>;
+  onUploadImage: (file: File, previousUrl?: string) => Promise<string | null>;
 }
 
 export default function OccasionsEditor({
@@ -54,6 +54,10 @@ export default function OccasionsEditor({
   const handleDelete = async (index: number) => {
     const itemTitle = occasions[index]?.name || "this occasion";
     if (!confirm(`Are you sure you want to delete "${itemTitle}"? This will immediately remove it from the website.`)) return;
+    const removedItem = occasions[index];
+    if (removedItem?.imageUrl && removedItem.imageUrl.includes("cloudinary.com")) {
+      fetch(`/api/admin/upload?url=${encodeURIComponent(removedItem.imageUrl)}`, { method: "DELETE" }).catch(() => {});
+    }
     const updated = occasions.filter((_, i) => i !== index);
     setOccasions(updated);
     if (editingIndex === index) {
@@ -98,7 +102,7 @@ export default function OccasionsEditor({
     if (!file) return;
     setIsUploading(true);
     try {
-      const url = await onUploadImage(file);
+      const url = await onUploadImage(file, editOccasion?.imageUrl);
       if (url && editOccasion) {
         setEditOccasion({ ...editOccasion, imageUrl: url });
       }

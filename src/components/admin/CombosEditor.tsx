@@ -8,7 +8,7 @@ import { ComboCollectionItem } from "@/content/site";
 interface CombosEditorProps {
   combos: ComboCollectionItem[];
   onSave: (updatedCombos: ComboCollectionItem[]) => Promise<void>;
-  onUploadImage: (file: File) => Promise<string | null>;
+  onUploadImage: (file: File, previousUrl?: string) => Promise<string | null>;
 }
 
 export default function CombosEditor({
@@ -62,6 +62,10 @@ export default function CombosEditor({
   const handleDelete = async (index: number) => {
     const itemTitle = combos[index]?.title || "this suite";
     if (!confirm(`Are you sure you want to delete "${itemTitle}"? This will immediately remove it from the website.`)) return;
+    const removedItem = combos[index];
+    if (removedItem?.imageUrl && removedItem.imageUrl.includes("cloudinary.com")) {
+      fetch(`/api/admin/upload?url=${encodeURIComponent(removedItem.imageUrl)}`, { method: "DELETE" }).catch(() => {});
+    }
     const updated = combos.filter((_, i) => i !== index);
     setCombos(updated);
     if (editingIndex === index) {
@@ -111,7 +115,7 @@ export default function CombosEditor({
     if (!file) return;
     setIsUploading(true);
     try {
-      const url = await onUploadImage(file);
+      const url = await onUploadImage(file, editCombo?.imageUrl);
       if (url && editCombo) {
         setEditCombo({ ...editCombo, imageUrl: url });
       }

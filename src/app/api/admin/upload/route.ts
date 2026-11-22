@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { uploadMedia } from '@/lib/cloudinary';
+import { uploadMedia, deleteMediaByUrl, deleteMedia } from '@/lib/cloudinary';
 import { convertHeicToJpegBuffer } from '@/lib/heicConverter';
 
 export async function POST(req: Request) {
@@ -8,6 +8,7 @@ export async function POST(req: Request) {
     let filePayload: string = '';
     let resourceType: 'image' | 'video' | 'auto' = 'auto';
     let folder = 'the-petal-muse';
+    let previousUrl: string = '';
 
     // ── Parse incoming request ────────────────────────────────────────────────
     if (contentType.includes('multipart/form-data')) {
@@ -25,6 +26,11 @@ export async function POST(req: Request) {
         (formData.get('resourceType') as 'image' | 'video' | 'auto') ||
         (file.type.startsWith('video/') ? 'video' : 'image');
       folder = (formData.get('folder') as string) || 'the-petal-muse';
+      previousUrl =
+        (formData.get('previousUrl') as string) ||
+        (formData.get('replaceUrl') as string) ||
+        (formData.get('oldUrl') as string) ||
+        '';
 
       let buffer: any = Buffer.from(await file.arrayBuffer());
       let mimeType = file.type || 'image/jpeg';
@@ -53,6 +59,7 @@ export async function POST(req: Request) {
       filePayload  = body.file;          // base64 data-URL or remote URL
       resourceType = body.resourceType || 'auto';
       folder       = body.folder || 'the-petal-muse';
+      previousUrl  = body.previousUrl || body.replaceUrl || body.oldUrl || '';
 
       if (
         filePayload &&
@@ -82,12 +89,29 @@ export async function POST(req: Request) {
     // ── Upload directly to Cloudinary ─────────────────────────────────────────
     const result = await uploadMedia(filePayload, { folder, resource_type: resourceType });
 
+    // ── Clean up replaced asset from Cloudinary (saves quota/memory) ──────────
+    let previousDeleted = false;
+    if (
+      previousUrl &&
+      previousUrl.trim() !== '' &&
+      previousUrl !== result.secureUrl &&
+      previousUrl !== result.url
+    ) {
+      try {
+        console.log(`[Upload Route] Replaced media detected. Removing old Cloudinary asset: ${previousUrl}`);
+        previousDeleted = await deleteMediaByUrl(previousUrl.trim());
+      } catch (delErr: any) {
+        console.warn('[Upload Route] Cleanup of old asset skipped/failed:', delErr.message);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Uploaded to Cloudinary successfully.',
       data: {
         ...result,
         source: 'cloudinary',
+        previousDeleted,
       },
     });
 
@@ -95,6 +119,51 @@ export async function POST(req: Request) {
     console.error('[Upload Error]', err.message);
     return NextResponse.json(
       { success: false, message: err.message || 'Upload failed.' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    let url = searchParams.get('url');
+    let publicId = searchParams.get('publicId');
+    let resourceType = (searchParams.get('resourceType') || 'image') as 'image' | 'video';
+
+    if (!url && !publicId) {
+      const body = await req.json().catch(() => ({}));
+      url = body.url;
+      publicId = body.publicId;
+      if (body.resourceType) resourceType = body.resourceType;
+    }
+
+    if (url) {
+      const deleted = await deleteMediaByUrl(url);
+      return NextResponse.json({
+        success: true,
+        deleted,
+        message: deleted ? 'Cloudinary asset deleted successfully.' : 'Asset skipped or not on Cloudinary.',
+      });
+    }
+
+    if (publicId) {
+      const res = await deleteMedia(publicId, resourceType);
+      return NextResponse.json({
+        success: true,
+        result: res,
+        message: 'Cloudinary asset destroyed via publicId.',
+      });
+    }
+
+    return NextResponse.json(
+      { success: false, message: 'url or publicId is required for deletion.' },
+      { status: 400 }
+    );
+  } catch (err: any) {
+    console.error('[Delete Error]', err.message);
+    return NextResponse.json(
+      { success: false, message: err.message || 'Delete failed.' },
       { status: 500 }
     );
   }
