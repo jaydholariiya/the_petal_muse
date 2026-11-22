@@ -29,16 +29,8 @@ export function AtelierContentProvider({ children }: { children: React.ReactNode
   const [catalogWorks, setCatalogWorks] = useState<Record<string, CatalogWorkItem[]>>(CATALOG_WORKS);
   const [reels, setReels] = useState<ReelItem[]>(SITE_CONTENT.reels);
   const [reviews, setReviews] = useState<CustomerReview[]>(SITE_CONTENT.customerReviewsSection.reviews);
-  const [settings, setSettings] = useState<Record<string, string>>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const cached = localStorage.getItem("the_petal_muse_cached_settings");
-        if (cached) return JSON.parse(cached);
-      } catch {}
-    }
-    return {
-      about_portraitImage: "https://res.cloudinary.com/dswr70tfw/image/upload/v1794846243/the-petal-muse/npxf7zicjhxearykgyal.png",
-    };
+  const [settings, setSettings] = useState<Record<string, string>>({
+    about_portraitImage: "https://res.cloudinary.com/dswr70tfw/image/upload/v1794846243/the-petal-muse/npxf7zicjhxearykgyal.png",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

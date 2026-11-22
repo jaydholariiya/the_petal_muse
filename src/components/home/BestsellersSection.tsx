@@ -172,22 +172,25 @@ export default function BestsellersSection() {
 
               // Dynamic editorial column spans when viewing "All Bestsellers"
               let colSpan = "";
-              let aspectClass = "aspect-[4/5]";
+              let aspectClass = "aspect-[3/4] min-h-[500px]";
 
               if (selectedFilter === "all") {
                 if (index === 0) {
-                  // Hero piece (portrait on mobile for full artwork visibility, 7 columns on desktop)
+                  // Hero piece (Grand architectural scale, expansive artwork visibility)
                   colSpan = "col-span-12 lg:col-span-7";
-                  aspectClass = "aspect-[4/5] sm:aspect-[16/11]";
+                  aspectClass = "aspect-[3/4] sm:aspect-[16/14] min-h-[540px] sm:min-h-[600px] lg:min-h-[660px]";
                 } else if (index === 1) {
-                  // Companion piece (5 columns on large desktop)
+                  // Companion piece (Aligned height with hero piece)
                   colSpan = "col-span-12 lg:col-span-5";
-                  aspectClass = "aspect-[4/5]";
+                  aspectClass = "aspect-[3/4] min-h-[540px] sm:min-h-[600px] lg:min-h-[660px]";
                 } else {
                   // 3-column rows (4 + 4 + 4 = 12 columns)
                   colSpan = "col-span-12 md:col-span-6 lg:col-span-4";
-                  aspectClass = "aspect-[4/5]";
+                  aspectClass = "aspect-[3/4] min-h-[480px] sm:min-h-[520px]";
                 }
+              } else {
+                colSpan = "col-span-12 md:col-span-6 lg:col-span-4";
+                aspectClass = "aspect-[3/4] min-h-[500px]";
               }
 
               return (
@@ -211,8 +214,8 @@ export default function BestsellersSection() {
                       className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
                     />
 
-                    {/* Gentle Gradient Shade from Bottom */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/95 via-ink-aubergine/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-500" />
+                    {/* Gentle Bottom-Only Legibility Shade for Editorial Text (Top 60% is 100% crystal clear & bright) */}
+                    <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-ink-aubergine/95 via-ink-aubergine/40 to-transparent pointer-events-none" />
 
                     {/* Archival Catalog Number Disc at Top Left */}
                     <div className="absolute top-4 sm:top-5 left-4 sm:left-5 z-10 w-8 h-8 rounded-full bg-ink-aubergine/70 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/20 shadow-sm group-hover:border-marigold-glow/50 transition-colors">

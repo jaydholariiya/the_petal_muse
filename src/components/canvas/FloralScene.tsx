@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -11,66 +11,71 @@ interface FloralSceneProps {
   mousePos?: { x: number; y: number };
 }
 
-// Section color profiles: soft, porcelain, translucent pastel tones (never dark muddy brown)
+// Luxury color profiles for the Living Atelier 4-Phase Scroll Journey
 const COLOR_PROFILES: Record<
   TimeOfDay,
-  { petal: THREE.Color; dust: THREE.Color; light: string; intensity: number }
+  { petal: THREE.Color; dust: THREE.Color; light: string; ambientIntensity: number }
 > = {
   dawn: {
-    petal: new THREE.Color("#FFF3F0"), // Soft champagne blush
-    dust: new THREE.Color("#E8A93B"),
+    // 1. Top Section (Hero & Bestsellers): Champagne Blush Pearl
+    petal: new THREE.Color("#E8B0A2"), // Soft champagne blush rose
+    dust: new THREE.Color("#E8A93B"), // Warm golden stardust
     light: "#FFF8F0",
-    intensity: 1.4,
+    ambientIntensity: 1.9,
   },
   morning: {
-    petal: new THREE.Color("#F3F7F2"), // Soft sage & porcelain
-    dust: new THREE.Color("#FBF4E6"),
-    light: "#FFFFFF",
-    intensity: 1.5,
+    // 2. Middle Section 1 (Atelier Catalogs & Runway / #collections): Signature Mulberry Wine
+    petal: new THREE.Color("#9E3564"), // Rich mulberry rose petals
+    dust: new THREE.Color("#E5A2C0"), // Rose gold shimmer stardust
+    light: "#FFEBF3",
+    ambientIntensity: 2.0,
   },
   noon: {
-    petal: new THREE.Color("#FFFDF5"), // Warm sunlit ivory
-    dust: new THREE.Color("#E8A93B"),
-    light: "#FFFDF7",
-    intensity: 1.6,
+    // 3. Middle Section 2 (Combos, Occasions & Reviews): Sunlit Honey Amber & 24K Gold
+    petal: new THREE.Color("#D49438"), // Warm sunlit amber petals
+    dust: new THREE.Color("#F7CF68"), // Sparkling 24K gold embers
+    light: "#FFF8E6",
+    ambientIntensity: 2.1,
   },
   sunset: {
-    petal: new THREE.Color("#FFF0F3"), // Delicate pale rose
-    dust: new THREE.Color("#F4B9A0"),
+    petal: new THREE.Color("#B84B72"),
+    dust: new THREE.Color("#F4A58C"),
     light: "#FFF0EB",
-    intensity: 1.4,
+    ambientIntensity: 1.85,
   },
   night: {
-    petal: new THREE.Color("#F7EEF5"), // Translucent moonlight orchid
-    dust: new THREE.Color("#E8A93B"),
-    light: "#6A385E",
-    intensity: 1.0,
+    // 4. Bottom Section (Services, Journal, Contact & Footer): Moonlight Orchid Night Garden
+    petal: new THREE.Color("#D4B0CE"), // Translucent moonlight orchid
+    dust: new THREE.Color("#F5C368"), // Twilight fireflies
+    light: "#9A6088",
+    ambientIntensity: 1.5,
   },
 };
 
-// Refined, delicate organic petal geometry (dainty proportion)
-function createPetalGeometry() {
+// Realistic organic curved botanical petal geometry
+function createOrganicPetalGeometry() {
   const shape = new THREE.Shape();
   shape.moveTo(0, 0);
-  shape.bezierCurveTo(0.12, 0.2, 0.25, 0.45, 0.12, 0.7);
-  shape.bezierCurveTo(0.04, 0.85, -0.04, 0.85, -0.12, 0.7);
-  shape.bezierCurveTo(-0.25, 0.45, -0.12, 0.2, 0, 0);
+  shape.bezierCurveTo(0.2, 0.25, 0.45, 0.6, 0.22, 1.0);
+  shape.bezierCurveTo(0.08, 1.18, -0.08, 1.18, -0.22, 1.0);
+  shape.bezierCurveTo(-0.45, 0.6, -0.2, 0.25, 0, 0);
 
-  const geometry = new THREE.ShapeGeometry(shape, 12);
+  const geometry = new THREE.ShapeGeometry(shape, 16);
 
-  // Subtle curvature so petals catch specular highlights gracefully
+  // Sculpt curved bowl shape so petals catch 3D specular light organically
   const pos = geometry.attributes.position;
   for (let i = 0; i < pos.count; i++) {
     const y = pos.getY(i);
     const x = pos.getX(i);
-    pos.setZ(i, Math.sin(y * 2.5) * 0.08 - Math.abs(x) * 0.05);
+    const zOffset = Math.sin(y * 2.8) * 0.14 - (x * x) * 0.18;
+    pos.setZ(i, zOffset);
   }
   geometry.computeVertexNormals();
   return geometry;
 }
 
-// 1. Instanced Drifting Petals — Feather-light 3D petals with responsive tuning
-function DriftingPetals({
+// 1. Interactive 3D Drifting & Swirling Petals
+function InteractivePetals({
   timeOfDay = "dawn",
   mouseX = 0,
   mouseY = 0,
@@ -80,28 +85,33 @@ function DriftingPetals({
   mouseY: number;
 }) {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
-  const count = isMobile ? 12 : 30;
+  const count = isMobile ? 22 : 45;
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  const petalGeo = useMemo(() => createPetalGeometry(), []);
+  const petalGeo = useMemo(() => createOrganicPetalGeometry(), []);
 
-  // Initialize petals strictly deep in background (z: -4 to -8), never right in front of camera
+  // Smooth mouse coordinates in 3D world space
+  const smoothMouse = useRef({ x: 0, y: 0 });
+
+  // Initialize petals in visible 3D space with natural tumbling properties
   const petals = useMemo(() => {
     return Array.from({ length: count }, () => ({
-      x: (Math.random() - 0.5) * (isMobile ? 8 : 16),
-      y: (Math.random() - 0.5) * 14 - 1.5,
-      z: -4 - Math.random() * 4, // Deep in background so it never covers buttons or text
+      x: (Math.random() - 0.5) * (isMobile ? 10 : 20),
+      y: (Math.random() - 0.5) * 16,
+      z: -2 + (Math.random() - 0.5) * 4, // Distributed from z: -4 to 0 (clearly visible)
+      baseZ: -2 + (Math.random() - 0.5) * 4,
       rx: Math.random() * Math.PI * 2,
       ry: Math.random() * Math.PI * 2,
       rz: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.003,
-      vy: -0.004 - Math.random() * 0.005, // Slow ethereal drift
-      vrx: (Math.random() - 0.5) * 0.006,
-      vry: (Math.random() - 0.5) * 0.006,
-      vrz: (Math.random() - 0.5) * 0.005,
-      scale: isMobile ? 0.2 + Math.random() * 0.18 : 0.25 + Math.random() * 0.25, // Dainty, subtle, delicate scale
-      oscSpeed: 1 + Math.random() * 1.2,
-      oscOffset: Math.random() * Math.PI * 2,
+      vx: (Math.random() - 0.5) * 0.004,
+      vy: -0.005 - Math.random() * 0.007, // Gentle downward drift
+      vz: (Math.random() - 0.5) * 0.002,
+      vrx: (Math.random() - 0.5) * 0.012,
+      vry: (Math.random() - 0.5) * 0.014,
+      vrz: (Math.random() - 0.5) * 0.008,
+      scale: isMobile ? 0.45 + Math.random() * 0.35 : 0.65 + Math.random() * 0.55, // Full, luscious luxury scale
+      swirlForceX: 0,
+      swirlForceY: 0,
     }));
   }, [count, isMobile]);
 
@@ -110,33 +120,59 @@ function DriftingPetals({
   useFrame((state) => {
     if (!meshRef.current) return;
 
-    // Smooth color transition
+    // Smooth color blending across day cycles
     const targetColor = COLOR_PROFILES[timeOfDay]?.petal || COLOR_PROFILES.dawn.petal;
-    currentColor.current.lerp(targetColor, 0.03);
+    currentColor.current.lerp(targetColor, 0.05);
 
     const time = state.clock.getElapsedTime();
 
+    // Lerp mouse coordinates
+    const targetWorldMouseX = mouseX * (isMobile ? 5 : 9);
+    const targetWorldMouseY = mouseY * (isMobile ? 4 : 7);
+    smoothMouse.current.x += (targetWorldMouseX - smoothMouse.current.x) * 0.08;
+    smoothMouse.current.y += (targetWorldMouseY - smoothMouse.current.y) * 0.08;
+
     petals.forEach((p, i) => {
+      // 1. Natural oscillation
       p.y += p.vy;
-      p.x += p.vx + Math.sin(time * p.oscSpeed + p.oscOffset) * 0.003;
-      p.z += Math.cos(time * 0.6 + p.oscOffset) * 0.002;
+      p.x += p.vx + Math.sin(time * 0.8 + i) * 0.004;
+      p.z += p.vz + Math.cos(time * 0.6 + i) * 0.002;
 
-      const mouseParallaxX = mouseX * 0.5;
-      const mouseParallaxY = -mouseY * 0.5;
+      // 2. Interactive Cursor Swirl & Repulsion
+      const dx = p.x - smoothMouse.current.x;
+      const dy = p.y - smoothMouse.current.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
 
+      if (dist < 3.5) {
+        const force = (1 - dist / 3.5) * 0.035;
+        p.swirlForceX += (dx / dist) * force;
+        p.swirlForceY += (dy / dist) * force;
+        // Spin faster when disturbed by cursor
+        p.rx += p.vrx * 3.5;
+        p.ry += p.vry * 3.5;
+      }
+
+      // Apply and decay swirl force
+      p.x += p.swirlForceX;
+      p.y += p.swirlForceY;
+      p.swirlForceX *= 0.92;
+      p.swirlForceY *= 0.92;
+
+      // Natural rotation
       p.rx += p.vrx;
       p.ry += p.vry;
       p.rz += p.vrz;
 
-      if (p.y < -8) {
-        p.y = 7;
-        p.x = (Math.random() - 0.5) * (isMobile ? 8 : 16);
+      // Wrap around bounds
+      if (p.y < -9) {
+        p.y = 9;
+        p.x = (Math.random() - 0.5) * (isMobile ? 10 : 20);
       }
-      const xBound = isMobile ? 4.5 : 9;
+      const xBound = isMobile ? 5.5 : 11;
       if (p.x < -xBound) p.x = xBound;
       if (p.x > xBound) p.x = -xBound;
 
-      dummy.position.set(p.x + mouseParallaxX, p.y + mouseParallaxY, p.z);
+      dummy.position.set(p.x, p.y, p.z);
       dummy.rotation.set(p.rx, p.ry, p.rz);
       dummy.scale.setScalar(p.scale);
       dummy.updateMatrix();
@@ -158,49 +194,57 @@ function DriftingPetals({
       frustumCulled={false}
     >
       <meshStandardMaterial
-        color="#FFF0ED"
-        roughness={0.2}
-        metalness={0.02}
+        color="#FFFFFF"
+        roughness={0.28}
+        metalness={0.15}
         side={THREE.DoubleSide}
         transparent
-        opacity={isMobile ? 0.22 : 0.28} // Ethereal and faint
+        opacity={isMobile ? 0.65 : 0.82} // Clearly visible, rich living botanical petals
         depthWrite={false}
       />
     </instancedMesh>
   );
 }
 
-// 2. Twinkling Golden Dust & Fireflies
-function GoldDustParticles({ timeOfDay = "dawn" }: { timeOfDay: TimeOfDay }) {
+// 2. Golden Firefly Embers & Stardust (Twinkling ambient light points)
+function GoldenStardust({ timeOfDay = "dawn" }: { timeOfDay: TimeOfDay }) {
   const pointsRef = useRef<THREE.Points>(null);
   const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
-  const count = isMobile ? 45 : 90;
-
-  const [positions] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * (isMobile ? 10 : 18);
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 14 - 1;
-      pos[i * 3 + 2] = -2 - Math.random() * 6;
-    }
-    return [pos];
-  }, [count, isMobile]);
-
+  const count = isMobile ? 60 : 120;
   const currentDustColor = useRef(new THREE.Color(COLOR_PROFILES.dawn.dust));
 
+  const [positions, initialY] = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    const iy = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * (isMobile ? 12 : 24);
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 18;
+      pos[i * 3 + 2] = -1 - Math.random() * 5;
+      iy[i] = pos[i * 3 + 1];
+    }
+    return [pos, iy];
+  }, [count, isMobile]);
+
   useFrame((state) => {
-    if (!pointsRef.current) return;
+    if (!pointsRef.current || !pointsRef.current.geometry) return;
+    const pos = pointsRef.current.geometry.attributes?.position;
+    if (!pos) return;
+
     const time = state.clock.getElapsedTime();
 
-    const targetColor = COLOR_PROFILES[timeOfDay]?.dust || COLOR_PROFILES.dawn.dust;
-    currentDustColor.current.lerp(targetColor, 0.04);
+    // Smooth color blending for stardust embers
+    const targetDust = COLOR_PROFILES[timeOfDay]?.dust || COLOR_PROFILES.dawn.dust;
+    currentDustColor.current.lerp(targetDust, 0.05);
+    const mat = pointsRef.current.material as THREE.PointsMaterial | undefined;
+    if (mat && "color" in mat && mat.color && typeof mat.color.copy === "function") {
+      mat.color.copy(currentDustColor.current);
+    }
 
-    const pos = pointsRef.current.geometry.attributes.position;
     for (let i = 0; i < count; i++) {
-      let y = pos.getY(i) - 0.003;
-      if (y < -7) y = 7;
+      let y = pos.getY(i) - 0.005;
+      if (y < -9) y = 9;
       pos.setY(i, y);
-      pos.setX(i, pos.getX(i) + Math.sin(time * 0.8 + i) * 0.002);
+      pos.setX(i, pos.getX(i) + Math.sin(time * 0.9 + i) * 0.003);
     }
     pos.needsUpdate = true;
   });
@@ -211,10 +255,10 @@ function GoldDustParticles({ timeOfDay = "dawn" }: { timeOfDay: TimeOfDay }) {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.05}
-        color="#E8A93B"
+        size={isMobile ? 0.09 : 0.14}
+        color="#F3D082"
         transparent
-        opacity={timeOfDay === "night" ? 0.85 : 0.45}
+        opacity={timeOfDay === "night" ? 0.9 : 0.72}
         blending={THREE.AdditiveBlending}
         sizeAttenuation
         depthWrite={false}
@@ -231,21 +275,24 @@ export default function FloralScene({
 
   return (
     <>
-      <ambientLight color={lightConfig.light} intensity={lightConfig.intensity * 0.8} />
+      <ambientLight color={lightConfig.light} intensity={lightConfig.ambientIntensity} />
       <directionalLight
-        position={[4, 6, 4]}
-        intensity={lightConfig.intensity}
+        position={[5, 8, 5]}
+        intensity={1.8}
         color={lightConfig.light}
       />
-      <pointLight position={[-3, -2, 1]} color="#F4B9A0" intensity={0.6} />
+      <pointLight position={[-4, -2, 2]} color="#E8A93B" intensity={1.2} />
+      <pointLight position={[4, 3, 1]} color="#F4B9A0" intensity={0.9} />
 
-      <DriftingPetals
+      {/* 1. Interactive 3D Drifting & Swirling Petals */}
+      <InteractivePetals
         timeOfDay={timeOfDay}
         mouseX={mousePos.x}
         mouseY={mousePos.y}
       />
 
-      <GoldDustParticles timeOfDay={timeOfDay} />
+      {/* 2. Twinkling Golden Stardust Embers */}
+      <GoldenStardust timeOfDay={timeOfDay} />
     </>
   );
 }

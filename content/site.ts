@@ -229,9 +229,9 @@ export const SITE_CONTENT = {
     enableWhatsApp: false,
 
     // Contact Information (Owner placeholders until verified)
-    whatsappNumber: "ADD_PHONE_HERE", 
+    whatsappNumber: "ADD_PHONE_HERE",
     contactEmail: "ADD_EMAIL_HERE",
-    location: "ADD_LOCATION_HERE", 
+    location: "ADD_LOCATION_HERE",
     locationDisplay: "Gujarat, India | Handcrafted & Delivered Across India & Worldwide",
 
     // Logo configuration: Leave empty to show the elegant display mark, or set to "/logo.png" when you place your logo in /public
@@ -592,7 +592,7 @@ export const SITE_CONTENT = {
     title: "Design Your Floral Mood",
     subtitle: "A Bespoke Sensory Workshop",
     description: "Curate your dream botanical palette, scale, and occasion. Watch the living floral preview shift in real-time, then send your personalized concept directly to Jensi on WhatsApp.",
-    
+
     occasions: [
       { id: "wedding", name: "Grand Wedding Celebration", defaultStyle: "statement" },
       { id: "editorial", name: "Editorial & Campaign", defaultStyle: "sculptural" },
@@ -1130,6 +1130,8 @@ export const SITE_CONTENT = {
       sampleItems: [
         { title: "The 24-Ferrero Golden Bloom Bouquet", detail: "Golden Ferrero spheres nestled inside a crown of ruby Ecuadorian roses." },
         { title: "Lindt Swiss Truffle & Blush Rose Bouquet", detail: "Smooth melting Lindt truffles nestled in apricot blush garden blooms." },
+        { title: "The Noir Reserve Artisan Truffle Bouquet", detail: "Single-origin 85% Belgian dark chocolate spheres with deep crimson blooms." },
+        { title: "Gourmet Praline & Vanilla Bean Floral Suite", detail: "Roasted hazelnut pralines, Madagascar vanilla truffles & white garden lilies." },
       ],
     },
     {

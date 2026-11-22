@@ -24,6 +24,7 @@ import {
 import { SITE_CONTENT, OccasionItem } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
+import Luxury3DCard from "@/components/ui/Luxury3DCard";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1533616688419-b7a585564566?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
@@ -377,44 +378,46 @@ export default function OccasionCollections() {
               {/* LEFT: CINEMATIC PORTRAIT FRAME WITH ARCHITECTURAL SILHOUETTE */}
               {/* ----------------------------------------------------------- */}
               <div className="lg:col-span-5 relative w-full min-w-0">
-                <div className="relative aspect-[4/5] sm:aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-2xl bg-black/40 border border-white/20 group">
-                  <Image
-                    src={getSafeImageUrl(activeOccasion.imageUrl)}
-                    alt={activeOccasion.name}
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 42vw"
-                    className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
-                  />
+                <Luxury3DCard tiltIntensity={7} className="w-full aspect-[4/5]">
+                  <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-black/40 border border-white/20 group">
+                    <Image
+                      src={getSafeImageUrl(activeOccasion.imageUrl)}
+                      alt={activeOccasion.name}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 42vw"
+                      className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
+                    />
 
-                  {/* Gradient Shadow Shading from Bottom */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-85" />
+                    {/* Bottom-Only Gradient Shade for Text Legibility (Top is 100% bright & crystal clear) */}
+                    <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-black/90 via-black/45 to-transparent pointer-events-none" />
 
-                  {/* Top Left Archival Occasion Disc */}
-                  <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full text-[9.5px] uppercase font-sans tracking-widest bg-ink-aubergine/85 text-butter-cream border border-white/20 backdrop-blur-md font-semibold">
-                      Chapter #{String(activeOccasionIndex + 1).padStart(2, "0")} of {String(occasions.length).padStart(2, "0")}
-                    </span>
-                  </div>
-
-                  {/* Bottom Portrait Caption */}
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-20 text-butter-cream">
-                    <span className="text-[9.5px] uppercase font-sans tracking-[0.25em] text-marigold-glow block mb-1 font-semibold">
-                      Curated Celebration Suite
-                    </span>
-                    <h4 className="font-serif text-xl sm:text-2xl text-butter-cream font-light leading-snug">
-                      {activeOccasion.name}
-                    </h4>
-
-                    {/* Botanical Mood Indicator */}
-                    <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-sans text-apricot-blush">
-                      <span className="w-2 h-2 rounded-full bg-marigold-glow animate-ping" />
-                      <span className="truncate max-w-[240px]">
-                        <strong>Mood:</strong> {activeOccasion.botanicalMood}
+                    {/* Top Left Archival Occasion Disc */}
+                    <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full text-[9.5px] uppercase font-sans tracking-widest bg-ink-aubergine/85 text-butter-cream border border-white/20 backdrop-blur-md font-semibold">
+                        Chapter #{String(activeOccasionIndex + 1).padStart(2, "0")} of {String(occasions.length).padStart(2, "0")}
                       </span>
                     </div>
+
+                    {/* Bottom Portrait Caption */}
+                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-20 text-butter-cream">
+                      <span className="text-[9.5px] uppercase font-sans tracking-[0.25em] text-marigold-glow block mb-1 font-semibold">
+                        Curated Celebration Suite
+                      </span>
+                      <h4 className="font-serif text-xl sm:text-2xl text-butter-cream font-light leading-snug">
+                        {activeOccasion.name}
+                      </h4>
+
+                      {/* Botanical Mood Indicator */}
+                      <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-sans text-apricot-blush">
+                        <span className="w-2 h-2 rounded-full bg-marigold-glow animate-ping" />
+                        <span className="truncate max-w-[240px]">
+                          <strong>Mood:</strong> {activeOccasion.botanicalMood}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Luxury3DCard>
               </div>
 
               {/* ----------------------------------------------------------- */}

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import dynamic from "next/dynamic";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,6 +34,12 @@ import { SITE_CONTENT } from "@/content/site";
 import { CATALOG_WORKS, CatalogWorkItem } from "@/content/catalogWorks";
 import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
+import Luxury3DCard from "@/components/ui/Luxury3DCard";
+
+// Dynamically import Three.js atmospheric canvas for Runway
+const RunwayParticlesCanvas = dynamic(() => import("./RunwayParticlesCanvas"), {
+  ssr: false,
+});
 
 // Refined aesthetic short titles for the 15 categories (Matching User Priority 1 to 15)
 const SHORT_TITLES: Record<string, string> = {
@@ -77,9 +84,19 @@ export default function CollectionsShowcase() {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [isFitMode, setIsFitMode] = useState<boolean>(false);
   const [showMobileSpecs, setShowMobileSpecs] = useState<boolean>(false);
+  const [carouselScrollProgress, setCarouselScrollProgress] = useState<number>(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const activeItemRef = useRef<HTMLButtonElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const handleCarouselScroll = () => {
+    if (!carouselRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    const maxScroll = scrollWidth - clientWidth;
+    if (maxScroll > 0) {
+      setCarouselScrollProgress((scrollLeft / maxScroll) * 100);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -107,7 +124,8 @@ export default function CollectionsShowcase() {
   // Smooth scroll creations runway slider by offset
   const scrollSlider = (dir: number) => {
     if (sliderRef.current) {
-      const scrollAmount = sliderRef.current.clientWidth > 768 ? 390 : 290;
+      const firstCard = sliderRef.current.firstElementChild as HTMLElement | null;
+      const scrollAmount = firstCard ? firstCard.offsetWidth + 24 : 380;
       sliderRef.current.scrollBy({ left: dir * scrollAmount, behavior: "smooth" });
     }
   };
@@ -181,25 +199,25 @@ export default function CollectionsShowcase() {
   return (
     <section
       id="collections"
-      className="relative py-14 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden w-full min-w-0"
+      className="relative pt-6 sm:pt-8 md:pt-10 pb-12 sm:pb-16 px-4 sm:px-6 md:px-10 max-w-7xl mx-auto overflow-hidden w-full min-w-0"
     >
       {/* ------------------------------------------------------------------- */}
       {/* SECTION HEADER                                                      */}
       {/* ------------------------------------------------------------------- */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-ink-aubergine/10 pb-5 sm:pb-8 mb-6 sm:mb-10 w-full min-w-0 gap-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-ink-aubergine/10 pb-3 sm:pb-4 mb-4 sm:mb-5 w-full min-w-0 gap-3">
         <div className="w-full md:w-auto min-w-0">
-          <div className="flex items-center gap-2 mb-2 sm:mb-3">
+          <div className="flex items-center gap-2 mb-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
-            <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.25em] sm:tracking-[0.3em] text-mulberry-wine font-medium">
+            <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.25em] text-mulberry-wine font-medium">
               Signature Atelier Repertoire
             </span>
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-ink-aubergine font-light leading-tight">
-            Explore Our Atelier Works – <br className="hidden sm:inline" />
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-ink-aubergine font-light leading-tight">
+            Explore Our Atelier Works –{" "}
             <span className="italic font-serif text-mulberry-wine">Handcrafted Catalogs</span>
           </h2>
         </div>
-        <p className="mt-2 md:mt-0 font-sans text-xs sm:text-sm md:text-base text-ink-aubergine/75 max-w-md leading-relaxed hidden sm:block">
+        <p className="mt-1 md:mt-0 font-sans text-xs sm:text-sm text-ink-aubergine/70 max-w-md leading-relaxed hidden sm:block">
           Select any catalog below to explore genuine pieces sculpted by Jensi Dholariya. Click any creation to view the high-definition{" "}
           <strong className="text-ink-aubergine font-medium">5 Photos + 1 Studio Video</strong> presentation.
         </p>
@@ -306,24 +324,24 @@ export default function CollectionsShowcase() {
       </div>
 
       {/* DESKTOP VIEW ONLY: Atelier Archival Reel (Single Line Horizontal Navigation) */}
-      <div className="hidden sm:block mb-8 sm:mb-10 w-full min-w-0">
+      <div className="hidden sm:block mb-4 sm:mb-5 w-full min-w-0">
         {/* Archival reel control & status header */}
-        <div className="flex items-center justify-between gap-3 mb-3.5">
+        <div className="flex items-center justify-between gap-3 mb-2.5">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-marigold-glow animate-pulse" />
-            <span className="text-[10.5px] sm:text-xs font-sans uppercase tracking-[0.22em] text-ink-aubergine font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
+            <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.22em] text-ink-aubergine font-semibold">
               Atelier Archival Reel
             </span>
-            <span className="text-[10px] font-sans px-2.5 py-0.5 rounded-full bg-mulberry-wine/10 text-mulberry-wine border border-mulberry-wine/20 font-medium">
+            <span className="text-[9.5px] font-sans px-2 py-0.2 rounded-full bg-mulberry-wine/10 text-mulberry-wine border border-mulberry-wine/20 font-medium">
               15 Curated Editions
             </span>
           </div>
 
           {/* Unified Luxury Archival Controller */}
-          <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-md p-1 pl-3 rounded-full border border-ink-aubergine/15 shadow-sm">
+          <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-md p-1 pl-3 rounded-full border border-ink-aubergine/15 shadow-xs">
             <div className="flex items-center gap-1.5 pr-2 border-r border-ink-aubergine/10">
               <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
-              <span className="text-[9.5px] font-sans uppercase tracking-[0.16em] text-mulberry-wine font-semibold">
+              <span className="text-[9px] font-sans uppercase tracking-[0.16em] text-mulberry-wine font-semibold">
                 Edition
               </span>
               <span className="font-serif text-sm font-semibold text-ink-aubergine ml-0.5">
@@ -340,7 +358,7 @@ export default function CollectionsShowcase() {
                 scrollCarousel(-1);
               }}
               aria-label="Scroll left through catalogs"
-              className="w-7 h-7 rounded-full bg-ink-aubergine/5 hover:bg-ink-aubergine hover:text-butter-cream text-ink-aubergine flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
+              className="w-6 h-6 rounded-full bg-ink-aubergine/5 hover:bg-ink-aubergine hover:text-butter-cream text-ink-aubergine flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
@@ -351,7 +369,7 @@ export default function CollectionsShowcase() {
                 scrollCarousel(1);
               }}
               aria-label="Scroll right through catalogs"
-              className="w-7 h-7 rounded-full bg-ink-aubergine/5 hover:bg-ink-aubergine hover:text-butter-cream text-ink-aubergine flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
+              className="w-6 h-6 rounded-full bg-ink-aubergine/5 hover:bg-ink-aubergine hover:text-butter-cream text-ink-aubergine flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
             >
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
@@ -361,7 +379,8 @@ export default function CollectionsShowcase() {
         {/* Single continuous horizontal track on desktop */}
         <div
           ref={carouselRef}
-          className="flex items-center gap-3 overflow-x-auto no-scrollbar scroll-smooth py-4 px-1.5 -my-2 w-full min-w-0"
+          onScroll={handleCarouselScroll}
+          className="flex items-center gap-2.5 overflow-x-auto no-scrollbar scroll-smooth py-1 px-1 w-full min-w-0"
         >
           {productCategories.map((cat, index) => {
             const isActive = activeCategoryId === cat.id;
@@ -437,73 +456,59 @@ export default function CollectionsShowcase() {
             );
           })}
         </div>
-      </div>
 
-      {/* ------------------------------------------------------------------- */}
-      {/* ACTIVE CATEGORY INTRO BANNER (Desktop Only — Streamlined on Mobile) */}
-      {/* ------------------------------------------------------------------- */}
-      <div className="hidden sm:flex p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-white/70 border border-ink-aubergine/10 backdrop-blur-md mb-6 sm:mb-10 flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
-        <div className="max-w-2xl min-w-0">
-          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1">
-            <span className="px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9px] uppercase font-sans tracking-widest bg-ink-aubergine text-butter-cream font-medium">
-              Catalog #{String(productCategories.findIndex((c) => c.id === currentCategory.id) + 1).padStart(2, "0")}
-            </span>
-            {currentCategory.badge && (
-              <span className="px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9px] uppercase font-sans tracking-widest bg-mulberry-wine/10 text-mulberry-wine border border-mulberry-wine/20 font-medium flex items-center gap-1">
-                <Sparkles className="w-2.5 h-2.5 text-marigold-glow" />
-                <span>{currentCategory.badge}</span>
-              </span>
-            )}
+        {/* Haute Couture Golden Scroll Track (Visual indicator for 15 categories) */}
+        <div className="w-full flex items-center justify-between gap-4 mt-2 px-1">
+          <div className="flex-1 h-1.5 bg-ink-aubergine/10 rounded-full overflow-hidden relative">
+            <div
+              className="h-full bg-gradient-to-r from-amber-300 via-marigold-glow to-amber-500 rounded-full transition-all duration-150 shadow-sm"
+              style={{
+                width: `${Math.max(14, carouselScrollProgress)}%`,
+                marginLeft: `${(carouselScrollProgress * 0.86).toFixed(1)}%`,
+              }}
+            />
           </div>
-          <h3 className="font-serif text-lg sm:text-2xl text-ink-aubergine font-normal">
-            {currentCategory.name}
-          </h3>
-          <p className="mt-0.5 font-serif text-xs italic text-mulberry-wine">
-            &ldquo;{currentCategory.shortTagline}&rdquo;
-          </p>
-          <p className="mt-1.5 text-xs sm:text-sm text-ink-aubergine/75 font-sans font-light leading-relaxed hidden sm:block">
-            {currentCategory.description}
-          </p>
-        </div>
-
-        <div className="hidden sm:flex shrink-0 flex-col sm:flex-row md:flex-col items-start md:items-end gap-2">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-ink-aubergine/5 border border-ink-aubergine/10 text-xs font-sans text-ink-aubergine">
-            <Layers className="w-3.5 h-3.5 text-marigold-glow" />
-            <span>
-              Showing <strong>{currentWorks.length}</strong> creations
-            </span>
-          </div>
-          <span className="text-[10px] text-ink-aubergine/50 uppercase tracking-widest font-sans">
-            Each with 5 Photos + 1 Video
+          <span className="text-[10px] font-mono uppercase tracking-widest text-ink-aubergine/70 shrink-0 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
+            <span>Edition {String(productCategories.findIndex((c) => c.id === activeCategoryId) + 1).padStart(2, "0")} of 15</span>
           </span>
         </div>
       </div>
 
       {/* ------------------------------------------------------------------- */}
-      {/* ATELIER CREATIONS RUNWAY SLIDER (Clean, Visual, Zero First-Page Clutter) */}
+      {/* ATELIER CREATIONS RUNWAY SLIDER (Main Feature: Grand Editorial Cards) */}
       {/* ------------------------------------------------------------------- */}
-      <div className="w-full min-w-0 mb-10 sm:mb-14">
+      <div className="relative w-full min-w-0 mb-8 sm:mb-12">
+        {/* 1. Three.js Auto-Magic Stardust Atmosphere */}
+        <RunwayParticlesCanvas />
+
         {/* Sleek Minimalist Controls Header */}
-        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6 pb-2.5 sm:pb-3 border-b border-ink-aubergine/10 w-full min-w-0">
-          <div className="flex items-center gap-2 min-w-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse shrink-0" />
-            <span className="text-[10px] sm:text-xs font-sans uppercase tracking-[0.2em] text-mulberry-wine font-semibold shrink-0">
+        <div className="relative z-10 flex items-center justify-between gap-3 mb-4 sm:mb-5 pb-3 border-b border-ink-aubergine/10 w-full min-w-0">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="w-2 h-2 rounded-full bg-marigold-glow animate-pulse shrink-0" />
+            <span className="text-xs sm:text-sm font-sans uppercase tracking-[0.22em] text-mulberry-wine font-semibold shrink-0">
               Runway
             </span>
             <span className="text-ink-aubergine/30 font-light shrink-0 hidden xs:inline">•</span>
-            <h4 className="font-serif text-sm sm:text-base text-ink-aubergine font-medium truncate">
+            <h4 className="font-serif text-lg sm:text-2xl text-ink-aubergine font-normal truncate">
               {SHORT_TITLES[activeCategoryId] || currentCategory.name.split("&")[0].trim()}
             </h4>
+            {currentCategory.badge && (
+              <span className="hidden md:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[9.5px] uppercase font-sans tracking-widest bg-mulberry-wine/10 text-mulberry-wine border border-mulberry-wine/20 font-medium">
+                <Sparkles className="w-2.5 h-2.5 text-marigold-glow" />
+                <span>{currentCategory.badge}</span>
+              </span>
+            )}
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-[9.5px] sm:text-[10px] font-sans px-2.5 py-0.5 rounded-full bg-mulberry-wine/10 text-mulberry-wine border border-mulberry-wine/20 font-medium shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span className="text-[10px] sm:text-xs font-sans px-3 py-1 rounded-full bg-mulberry-wine/10 text-mulberry-wine border border-mulberry-wine/20 font-medium shrink-0">
               {currentWorks.length} {currentWorks.length === 1 ? "Piece" : "Pieces"}
             </span>
 
             {/* Navigation Arrows for Runway Slider — ONLY on Desktop where runway is horizontal slider */}
             <div className="hidden sm:flex items-center gap-2">
-              <span className="text-[11px] font-sans text-ink-aubergine/60">
+              <span className="text-xs font-sans text-ink-aubergine/60 mr-1">
                 Swipe or use arrows to explore
               </span>
               <button
@@ -540,80 +545,104 @@ export default function CollectionsShowcase() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.35 }}
-            className="w-full min-w-0"
+            className="relative z-10 w-full min-w-0"
           >
             {/* DESKTOP VIEW ONLY (>= 640px): Panoramic Runway Slider with Arrows */}
             <div className="hidden sm:block w-full min-w-0">
               <div
                 ref={sliderRef}
-                className="flex gap-5 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-0.5 w-full min-w-0"
+                className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-3 px-0 w-full min-w-0"
               >
                 {currentWorks.map((work, index) => {
                   const itemNumber = String(index + 1).padStart(2, "0");
 
                   return (
-                    <div
+                    <Luxury3DCard
                       key={work.id}
+                      tiltIntensity={8}
+                      roundedClassName="rounded-tl-[3.8rem] rounded-br-[3.8rem] rounded-tr-[1.2rem] rounded-bl-[1.2rem]"
+                      className="w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)] aspect-[3/4.2] shrink-0 snap-start select-none cursor-pointer"
                       onClick={() => handleOpenWork(work)}
-                      className="group relative cursor-pointer w-[300px] md:w-[350px] aspect-[3/4.3] shrink-0 snap-start select-none rounded-[2rem] overflow-hidden bg-ink-aubergine shadow-xl hover:shadow-2xl transition-all duration-500 border border-ink-aubergine/15 hover:border-marigold-glow/60 hover:-translate-y-1"
                     >
-                      <Image
-                        src={getSafeImageUrl(work.coverImage)}
-                        alt={work.title}
-                        fill
-                        sizes="350px"
-                        className="object-cover transition-transform duration-1000 ease-out group-hover:scale-106"
-                      />
+                      {/* Organic Botanical Petal Silhouette & Archival Passepartout */}
+                      <div className="relative w-full h-full rounded-tl-[3.8rem] rounded-br-[3.8rem] rounded-tr-[1.2rem] rounded-bl-[1.2rem] overflow-hidden bg-[#100314] group border border-[#E5D7C3]/25">
+                        {/* 1. Authentic Masterpiece Photography */}
+                        <Image
+                          src={getSafeImageUrl(work.coverImage)}
+                          alt={work.title}
+                          fill
+                          sizes="400px"
+                          className="object-cover transition-transform duration-1000 ease-out group-hover:scale-108"
+                        />
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#140817] via-[#140817]/55 via-45% to-transparent opacity-75 group-hover:opacity-85 transition-opacity duration-300 pointer-events-none" />
+                        {/* 2. Archival Atelier Legibility Vignette (Bottom-only for text, top is 100% crystal clear & bright) */}
+                        <div className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-[#0B020E]/95 via-[#0B020E]/50 to-transparent pointer-events-none" />
 
-                      <div className="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/20 shadow-sm group-hover:border-marigold-glow/50 transition-colors">
-                        {itemNumber}
-                      </div>
+                        {/* 3. Asymmetric Petal Gilded Inner Hairline */}
+                        <div className="absolute inset-2.5 rounded-tl-[3.3rem] rounded-br-[3.3rem] rounded-tr-[0.8rem] rounded-bl-[0.8rem] border border-white/15 group-hover:border-[#E5D7C3]/50 transition-colors pointer-events-none z-10" />
 
-                      <div className="absolute top-4 right-4 z-10">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[8.5px] uppercase font-sans tracking-widest bg-ink-aubergine/85 backdrop-blur-md text-butter-cream border border-white/20 shadow-sm font-medium">
-                          <Sparkles className="w-2.5 h-2.5 text-marigold-glow" />
-                          <span>{work.badge || "Signature Piece"}</span>
-                        </span>
-                      </div>
+                        {/* 4. Top Badges */}
+                        <div
+                          className="absolute top-5 left-5 z-20 w-8 h-8 rounded-full bg-[#18081C]/90 backdrop-blur-md text-white text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-[#E5D7C3]/35 shadow-sm group-hover:border-[#E5D7C3]/70 transition-colors"
+                        >
+                          {itemNumber}
+                        </div>
 
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100 pointer-events-none">
-                        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ink-aubergine/95 backdrop-blur-md text-butter-cream border border-marigold-glow/60 text-[11px] font-sans uppercase tracking-widest shadow-2xl">
-                          <Maximize2 className="w-3.5 h-3.5 text-marigold-glow" />
-                          <span>Explore 5 Photos + 1 Video</span>
-                        </span>
-                      </div>
-
-                      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-10 flex flex-col justify-end text-butter-cream">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-sans font-semibold tracking-wider uppercase bg-marigold-glow/20 text-marigold-glow border border-marigold-glow/30">
-                            <Camera className="w-2.5 h-2.5" /> 5 Photos
-                          </span>
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-sans font-semibold tracking-wider uppercase bg-apricot-blush/20 text-apricot-blush border border-apricot-blush/30">
-                            <Film className="w-2.5 h-2.5" /> 1 Video
+                        <div
+                          className="absolute top-5 right-5 z-20"
+                        >
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[8.5px] uppercase font-sans tracking-widest bg-[#18081C]/90 backdrop-blur-md text-[#FFF8EE] border border-[#E5D7C3]/35 shadow-sm font-medium">
+                            <Sparkles className="w-2.5 h-2.5 text-[#E8DEC8]" />
+                            <span>{work.badge || "Signature Piece"}</span>
                           </span>
                         </div>
 
-                        <h4 className="font-serif text-lg sm:text-xl font-normal leading-snug line-clamp-1 group-hover:text-butter-cream transition-colors">
-                          {work.title}
-                        </h4>
+                        {/* 5. Center Interactive Hover Lens: "Explore" Only (Compact, No Overflow) */}
+                        <div
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100 pointer-events-none"
+                        >
+                          <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#140618]/95 backdrop-blur-md text-white border border-[#E5D7C3]/60 shadow-[0_12px_36px_rgba(0,0,0,0.7)] whitespace-nowrap">
+                            <Sparkles className="w-3.5 h-3.5 text-[#E8DEC8] animate-pulse shrink-0" />
+                            <span className="text-xs font-sans uppercase tracking-[0.24em] font-medium text-[#FAF7F2] whitespace-nowrap">
+                              Explore
+                            </span>
+                          </div>
+                        </div>
 
-                        <p className="mt-0.5 font-serif text-xs italic text-apricot-blush/90 line-clamp-1">
-                          &ldquo;{work.tagline}&rdquo;
-                        </p>
+                        {/* 6. Bottom Editorial Content */}
+                        <div
+                          className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-20 flex flex-col justify-end text-butter-cream"
+                        >
+                          {/* Inclusions Pills in Frosted Glass (No Loud Yellow) */}
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-sans font-medium tracking-wider uppercase bg-white/10 text-[#FAF7F2] border border-white/15 backdrop-blur-sm">
+                              <Camera className="w-2.5 h-2.5 text-[#E8DEC8]" /> 5 Photos
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-sans font-medium tracking-wider uppercase bg-white/10 text-[#FAF7F2] border border-white/15 backdrop-blur-sm">
+                              <Film className="w-2.5 h-2.5 text-[#E8DEC8]" /> 1 Video
+                            </span>
+                          </div>
 
-                        <div className="mt-3 flex items-center justify-between pt-2.5 border-t border-white/15 text-[10.5px] font-sans">
-                          <span className="flex items-center gap-1 text-marigold-glow uppercase tracking-widest font-medium group-hover:translate-x-0.5 transition-transform">
-                            <span>View Gallery &amp; Details</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </span>
-                          <span className="text-butter-cream/50 uppercase tracking-widest font-mono text-[9px]">
-                            0{index + 1} / {String(currentWorks.length).padStart(2, "0")}
-                          </span>
+                          <h4 className="font-serif text-lg sm:text-2xl font-light leading-snug line-clamp-1 text-white group-hover:text-[#FFF8EE] transition-colors">
+                            {work.title}
+                          </h4>
+
+                          <p className="mt-0.5 font-serif text-xs italic text-[#E5D7C3]/85 line-clamp-1">
+                            &ldquo;{work.tagline}&rdquo;
+                          </p>
+
+                          <div className="mt-3 flex items-center justify-between pt-2.5 border-t border-white/15 text-[10.5px] font-sans">
+                            <span className="flex items-center gap-1.5 text-[#E8DEC8] uppercase tracking-widest font-medium group-hover:translate-x-1 transition-transform">
+                              <span>View Gallery &amp; Details</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </span>
+                            <span className="text-white/50 uppercase tracking-widest font-mono text-[9px]">
+                              0{index + 1} / {String(currentWorks.length).padStart(2, "0")}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Luxury3DCard>
                   );
                 })}
               </div>
@@ -638,7 +667,7 @@ export default function CollectionsShowcase() {
                       className="object-cover"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#140817] via-[#140817]/55 via-45% to-transparent opacity-80 pointer-events-none" />
+                    <div className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-[#140817]/95 via-[#140817]/50 to-transparent pointer-events-none" />
 
                     <div className="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-butter-cream text-[10px] font-sans font-semibold tracking-wider flex items-center justify-center border border-white/20 shadow-sm">
                       {itemNumber}

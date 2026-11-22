@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { deleteCustomerReview } from '@/lib/serverDb';
 import { clearContentCache } from '@/lib/contentCache';
 
+export const dynamic = 'force-dynamic';
+
 export async function DELETE(
   req: Request,
   { params }: { params: { id: string } }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope, Italiana } from "next/font/google";
+import { Cormorant_Garamond, Manrope, Italiana, Alex_Brush } from "next/font/google";
 import "./globals.css";
 import { SITE_CONTENT } from "@/content/site";
 import { AtelierContentProvider } from "@/context/AtelierContentContext";
@@ -24,6 +24,13 @@ const italiana = Italiana({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-italiana",
+  display: "swap",
+});
+
+const alexBrush = Alex_Brush({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-alex-brush",
   display: "swap",
 });
 
@@ -101,7 +108,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${manrope.variable} ${italiana.variable} scroll-smooth`}
+      className={`${cormorant.variable} ${manrope.variable} ${italiana.variable} ${alexBrush.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <head>

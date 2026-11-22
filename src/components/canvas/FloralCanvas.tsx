@@ -32,22 +32,37 @@ export default function FloralCanvas({ activeTimeOfDay }: FloralCanvasProps) {
         setMousePos({ x, y });
       };
 
-      // Determine Time of Day based on scroll position
+      // Determine 4 distinct atmospheric combinations based on scroll position & section milestones
       const handleScroll = () => {
         const scrollY = window.scrollY;
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
         const progress = totalHeight > 0 ? scrollY / totalHeight : 0;
 
-        if (progress < 0.18) {
-          setCurrentTimeOfDay("dawn");
-        } else if (progress < 0.38) {
-          setCurrentTimeOfDay("morning");
-        } else if (progress < 0.65) {
-          setCurrentTimeOfDay("noon");
-        } else if (progress < 0.85) {
-          setCurrentTimeOfDay("sunset");
-        } else {
+        const collectionsEl = document.getElementById("collections");
+        const occasionsEl = document.getElementById("occasions");
+        const contactEl = document.getElementById("contact");
+
+        const vh = window.innerHeight;
+        const collectionsTop = collectionsEl ? collectionsEl.getBoundingClientRect().top : vh * 0.4;
+        const occasionsTop = occasionsEl ? occasionsEl.getBoundingClientRect().top : vh * 0.65;
+        const contactTop = contactEl ? contactEl.getBoundingClientRect().top : vh * 0.85;
+
+        // 4 Clear Combinations Across the Narrative Page:
+        // Combination 4: Midnight Obsidian Velvet (Night Garden & Concierge)
+        if (contactTop <= vh * 0.5 || progress > 0.76) {
           setCurrentTimeOfDay("night");
+        }
+        // Combination 3: Sunlit Honey Amber (Combos, Occasions, Craftsmanship & Reviews)
+        else if (occasionsTop <= vh * 0.5 || progress > 0.46) {
+          setCurrentTimeOfDay("noon");
+        }
+        // Combination 2: Signature Mulberry Wine (Atelier Catalogs & Collections Showcase)
+        else if (collectionsTop <= vh * 0.6 || progress > 0.18) {
+          setCurrentTimeOfDay("morning");
+        }
+        // Combination 1: Champagne Blush Pearl (Hero & Bestsellers)
+        else {
+          setCurrentTimeOfDay("dawn");
         }
       };
 
@@ -66,13 +81,18 @@ export default function FloralCanvas({ activeTimeOfDay }: FloralCanvasProps) {
   // Allow explicit override if passed as prop
   const effectiveTimeOfDay = activeTimeOfDay || currentTimeOfDay;
 
-  // Background gradient map for the Living Day concept
+  // Background gradient map for the 4 Living Atelier Scroll Milestones
   const backgroundGradients: Record<TimeOfDay, string> = {
-    dawn: "radial-gradient(ellipse at 80% 20%, rgba(244,185,160,0.18) 0%, rgba(251,244,230,0.4) 60%, transparent 100%)",
-    morning: "radial-gradient(ellipse at 20% 40%, rgba(185,201,163,0.16) 0%, rgba(251,244,230,0.3) 65%, transparent 100%)",
-    noon: "radial-gradient(ellipse at 50% 10%, rgba(232,169,59,0.14) 0%, rgba(251,244,230,0.3) 60%, transparent 100%)",
-    sunset: "radial-gradient(ellipse at 70% 60%, rgba(229,143,160,0.18) 0%, rgba(244,185,160,0.15) 45%, transparent 100%)",
-    night: "radial-gradient(ellipse at 50% 80%, rgba(74,31,61,0.45) 0%, rgba(27,18,32,0.92) 80%)",
+    // 1. Top (Hero & Bestsellers): Champagne Blush Pearl
+    dawn: "radial-gradient(ellipse at 80% 18%, rgba(246, 222, 210, 0.45) 0%, rgba(254, 250, 244, 0.65) 55%, transparent 100%)",
+    // 2. Middle 1 (Atelier Catalogs & Collections Showcase): Rich Mulberry Wine Atmosphere
+    morning: "radial-gradient(ellipse at 35% 35%, rgba(168, 62, 108, 0.18) 0%, rgba(224, 142, 178, 0.12) 45%, rgba(254, 248, 242, 0.55) 80%, transparent 100%)",
+    // 3. Middle 2 (Combos, Occasions & Reviews): Luminous Sunlit Honey Amber
+    noon: "radial-gradient(ellipse at 65% 50%, rgba(234, 168, 58, 0.22) 0%, rgba(238, 204, 134, 0.14) 50%, rgba(254, 251, 245, 0.6) 80%, transparent 100%)",
+    // Sunset transition fallback
+    sunset: "radial-gradient(ellipse at 70% 60%, rgba(212, 120, 145, 0.22) 0%, rgba(240, 165, 140, 0.15) 45%, transparent 100%)",
+    // 4. Bottom (Services, Journal, Contact & Footer): Deep Obsidian Plum Velvet Night
+    night: "radial-gradient(ellipse at 50% 80%, rgba(94, 33, 76, 0.7) 0%, rgba(27, 18, 32, 0.96) 80%)",
   };
 
   return (

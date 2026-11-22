@@ -26,7 +26,6 @@ const FULL_DIRECTORY_LINKS = [
   { label: "Gifts for Every Occasion", sub: "Birthdays, anniversaries, milestones", href: "#occasions" },
   { label: "Craftsmanship & Story", sub: "Handmade with love & why choose us", href: "#craftsmanship" },
   { label: "Client Reviews", sub: "5-star patron stories & real gifting photos", href: "#reviews" },
-  { label: "Atelier Philosophy", sub: "The hands behind the petals", href: "#philosophy" },
   { label: "Our Floral Craft", sub: "Installations, bridal & tablescapes", href: "#services" },
   { label: "Instagram Journal", sub: "Recent captures from @the.petalmusee", href: "#journal" },
   { label: "Contact & Concierge", sub: "Direct consultation with Jensi", href: "#contact" },

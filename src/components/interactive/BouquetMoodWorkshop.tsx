@@ -194,19 +194,16 @@ export default function BouquetMoodWorkshop() {
                   <button
                     key={`mobile-occ-${occ.id}`}
                     onClick={() => setOccasion(occ.name)}
-                    className={`py-2 px-3 rounded-xl text-left border transition-all duration-200 flex items-center justify-between text-xs font-sans ${
-                      isFirst ? "col-span-2" : "col-span-1"
-                    } ${
-                      isSelected
+                    className={`py-2 px-3 rounded-xl text-left border transition-all duration-200 flex items-center justify-between text-xs font-sans ${isFirst ? "col-span-2" : "col-span-1"
+                      } ${isSelected
                         ? "bg-ink-aubergine text-butter-cream border-ink-aubergine shadow-sm"
                         : "bg-white/70 text-ink-aubergine/80 border-ink-aubergine/10 hover:bg-white"
-                    }`}
+                      }`}
                   >
                     <span className="font-medium truncate pr-1">{occ.name}</span>
                     <span
-                      className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                        isSelected ? "bg-marigold-glow" : "bg-ink-aubergine/20"
-                      }`}
+                      className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? "bg-marigold-glow" : "bg-ink-aubergine/20"
+                        }`}
                     />
                   </button>
                 );
@@ -219,11 +216,10 @@ export default function BouquetMoodWorkshop() {
                 <button
                   key={occ.id}
                   onClick={() => setOccasion(occ.name)}
-                  className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-sans tracking-wider transition-all duration-200 ${
-                    occasion === occ.name
+                  className={`px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-sans tracking-wider transition-all duration-200 ${occasion === occ.name
                       ? "bg-ink-aubergine text-butter-cream shadow-sm"
                       : "bg-ink-aubergine/5 text-ink-aubergine/80 hover:bg-ink-aubergine/10"
-                  }`}
+                    }`}
                 >
                   {occ.name}
                 </button>
@@ -248,11 +244,10 @@ export default function BouquetMoodWorkshop() {
                   <div
                     key={palette.id}
                     onClick={() => setPaletteId(palette.id)}
-                    className={`p-3.5 sm:p-4 rounded-2xl cursor-pointer border transition-all duration-300 ${
-                      isSelected
+                    className={`p-3.5 sm:p-4 rounded-2xl cursor-pointer border transition-all duration-300 ${isSelected
                         ? "border-mulberry-wine bg-mulberry-wine/5 shadow-md"
                         : "border-ink-aubergine/10 bg-white/40 hover:bg-white/80"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-serif text-sm sm:text-base text-ink-aubergine font-medium">
@@ -298,17 +293,15 @@ export default function BouquetMoodWorkshop() {
                   <button
                     key={style.id}
                     onClick={() => setStyleId(style.id)}
-                    className={`p-3 sm:p-3.5 rounded-2xl text-left border transition-all duration-200 ${
-                      isSelected
+                    className={`p-3 sm:p-3.5 rounded-2xl text-left border transition-all duration-200 ${isSelected
                         ? "border-ink-aubergine bg-ink-aubergine text-butter-cream shadow-md"
                         : "border-ink-aubergine/10 bg-white/40 text-ink-aubergine hover:bg-white/70"
-                    }`}
+                      }`}
                   >
                     <div className="font-serif text-xs sm:text-sm font-medium">{style.name}</div>
                     <div
-                      className={`text-[9px] sm:text-[10px] font-sans mt-1 line-clamp-2 ${
-                        isSelected ? "text-butter-cream/80" : "text-ink-aubergine/60"
-                      }`}
+                      className={`text-[9px] sm:text-[10px] font-sans mt-1 line-clamp-2 ${isSelected ? "text-butter-cream/80" : "text-ink-aubergine/60"
+                        }`}
                     >
                       {style.detail}
                     </div>

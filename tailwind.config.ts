@@ -39,6 +39,7 @@ const config: Config = {
         sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
         display: ["var(--font-cormorant)", "Georgia", "serif"],
         script: ["var(--font-italiana)", "var(--font-cormorant)", "serif"],
+        signature: ["var(--font-alex-brush)", "cursive"],
       },
       animation: {
         "float-slow": "float 8s ease-in-out infinite",

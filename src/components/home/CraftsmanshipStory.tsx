@@ -17,6 +17,7 @@ import {
 import { SITE_CONTENT } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
 import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
+import Luxury3DCard from "@/components/ui/Luxury3DCard";
 
 function getSafeImageUrl(url?: string, fallback: string = "https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&w=1200&q=85") {
   if (!url || typeof url !== "string") return fallback;
@@ -88,26 +89,28 @@ export default function CraftsmanshipStory() {
       {/* 1. HANDMADE WITH LOVE */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center mb-16 sm:mb-24 w-full min-w-0">
         <div className="lg:col-span-6 relative w-full min-w-0">
-          <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-ink-aubergine/5">
-            <Image
-              src={getSafeImageUrl(handmadeWithLove.imageUrl)}
-              alt={handmadeWithLove.title}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/60 via-transparent to-transparent" />
-            
-            <div className="absolute bottom-4 left-4 right-4 z-10 text-butter-cream">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[8.5px] uppercase font-sans tracking-widest bg-ink-aubergine/80 backdrop-blur-md text-butter-cream border border-white/20 mb-1.5">
-                <Heart className="w-2.5 h-2.5 text-apricot-blush" />
-                <span>Handcrafted by Jensi Dholariya</span>
-              </span>
-              <h4 className="font-serif text-lg sm:text-2xl font-light">
-                Every Stem Has a Soul
-              </h4>
+          <Luxury3DCard tiltIntensity={7} className="w-full aspect-[4/5]">
+            <div className="relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-ink-aubergine/5">
+              <Image
+                src={getSafeImageUrl(handmadeWithLove.imageUrl)}
+                alt={handmadeWithLove.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/60 via-transparent to-transparent" />
+              
+              <div className="absolute bottom-4 left-4 right-4 z-10 text-butter-cream">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[8.5px] uppercase font-sans tracking-widest bg-ink-aubergine/80 backdrop-blur-md text-butter-cream border border-white/20 mb-1.5">
+                  <Heart className="w-2.5 h-2.5 text-apricot-blush" />
+                  <span>Handcrafted by Jensi Dholariya</span>
+                </span>
+                <h4 className="font-serif text-lg sm:text-2xl font-light">
+                  Every Stem Has a Soul
+                </h4>
+              </div>
             </div>
-          </div>
+          </Luxury3DCard>
         </div>
 
         <div className="lg:col-span-6 flex flex-col justify-center w-full min-w-0">
@@ -225,16 +228,18 @@ export default function CraftsmanshipStory() {
         </div>
 
         <div className="lg:col-span-6 order-1 lg:order-2 relative w-full min-w-0">
-          <div className="relative aspect-[4/5] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-ink-aubergine/5">
-            <Image
-              src={getSafeImageUrl(personalizedGifts.imageUrl)}
-              alt={personalizedGifts.title}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/60 via-transparent to-transparent" />
-          </div>
+          <Luxury3DCard tiltIntensity={7} className="w-full aspect-[4/5]">
+            <div className="relative w-full h-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl bg-ink-aubergine/5">
+              <Image
+                src={getSafeImageUrl(personalizedGifts.imageUrl)}
+                alt={personalizedGifts.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/60 via-transparent to-transparent" />
+            </div>
+          </Luxury3DCard>
         </div>
       </div>
 

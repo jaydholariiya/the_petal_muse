@@ -5,58 +5,67 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Star,
-  CheckCircle2,
-  Heart,
-  MessageCircle,
-  Instagram,
   Sparkles,
-  MapPin,
-  Gift,
-  ArrowUpRight,
   ChevronLeft,
   ChevronRight,
+  Heart,
+  Quote,
+  CheckCircle2,
+  Award,
 } from "lucide-react";
 import { SITE_CONTENT, CustomerReview } from "@/content/site";
 import { useAtelierContent } from "@/context/AtelierContentContext";
-import { buildWhatsAppUrl, openInstagramInquiry } from "@/lib/utils";
+import { openInstagramInquiry } from "@/lib/utils";
 
 export default function CustomerReviewsSection() {
   const { reviews: dynamicReviews, settings } = useAtelierContent();
-  const enableWhatsApp = settings?.["enable_whatsapp"] !== undefined
-    ? settings["enable_whatsapp"] === "true"
-    : Boolean(SITE_CONTENT.brand.enableWhatsApp);
   const { customerReviewsSection } = SITE_CONTENT;
-  const reviews = dynamicReviews?.length > 0 ? dynamicReviews : customerReviewsSection.reviews;
-  const [activeIndex, setActiveIndex] = useState(0);
+  const reviews: CustomerReview[] =
+    dynamicReviews?.length > 0 ? dynamicReviews : customerReviewsSection.reviews;
 
-  // Keyboard navigation for desktop arrow keys
+  // Carousel active index
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
+
+  // Responsive items per view: 3 on desktop, 2 on tablet, 1 on mobile
+  const [itemsPerView, setItemsPerView] = useState(3);
+
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
-      }
-      if (e.key === "ArrowRight") {
-        setActiveIndex((prev) => (prev + 1) % reviews.length);
+    const updateItemsPerView = () => {
+      if (window.innerWidth >= 1024) {
+        setItemsPerView(3);
+      } else if (window.innerWidth >= 640) {
+        setItemsPerView(2);
+      } else {
+        setItemsPerView(1);
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [reviews.length]);
+    updateItemsPerView();
+    window.addEventListener("resize", updateItemsPerView);
+    return () => window.removeEventListener("resize", updateItemsPerView);
+  }, []);
 
-  const currentReview: CustomerReview = reviews[activeIndex] || reviews[0];
-  const slideNumber = String(activeIndex + 1).padStart(2, "0");
+  const maxIndex = Math.max(0, reviews.length - itemsPerView);
+
+  // Auto-advance carousel every 6s unless user is hovering
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isHovered, maxIndex]);
 
   const handlePrev = (e?: React.MouseEvent) => {
     e?.preventDefault();
-    setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
   const handleNext = (e?: React.MouseEvent) => {
     e?.preventDefault();
-    setActiveIndex((prev) => (prev + 1) % reviews.length);
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
-
-  const touchStartXRef = useRef<number | null>(null);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
@@ -65,256 +74,183 @@ export default function CustomerReviewsSection() {
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartXRef.current === null) return;
     const diff = touchStartXRef.current - e.changedTouches[0].clientX;
-    if (diff > 40) {
-      setActiveIndex((prev) => (prev + 1) % reviews.length);
-    } else if (diff < -40) {
-      setActiveIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+    if (diff > 45) {
+      handleNext();
+    } else if (diff < -45) {
+      handlePrev();
     }
     touchStartXRef.current = null;
   };
 
-  const waUrl = buildWhatsAppUrl({
-    service: `Patron Keepsake Inquiry: ${currentReview.giftedItem}`,
-    occasion: currentReview.occasion,
-    notes: `Hello Jensi! I read the review by ${currentReview.name} regarding "${currentReview.giftedItem}" and would love to craft a similar bespoke keepsake for my upcoming celebration!`,
-  });
+  const visibleReviews = reviews.slice(currentIndex, currentIndex + itemsPerView);
+  // Wrap around if needed for seamless 3-card view
+  if (visibleReviews.length < itemsPerView) {
+    visibleReviews.push(...reviews.slice(0, itemsPerView - visibleReviews.length));
+  }
+
+  const totalDots = maxIndex + 1;
 
   return (
     <section
       id="reviews"
-      className="relative py-8 sm:py-24 md:py-32 px-3 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden w-full min-w-0"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative py-14 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto overflow-hidden w-full select-none"
     >
-      {/* Editorial Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-ink-aubergine/10 pb-4 sm:pb-8 mb-4 sm:mb-12 w-full min-w-0 gap-3 sm:gap-4">
-        <div className="w-full md:w-auto min-w-0">
-          <div className="flex items-center gap-2 mb-1.5 sm:mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
-            <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.25em] sm:tracking-[0.3em] text-mulberry-wine font-medium">
-              {customerReviewsSection.eyebrow}
-            </span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif text-ink-aubergine font-normal tracking-tight">
-            {customerReviewsSection.title}
-          </h2>
-          <p className="mt-0.5 sm:mt-1 text-xs sm:text-base text-ink-aubergine/70 font-light max-w-xl">
-            {customerReviewsSection.subtitle}
-          </p>
+      {/* 1. ELEGANT AESTHETIC HEADER (Editorial Cormorant Serif + Italic Style) */}
+      <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 md:mb-20">
+        {/* Eyebrow Label */}
+        <div className="flex items-center justify-center gap-2 mb-2.5 sm:mb-3">
+          <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
+          <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.25em] sm:tracking-[0.3em] text-mulberry-wine font-medium">
+            Verified Patron Reflections
+          </span>
+          <span className="w-1.5 h-1.5 rounded-full bg-marigold-glow animate-pulse" />
         </div>
 
-        {/* Patron Confidence Stats */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-4 shrink-0">
-          {customerReviewsSection.stats.map((stat, idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white/70 border border-ink-aubergine/10 shadow-xs"
-            >
-              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-marigold-glow flex-shrink-0" />
-              <span className="text-[11px] sm:text-xs font-serif font-medium text-ink-aubergine">
-                {stat.value}
-              </span>
-              <span className="text-[10px] sm:text-[11px] font-sans text-ink-aubergine/60 font-light">
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
+        {/* Editorial Headline: Regular Serif + Italic Serif Swash (Exact Reference Style) */}
+        <motion.h2
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-ink-aubergine leading-[1.12] tracking-tight mb-3 sm:mb-4"
+        >
+          Love Stories &amp; Reviews –
+          <span className="block italic font-normal text-mulberry-wine mt-1 sm:mt-1.5">
+            Your Story in Every Detail
+          </span>
+        </motion.h2>
+
+        {/* Clean, Centered Luxury Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="font-sans text-xs sm:text-sm md:text-base text-ink-aubergine/75 font-light leading-relaxed max-w-2xl mx-auto"
+        >
+          Every bespoke keepsake we sculpt becomes an enduring memory. Read genuine reflections and love stories
+          from patrons who commemorated milestones, surprised partners, and celebrated with us.
+        </motion.p>
       </div>
 
-      {/* UNIQUE CINEMATIC LOVE STORY SLIDER (Compact on Mobile, Grand on Desktop) */}
+      {/* 2. THE 3-CARD CAROUSEL SLIDER (Exact layout from user screenshot) */}
       <div
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className="relative w-full rounded-2xl sm:rounded-[36px] bg-gradient-to-br from-white/95 via-cream-linen/70 to-warm-parchment/85 border border-ink-aubergine/10 shadow-lg sm:shadow-xl overflow-hidden p-3.5 sm:p-8 md:p-14 select-none"
+        className="relative w-full"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-8 lg:gap-14 items-center w-full min-w-0">
-          {/* LEFT: ARCHITECTURAL PORTRAIT & GIFT PHOTOGRAPHY */}
-          <div className="lg:col-span-5 relative w-full min-w-0">
-            <div className="relative aspect-[16/10] sm:aspect-[4/5] w-full rounded-xl sm:rounded-[32px] overflow-hidden shadow-md sm:shadow-2xl bg-ink-aubergine/10 border border-ink-aubergine/10">
-              <AnimatePresence initial={false} mode="wait">
-                <motion.div
-                  key={currentReview.id}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={currentReview.photoUrl}
-                    alt={`${currentReview.name} - ${currentReview.giftedItem}`}
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover"
-                  />
-                  {/* Atmospheric Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-aubergine/90 via-ink-aubergine/25 to-transparent" />
-                </motion.div>
-              </AnimatePresence>
+        {/* Left Navigation Arrow */}
+        <button
+          onClick={handlePrev}
+          aria-label="Previous Reviews"
+          className="absolute -left-2 sm:-left-5 top-1/3 -translate-y-1/2 z-30 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white text-ink-aubergine shadow-lg hover:shadow-xl border border-ink-aubergine/10 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-md"
+        >
+          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
 
-              {/* Floating Top Rating Badge */}
-              <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-10 flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-0.5 sm:py-1.5 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-amber-900/10">
-                <div className="flex items-center text-amber-500">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-500"
-                    />
-                  ))}
-                </div>
-                <span className="text-[10.5px] sm:text-xs font-sans font-bold text-ink-aubergine ml-0.5">
-                  5.0
-                </span>
-              </div>
+        {/* Right Navigation Arrow */}
+        <button
+          onClick={handleNext}
+          aria-label="Next Reviews"
+          className="absolute -right-2 sm:-right-5 top-1/3 -translate-y-1/2 z-30 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-white/90 hover:bg-white text-ink-aubergine shadow-lg hover:shadow-xl border border-ink-aubergine/10 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 backdrop-blur-md"
+        >
+          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+        </button>
 
-              {/* Occasion Pill (Top Right) */}
-              <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-ink-aubergine/80 backdrop-blur-md text-[8.5px] sm:text-[9.5px] font-sans uppercase tracking-wider text-butter-cream border border-white/20">
-                {currentReview.occasion}
-              </div>
-
-              {/* Bottom Inset: Gifted Item Tag */}
-              <div className="absolute bottom-2 inset-x-2 sm:bottom-4 sm:inset-x-4 z-10 p-2 sm:p-3 rounded-lg sm:rounded-2xl bg-ink-aubergine/90 backdrop-blur-md text-butter-cream border border-white/10 flex items-center gap-2">
-                <Gift className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-marigold-glow shrink-0" />
-                <div className="min-w-0">
-                  <span className="text-[7.5px] sm:text-[9px] uppercase font-sans tracking-widest text-apricot-blush block">
-                    Bespoke Creation Gifted
-                  </span>
-                  <p className="font-serif italic text-xs sm:text-sm truncate text-butter-cream">
-                    {currentReview.giftedItem}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: EDITORIAL VOICE, TESTIMONIAL & PATRON SIGNATURE */}
-          <div className="lg:col-span-7 flex flex-col justify-between w-full min-w-0">
-            <AnimatePresence mode="wait">
+        {/* Cards Grid / Track */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 w-full">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {visibleReviews.map((rev, idx) => (
               <motion.div
-                key={currentReview.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.25 }}
+                key={`${rev.id}-${currentIndex}-${idx}`}
+                initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.96 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative flex flex-col bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-ink-aubergine/10 transition-all duration-500"
               >
-                {/* Large Decorative Serif Quotation Mark (Desktop only to save vertical mobile space) */}
-                <div className="hidden sm:block text-5xl sm:text-6xl md:text-7xl font-serif text-mulberry-wine/25 leading-none select-none -mb-3">
-                  “
-                </div>
+                {/* Card Top: High-Res Keepsake / Patron Photograph */}
+                <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-porcelain-white">
+                  <Image
+                    src={rev.photoUrl}
+                    alt={`${rev.name} - ${rev.giftedItem || "The Petal Muse Keepsake"}`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  {/* Subtle Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                {/* The Emotional Testimonial Quote */}
-                <blockquote className="font-serif italic text-xs sm:text-xl md:text-2xl text-ink-aubergine font-normal sm:font-light leading-relaxed sm:leading-relaxed pl-0 sm:pl-2 line-clamp-4 sm:line-clamp-none">
-                  &ldquo;{currentReview.quote}&rdquo;
-                </blockquote>
-
-                {/* Patron Details & Verification */}
-                <div className="mt-3 sm:mt-6 pt-2.5 sm:pt-5 border-t border-ink-aubergine/10 flex items-center justify-between gap-2">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <h4 className="text-xs sm:text-base md:text-lg font-serif font-medium text-ink-aubergine truncate">
-                        {currentReview.name}
-                      </h4>
-                      {currentReview.verified && (
-                        <span
-                          title="Verified Patron Experience"
-                          className="inline-flex items-center text-emerald-600 shrink-0"
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-emerald-100" />
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-1 text-[10px] sm:text-xs font-sans text-ink-aubergine/65 mt-0.5 truncate">
-                      <MapPin className="w-3 h-3 text-ink-aubergine/40 shrink-0" />
-                      <span className="truncate">{currentReview.location}</span>
-                      <span className="mx-0.5">•</span>
-                      <span className="shrink-0">{currentReview.date}</span>
-                    </div>
+                  {/* Occasion / City Floating Tag */}
+                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/85 backdrop-blur-md border border-ink-aubergine/10 shadow-xs">
+                    <span className="text-[9px] sm:text-[10px] font-sans uppercase tracking-wider text-ink-aubergine font-medium">
+                      {rev.location || "Gujarat, India"}
+                    </span>
                   </div>
 
-                  <span className="hidden sm:inline-flex items-center gap-1.5 text-[10.5px] uppercase tracking-wider font-sans font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                    <span>Verified Purchase</span>
-                  </span>
+                  {/* Star Rating Badge (Bottom of Image) */}
+                  <div className="absolute bottom-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20">
+                    <div className="flex items-center gap-0.5">
+                      {[...Array(rev.rating || 5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <span className="text-[10px] font-sans font-semibold text-white ml-1">
+                      5.0
+                    </span>
+                  </div>
                 </div>
 
-                {/* Action CTA & Slider Controls (Side-by-side compact row on all screens) */}
-                <div className="mt-3 sm:mt-6 pt-2.5 sm:pt-5 border-t border-ink-aubergine/10 flex items-center justify-between gap-2 sm:gap-4">
-                  {enableWhatsApp ? (
-                    <a
-                      href={waUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2 sm:py-3 px-3 sm:px-6 rounded-full text-[11px] sm:text-xs font-sans uppercase tracking-wider font-semibold text-white bg-[#25D366] hover:bg-[#20bd5a] transition-all shadow-sm sm:shadow-md active:scale-95 flex items-center justify-center gap-1.5 truncate"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5 fill-white stroke-none shrink-0" />
-                      <span className="whitespace-nowrap">Order Keepsake</span>
-                      <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-80 shrink-0" />
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        openInstagramInquiry({
-                          title: currentReview.giftedItem,
-                          occasion: currentReview.occasion,
-                          notes: `Hello Jensi! I read the review by ${currentReview.name} regarding "${currentReview.giftedItem}" and would love to craft a similar bespoke keepsake for my upcoming celebration!`,
-                        })
-                      }
-                      className="flex-1 py-2 sm:py-3 px-3 sm:px-6 rounded-full text-[11px] sm:text-xs font-sans uppercase tracking-wider font-semibold text-white bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 transition-all shadow-sm sm:shadow-md active:scale-95 flex items-center justify-center gap-1.5 truncate"
-                    >
-                      <Instagram className="w-3.5 h-3.5 text-white shrink-0" />
-                      <span className="whitespace-nowrap">Order Keepsake</span>
-                      <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-80 shrink-0" />
-                    </button>
-                  )}
+                {/* Card Content Below Image */}
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 text-left bg-white">
+                  {/* Review Quote */}
+                  <div>
+                    <p className="font-serif italic text-sm sm:text-base text-ink-aubergine/85 leading-relaxed line-clamp-3">
+                      &ldquo;{rev.quote}&rdquo;
+                    </p>
+                  </div>
 
-                  {/* Previous / Next Arrow Controls */}
-                  <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                    <button
-                      type="button"
-                      onClick={handlePrev}
-                      aria-label="Previous story"
-                      className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-white border border-ink-aubergine/15 text-ink-aubergine hover:bg-ink-aubergine hover:text-warm-parchment flex items-center justify-center transition-all shadow-xs active:scale-95"
-                    >
-                      <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </button>
+                  {/* Patron Details & Gifted Item */}
+                  <div className="mt-4 pt-3.5 border-t border-ink-aubergine/10 flex items-center justify-between">
+                    <div>
+                      <h4 className="font-serif text-base sm:text-lg font-normal text-ink-aubergine leading-tight">
+                        {rev.name}
+                      </h4>
+                      <p className="font-sans text-[10px] sm:text-[11px] text-mulberry-wine font-medium mt-0.5 line-clamp-1">
+                        {rev.giftedItem || rev.occasion || "Bespoke Keepsake Commission"}
+                      </p>
+                    </div>
 
-                    <span className="px-2 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-sans uppercase tracking-widest text-ink-aubergine/70 bg-white/70 border border-ink-aubergine/10 font-medium">
-                      {slideNumber} / 06
-                    </span>
-
-                    <button
-                      type="button"
-                      onClick={handleNext}
-                      aria-label="Next story"
-                      className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-white border border-ink-aubergine/15 text-ink-aubergine hover:bg-ink-aubergine hover:text-warm-parchment flex items-center justify-center transition-all shadow-xs active:scale-95"
+                    {/* Verified Icon */}
+                    <div
+                      className="w-7 h-7 rounded-full bg-mulberry-wine/10 flex items-center justify-center text-mulberry-wine shrink-0"
+                      title="Verified Patron Story"
                     >
-                      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </button>
+                      <CheckCircle2 className="w-4 h-4 text-marigold-glow" />
+                    </div>
                   </div>
                 </div>
               </motion.div>
-            </AnimatePresence>
-          </div>
+            ))}
+          </AnimatePresence>
         </div>
-      </div>
 
-      {/* Pagination Slider Dots */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-3.5 sm:mt-6">
-        {reviews.map((rev, idx) => (
-          <button
-            key={rev.id}
-            type="button"
-            onClick={() => setActiveIndex(idx)}
-            aria-label={`Jump to review ${idx + 1}`}
-            className={`transition-all duration-300 rounded-full ${
-              idx === activeIndex
-                ? "w-5 sm:w-8 h-1.5 sm:h-2 bg-ink-aubergine"
-                : "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-ink-aubergine/25 hover:bg-ink-aubergine/50"
-            }`}
-          />
-        ))}
+        {/* 3. PAGINATION DOTS (Centered below cards) */}
+        <div className="flex items-center justify-center gap-2 mt-8 sm:mt-12">
+          {[...Array(totalDots)].map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              aria-label={`Go to review page ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                currentIndex === idx
+                  ? "w-8 bg-ink-aubergine"
+                  : "w-2 bg-ink-aubergine/25 hover:bg-ink-aubergine/50"
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -6,7 +6,6 @@ import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/home/HeroSection";
 import EditorialTicker from "@/components/home/EditorialTicker";
-import AboutSection from "@/components/home/AboutSection";
 import BestsellersSection from "@/components/home/BestsellersSection";
 import CollectionsShowcase from "@/components/home/CollectionsShowcase";
 import ComboCollections from "@/components/home/ComboCollections";
@@ -70,11 +69,9 @@ export default function Home() {
         {/* Endless Editorial Atelier Ribbon — Seamless Text Slider */}
         <EditorialTicker />
 
-        {/* Morning: Philosophy & About Jensi Dholariya — Core Essential */}
-        <AboutSection />
-
         {/* Atelier Bestsellers — Most Loved Creations */}
         <BestsellersSection />
+
 
         {/* 15 Product Categories Showcase — Complete Repertoire */}
         <CollectionsShowcase />
